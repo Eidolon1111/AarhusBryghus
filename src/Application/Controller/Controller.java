@@ -112,11 +112,11 @@ public class Controller {
         controller.createPris(fredagsbar,p5, 70,2);
 
         //Priser for butik for flasker
-        controller.createPris(fredagsbar,p1, 36,2);
-        controller.createPris(fredagsbar,p2, 36,2);
-        controller.createPris(fredagsbar,p3, 36,2);
-        controller.createPris(fredagsbar,p4, 36,2);
-        controller.createPris(fredagsbar,p5, 36,2);
+        controller.createPris(butik,p1, 36,2);
+        controller.createPris(butik,p2, 36,2);
+        controller.createPris(butik,p3, 36,2);
+        controller.createPris(butik,p4, 36,2);
+        controller.createPris(butik,p5, 36,2);
     }
 
 
