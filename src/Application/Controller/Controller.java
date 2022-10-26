@@ -40,17 +40,58 @@ public class Controller {
         controller.createPrisliste("Fredagsbar");
         controller.createPrisliste("Butik");
 
-        controller.createProduktGruppe("Flaske");
-        controller.createProduktGruppe("Fadøl");
-        controller.createProduktGruppe("Spiritus");
-        controller.createProduktGruppe("Fustage");
-        controller.createProduktGruppe("Kulsyre");
-        controller.createProduktGruppe("Malt");
-        controller.createProduktGruppe("Beklædning");
-        controller.createProduktGruppe("Anlæg");
-        controller.createProduktGruppe("Glas");
-        controller.createProduktGruppe("Sampakninger");
-        controller.createProduktGruppe("Rundvisning");
+        ProduktGruppe pg1 = controller.createProduktGruppe("Flaske");
+        ProduktGruppe pg2 = controller.createProduktGruppe("Fadøl");
+        ProduktGruppe pg3 = controller.createProduktGruppe("Spiritus");
+        ProduktGruppe pg4 = controller.createProduktGruppe("Fustage");
+        ProduktGruppe pg5 = controller.createProduktGruppe("Kulsyre");
+        ProduktGruppe pg6 = controller.createProduktGruppe("Malt");
+        ProduktGruppe pg7 = controller.createProduktGruppe("Beklædning");
+        ProduktGruppe pg8 = controller.createProduktGruppe("Anlæg");
+        ProduktGruppe pg9 = controller.createProduktGruppe("Glas");
+        ProduktGruppe pg10 = controller.createProduktGruppe("Sampakninger");
+        ProduktGruppe pg11 = controller.createProduktGruppe("Rundvisning");
+
+        //Flaske produkter
+        controller.createProdukt(pg1,"Klosterbryg","","");
+        controller.createProdukt(pg1,"Sweet Georgia Brown","","");
+        controller.createProdukt(pg1,"Extra Pilsner","","");
+        controller.createProdukt(pg1,"Celebration","","");
+        controller.createProdukt(pg1,"Blondie","","");
+
+        //Fadøl produkter
+        controller.createProdukt(pg2, "Klosterbryg", "", "40 cl");
+        controller.createProdukt(pg2, "Jazz Classic", "", "40 cl");
+        controller.createProdukt(pg2, "Extra Pilsner", "", "40 cl");
+        controller.createProdukt(pg2, "Celebration", "", "40 cl");
+        controller.createProdukt(pg2, "Blondie", "", "40 cl");
+
+        //Spritus produkter
+        controller.createProdukt(pg3, "Whisky", "45%", "50 cl rør");
+
+        //Fustage produkter
+        controller.createProdukt(pg4, "Klosterbryg", "","20 liter");
+
+        //Kulsyre
+        controller.createProdukt(pg5, "6 kg", "", "");
+
+        //Malt
+        controller.createProdukt(pg6, "Maltsæk", "", "25 kg");
+
+        //Beklædning
+        controller.createProdukt(pg7, "t-shirt", "", "");
+
+        //Anlæg
+        controller.createProdukt(pg8, "1-hane", "", "");
+
+        //Glas
+        controller.createProdukt(pg9, "Glas", "uanset størrelse", "");
+
+        //Sampakninger
+        controller.createProdukt(pg10, "Gaveæske", "2 øl, 2 glas", "");
+
+        //Rundvisning
+        controller.createProdukt(pg11, "Rundvisning", "kan variere afhængig af dag/aften/studierabat", "pr person dag");
     }
 
 
