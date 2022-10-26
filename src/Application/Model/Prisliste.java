@@ -10,9 +10,10 @@ public class Prisliste {
         this.navn = navn;
     }
 
-    public void createPrisTilPrisliste(Produkt produkt, double pris, int klip) {
+    public Pris createPrisTilPrisliste(Produkt produkt, double pris, int klip) {
         Pris prisListeProdukt = new Pris(pris, klip, produkt);
         prislisten.add(prisListeProdukt);
+        return prisListeProdukt;
     }
 
     public ArrayList<Pris> getPrislisten() {
