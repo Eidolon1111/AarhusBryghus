@@ -6,12 +6,22 @@ import Application.Model.Produkt;
 import Application.Model.ProduktGruppe;
 import Application.StorageInterface;
 
+import java.util.ArrayList;
+
 public class Controller {
     private static Controller controller;
     private StorageInterface storage;
 
     public Controller(StorageInterface storage) {
         this.storage = storage;
+    }
+    
+    public ArrayList<Prisliste> getPrislister() {
+        return storage.getPrislister();
+    }
+
+    public ArrayList<ProduktGruppe> getProduktGrupper() {
+        return storage.getProduktGrupper();
     }
 
     public Prisliste createPrisliste(String navn) {
