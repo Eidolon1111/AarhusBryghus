@@ -10,7 +10,7 @@ public class Prisliste {
         this.navn = navn;
     }
 
-    public void createPrislisteProdukt(Produkt produkt, int pris, int klip) {
+    public void createPrisTilPrisliste(Produkt produkt, double pris, int klip) {
         Pris prisListeProdukt = new Pris(pris, klip, produkt);
         prislisten.add(prisListeProdukt);
     }
@@ -19,7 +19,7 @@ public class Prisliste {
         return new ArrayList<>(prislisten);
     }
 
-    public double prisPaaProdukt(Produkt produkt){
+    public double findPrisPaaProdukt(Produkt produkt){
         double res = 0.0;
         for (Pris p : prislisten){
             if (p.getProdukt().getNavn().equals(produkt.getNavn())){
