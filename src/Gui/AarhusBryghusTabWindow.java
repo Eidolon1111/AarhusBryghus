@@ -1,6 +1,7 @@
 package Gui;
 
 import Application.Controller.Controller;
+import Storage.Storage;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
@@ -12,7 +13,9 @@ public class AarhusBryghusTabWindow extends Application {
 
     @Override
     public void init(){
-        Controller.init();
+        Storage storage = new Storage();
+        Controller controller = new Controller(storage);
+        controller.init();
     }
 
     @Override
