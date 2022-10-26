@@ -112,11 +112,11 @@ public class Controller {
         this.createPris(fredagsbar,p5, 70,2);
 
         //Priser for butik for flasker
-        this.createPris(fredagsbar,p1, 36,2);
-        this.createPris(fredagsbar,p2, 36,2);
-        this.createPris(fredagsbar,p3, 36,2);
-        this.createPris(fredagsbar,p4, 36,2);
-        this.createPris(fredagsbar,p5, 36,2);
+        this.createPris(butik,p1, 36,2);
+        this.createPris(butik,p2, 36,2);
+        this.createPris(butik,p3, 36,2);
+        this.createPris(butik,p4, 36,2);
+        this.createPris(butik,p5, 36,2);
     }
 
 
