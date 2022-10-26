@@ -1,6 +1,7 @@
 package Gui;
 
 import javafx.geometry.Insets;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 
@@ -12,8 +13,7 @@ public class OpretPrislisteWindow extends GridPane {
         this.setPadding(new Insets(10));
         this.setHgap(10);
         this.setVgap(10);
-
-        this.add(lwPrislister, 0, 0);
+        this.add(lwPrislister, 1, 0);
 
     }
 
