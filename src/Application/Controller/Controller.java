@@ -37,8 +37,8 @@ public class Controller {
     }
 
     public static void init(){
-        controller.createPrisliste("Fredagsbar");
-        controller.createPrisliste("Butik");
+        Prisliste fredagsbar = controller.createPrisliste("Fredagsbar");
+        Prisliste butik = controller.createPrisliste("Butik");
 
         ProduktGruppe pg1 = controller.createProduktGruppe("Flaske");
         ProduktGruppe pg2 = controller.createProduktGruppe("Fadøl");
@@ -53,11 +53,11 @@ public class Controller {
         ProduktGruppe pg11 = controller.createProduktGruppe("Rundvisning");
 
         //Flaske produkter
-        controller.createProdukt(pg1,"Klosterbryg","","");
-        controller.createProdukt(pg1,"Sweet Georgia Brown","","");
-        controller.createProdukt(pg1,"Extra Pilsner","","");
-        controller.createProdukt(pg1,"Celebration","","");
-        controller.createProdukt(pg1,"Blondie","","");
+        Produkt p1 = controller.createProdukt(pg1,"Klosterbryg","","");
+        Produkt p2 = controller.createProdukt(pg1,"Sweet Georgia Brown","","");
+        Produkt p3 = controller.createProdukt(pg1,"Extra Pilsner","","");
+        Produkt p4 = controller.createProdukt(pg1,"Celebration","","");
+        Produkt p5 = controller.createProdukt(pg1,"Blondie","","");
 
         //Fadøl produkter
         controller.createProdukt(pg2, "Klosterbryg", "", "40 cl");
@@ -92,6 +92,21 @@ public class Controller {
 
         //Rundvisning
         controller.createProdukt(pg11, "Rundvisning", "kan variere afhængig af dag/aften/studierabat", "pr person dag");
+
+
+        //Priser for fredagsbar for flasker
+        controller.createPris(fredagsbar,p1, 70,2);
+        controller.createPris(fredagsbar,p2, 70,2);
+        controller.createPris(fredagsbar,p3, 70,2);
+        controller.createPris(fredagsbar,p4, 70,2);
+        controller.createPris(fredagsbar,p5, 70,2);
+
+        //Priser for butik for flasker
+        controller.createPris(fredagsbar,p1, 36,2);
+        controller.createPris(fredagsbar,p2, 36,2);
+        controller.createPris(fredagsbar,p3, 36,2);
+        controller.createPris(fredagsbar,p4, 36,2);
+        controller.createPris(fredagsbar,p5, 36,2);
     }
 
 
