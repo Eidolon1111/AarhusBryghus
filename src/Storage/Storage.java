@@ -41,4 +41,5 @@ public class Storage implements StorageInterface {
             salg.add(s);
         }
     }
+
 }

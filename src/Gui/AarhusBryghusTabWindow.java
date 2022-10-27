@@ -11,10 +11,12 @@ import javafx.stage.Stage;
 
 public class AarhusBryghusTabWindow extends Application {
 
+    private ControllerInterface controller;
+
     @Override
     public void init(){
         Storage storage = new Storage();
-        Controller controller = new Controller(storage);
+        controller = new Controller(storage);
         controller.init();
     }
 
@@ -39,11 +41,19 @@ public class AarhusBryghusTabWindow extends Application {
     private void initTabPane(TabPane tabPane) {
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
+        //OpretDagligtSalg
+        Tab tabOpretDagligtSalg = new Tab("Opret DagligtSalg");
+        tabPane.getTabs().add(tabOpretDagligtSalg);
+
+        OpretDagligtSalgPane opretDagligtSalgPane = new OpretDagligtSalgPane(controller);
+        tabOpretDagligtSalg.setContent(opretDagligtSalgPane);
+        tabOpretDagligtSalg.setOnSelectionChanged(event -> opretDagligtSalgPane.updateControls());
+
         //Opret Prisliste
         Tab tabOpretPris = new Tab("Opret Pris");
         tabPane.getTabs().add(tabOpretPris);
 
-        OpretPrisPane opretPrisPane = new OpretPrisPane();
+        OpretPrisPane opretPrisPane = new OpretPrisPane(controller);
         tabOpretPris.setContent(opretPrisPane);
         tabOpretPris.setOnSelectionChanged(event -> opretPrisPane.updateControls());
 
@@ -51,7 +61,7 @@ public class AarhusBryghusTabWindow extends Application {
         Tab tabOpretProdukt = new Tab("Opret Produkt");
         tabPane.getTabs().add(tabOpretProdukt);
 
-        OpretProduktPane opretProduktPane = new OpretProduktPane();
+        OpretProduktPane opretProduktPane = new OpretProduktPane(controller);
         tabOpretProdukt.setContent(opretProduktPane);
         tabOpretProdukt.setOnSelectionChanged(event -> opretProduktPane.updateControls());
 

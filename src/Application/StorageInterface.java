@@ -18,4 +18,5 @@ public interface StorageInterface {
     public ArrayList<Salg> getSalg();
 
     public void addSalg(Salg salg);
+
 }

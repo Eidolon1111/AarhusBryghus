@@ -10,7 +10,7 @@ public class Salg {
 
 
     public Salg(LocalDate registreringsDato) {
-        this.registreringsDato = registreringsDato;
+        this.registreringsDato = LocalDate.now();
     }
 
     public Salgslinje createSalgslinje(Produkt produkt, int antal){
