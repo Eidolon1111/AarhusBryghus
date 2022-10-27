@@ -9,7 +9,7 @@ public class Salg {
     private Betalingsform betalingsform;
 
 
-    public Salg(LocalDate registreringsDato) {
+    public Salg() {
         this.registreringsDato = LocalDate.now();
     }
 
@@ -29,6 +29,14 @@ public class Salg {
 
     public ArrayList<Salgslinje> getSalgslinjer() {
         return new ArrayList<>(salgslinjer);
+    }
+
+    public ArrayList<String> printMellemRegning(Prisliste prisliste){
+        ArrayList<String> result = new ArrayList<>();
+        for (Salgslinje salgslinje : salgslinjer){
+            result.add(salgslinje.printMellemRegning(prisliste));
+        }
+        return result;
     }
 
     public void setBetalingsform(Betalingsform betalingsform){

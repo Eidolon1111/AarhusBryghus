@@ -1,9 +1,7 @@
 package Gui;
 
-import Application.Model.Prisliste;
-import Application.Model.Produkt;
-import Application.Model.ProduktGruppe;
-import Application.Model.Salgslinje;
+import Application.Controller.Controller;
+import Application.Model.*;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -29,7 +27,7 @@ public class OpretDagligtSalgPane extends GridPane {
     private Button btnTilføj = new Button("Tilføj");
 
     private Label lbKurv = new Label("Kurv: ");
-    private ListView<Salgslinje> lwSalgslinjer = new ListView<>();
+    private ListView<String> lwSalgslinjer = new ListView<>();
 
     private Label lbTotal = new Label("Total: ");
     private TextField txfTotal = new TextField();
@@ -60,14 +58,19 @@ public class OpretDagligtSalgPane extends GridPane {
 
         this.add(lbProduktgrupper, 0, 2);
         this.add(lwProduktgrupper, 0, 3, 1, 8);
+        ChangeListener<ProduktGruppe> listenerProduktGruppe = (ov, oldProduktGruppe, newProduktGruppe) -> this.selectedProduktGruppeChanged();
+        lwProduktgrupper.getSelectionModel().selectedItemProperty().addListener(listenerProduktGruppe);
 
         this.add(lbProdukt, 1, 0);
         this.add(lwProdukter, 1, 1,1,10);
+        ChangeListener<Produkt> listenerProdukt = (ov, oldProdukt, newProdukt) -> this.selectedProdukt();
+        lwProdukter.getSelectionModel().selectedItemProperty().addListener(listenerProdukt);
 
         this.add(lbAntal, 2, 5);
         this.add(txfAntal, 3, 5);
         txfAntal.setPrefWidth(40);
         this.add(btnTilføj, 2, 6);
+        btnTilføj.setOnAction(actionEvent -> setBtnTilføjAction());
 
         this.add(lbKurv, 4, 0);
         this.add(lwSalgslinjer, 4, 1,1,7);
@@ -81,6 +84,14 @@ public class OpretDagligtSalgPane extends GridPane {
         updateControls();
     }
 
+    public void selectedProduktGruppeChanged(){
+        updateControls();
+    }
+
+    public void selectedProdukt(){
+        updateControls();
+    }
+
 
     public void updateControls(){
         Prisliste prisliste = cBPrislister.getSelectionModel().getSelectedItem();
@@ -88,11 +99,23 @@ public class OpretDagligtSalgPane extends GridPane {
             lwProduktgrupper.getItems().setAll(controller.getProduktGupperIPrisliste(prisliste));
             ProduktGruppe produktGruppe = lwProduktgrupper.getSelectionModel().getSelectedItem();
             if(produktGruppe != null){
-                //lwProdukter.getItems().setAll()
+                lwProdukter.getItems().setAll(controller.getProdukterIProduktGruppe(produktGruppe));
+                Produkt produkt = lwProdukter.getSelectionModel().getSelectedItem();
             }
         }
-
-
     }
 
+    public void setBtnTilføjAction(){
+        Salg currentSalg = null;
+        Produkt produkt = lwProdukter.getSelectionModel().getSelectedItem();
+        Prisliste prisliste = cBPrislister.getSelectionModel().getSelectedItem();
+        int antal = Integer.parseInt(txfAntal.getText());
+        if(produkt != null && antal > 0){
+            currentSalg = controller.createSalg();
+            controller.createSalgslinje(currentSalg, antal, produkt);
+        }
+        if(currentSalg != null){
+            lwSalgslinjer.getItems().setAll(controller.printMellemRegning(prisliste, currentSalg));
+        }
+    }
 }

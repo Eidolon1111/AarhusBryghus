@@ -31,6 +31,16 @@ public class Controller implements ControllerInterface {
         return result;
     }
 
+    public ArrayList<Produkt> getProdukterIProduktGruppe(ProduktGruppe produktGruppe) {
+        ArrayList<Produkt> result = new ArrayList<>();
+        for(Produkt p : produktGruppe.getProdukts()){
+            if(!result.contains(p)){
+                result.add(p);
+            }
+        }
+        return result;
+    }
+
     public ArrayList<Salg> getSalg() {return storage.getSalg(); }
 
     public Prisliste createPrisliste(String navn) {
@@ -59,10 +69,16 @@ public class Controller implements ControllerInterface {
         return p;
     }
 
-    public Salg createSalg(LocalDate registreringsDato) {
-        Salg s = new Salg(registreringsDato);
+
+    public Salg createSalg() {
+        Salg s = new Salg();
         storage.addSalg(s);
         return s;
+    }
+
+    @Override
+    public ArrayList<String> printMellemRegning(Prisliste prisliste, Salg salg) {
+        return new ArrayList<String>(salg.printMellemRegning(prisliste));
     }
 
     public Salgslinje createSalgslinje(Salg salg, int antal, Produkt produkt) {

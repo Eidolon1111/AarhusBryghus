@@ -20,4 +20,13 @@ public class Salgslinje {
     public double beregnPris(Prisliste prisliste){
         return prisliste.findPrisPaaProdukt(produkt)*antal;
     }
+
+    public String printMellemRegning(Prisliste prisliste){
+        return produkt + " antal: " + antal + " pris: " + beregnPris(prisliste);
+    }
+
+    @Override
+    public String toString() {
+        return produkt + " " + antal + " ";
+    }
 }
