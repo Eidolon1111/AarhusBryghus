@@ -11,6 +11,7 @@ import javafx.scene.layout.HBox;
 public class OpretDagligtSalgPane extends GridPane {
 
     private ControllerInterface controller;
+    private Salg currentSalg = null;
 
     private Label lbPrisliser = new Label("Vælg Prisliste: ");
     private ComboBox<Prisliste> cBPrislister = new ComboBox<>();
@@ -78,6 +79,7 @@ public class OpretDagligtSalgPane extends GridPane {
         this.add(hBoxTotal, 4, 8);
         hBoxTotal.setSpacing(130);
         this.add(hBoxBetaling, 4, 9);
+        txfTotal.setEditable(false);
     }
 
     public void selectedPrislisteChanged(){
@@ -106,16 +108,21 @@ public class OpretDagligtSalgPane extends GridPane {
     }
 
     public void setBtnTilføjAction(){
-        Salg currentSalg = null;
         Produkt produkt = lwProdukter.getSelectionModel().getSelectedItem();
         Prisliste prisliste = cBPrislister.getSelectionModel().getSelectedItem();
         int antal = Integer.parseInt(txfAntal.getText());
         if(produkt != null && antal > 0){
-            currentSalg = controller.createSalg();
-            controller.createSalgslinje(currentSalg, antal, produkt);
-        }
-        if(currentSalg != null){
-            lwSalgslinjer.getItems().setAll(controller.printMellemRegning(prisliste, currentSalg));
+            if(currentSalg == null){
+                currentSalg = controller.createSalg();
+                controller.createSalgslinje(currentSalg, antal, produkt);
+                lwSalgslinjer.getItems().setAll(controller.printMellemRegning(prisliste, currentSalg));
+                txfTotal.setText("" + currentSalg.beregnSamletPris(prisliste));
+            } else {
+                controller.createSalgslinje(currentSalg, antal, produkt);
+                lwSalgslinjer.getItems().setAll(controller.printMellemRegning(prisliste, currentSalg));
+                txfTotal.setText("" + currentSalg.beregnSamletPris(prisliste));
+            }
+
         }
     }
 }

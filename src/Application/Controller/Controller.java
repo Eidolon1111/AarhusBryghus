@@ -78,7 +78,7 @@ public class Controller implements ControllerInterface {
 
     @Override
     public ArrayList<String> printMellemRegning(Prisliste prisliste, Salg salg) {
-        return new ArrayList<String>(salg.printMellemRegning(prisliste));
+        return salg.printMellemRegning(prisliste);
     }
 
     public Salgslinje createSalgslinje(Salg salg, int antal, Produkt produkt) {
