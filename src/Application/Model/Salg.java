@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class Salg {
     private LocalDate registreringsDato;
     private ArrayList<Salgslinje> salgslinjer = new ArrayList<Salgslinje>();
+    private Betalingsform betalingsform;
 
 
     public Salg(LocalDate registreringsDato) {
@@ -28,6 +29,18 @@ public class Salg {
 
     public ArrayList<Salgslinje> getSalgslinjer() {
         return new ArrayList<>(salgslinjer);
+    }
+
+    public void setBetalingsform(Betalingsform betalingsform){
+        this.betalingsform = betalingsform;
+    }
+
+    public Betalingsform getBetalingsform() {
+        return this.betalingsform;
+    }
+
+    public enum Betalingsform {
+        DANKORT, KONTANT, KLIPPEKORT, MOBILEPAY, REGNING;
     }
 
 }

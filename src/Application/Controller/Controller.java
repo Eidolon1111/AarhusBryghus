@@ -1,11 +1,9 @@
 package Application.Controller;
 
-import Application.Model.Pris;
-import Application.Model.Prisliste;
-import Application.Model.Produkt;
-import Application.Model.ProduktGruppe;
+import Application.Model.*;
 import Application.StorageInterface;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Controller {
@@ -23,6 +21,8 @@ public class Controller {
     public ArrayList<ProduktGruppe> getProduktGrupper() {
         return storage.getProduktGrupper();
     }
+
+    public ArrayList<Salg> getSalg() {return storage.getSalg(); }
 
     public Prisliste createPrisliste(String navn) {
         Prisliste pl = new Prisliste(navn);
@@ -45,6 +45,19 @@ public class Controller {
         Produkt p = produktGruppe.createProdukt(navn, enhed, beskrivelse);
         return p;
     }
+
+    public Salg createSalg(LocalDate registreringsDato) {
+        Salg s = new Salg(registreringsDato);
+        storage.addSalg(s);
+        return s;
+    }
+
+    public Salgslinje createSalgslinje(Salg salg, int antal, Produkt produkt) {
+        Salgslinje sl = salg.createSalgslinje(produkt, antal);
+        return sl;
+    }
+
+
 
     public void init(){
         Prisliste fredagsbar = this.createPrisliste("Fredagsbar");
