@@ -29,4 +29,8 @@ public class Prisliste {
         }
         return res;
     }
+    
+    public String toString() {
+        return navn;
+    }
 }

@@ -16,4 +16,8 @@ public class ProduktGruppe {
         produkts.add(produkt);
         return produkt;
     }
+    
+    public ArrayList<Produkt> getProdukts() {
+        return new ArrayList<>(produkts);
+    }
 }

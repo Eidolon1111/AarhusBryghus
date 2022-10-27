@@ -9,6 +9,8 @@ public interface ControllerInterface {
     public ArrayList<Prisliste> getPrislister();
 
     public ArrayList<ProduktGruppe> getProduktGrupper();
+    
+    public ArrayList<Produkt> getProdukter();
 
     public Prisliste createPrisliste(String navn);
 

@@ -23,4 +23,7 @@ public class Produkt {
         return enhed;
     }
 
+    public String toString() {
+        return navn + ", " + enhed + ", " + beskrivelse;
+    }
 }

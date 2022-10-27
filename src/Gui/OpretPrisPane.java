@@ -1,5 +1,9 @@
 package Gui;
 
+import Application.Model.Pris;
+import Application.Model.Prisliste;
+import Application.Model.Produkt;
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -14,6 +18,8 @@ public class OpretPrisPane extends GridPane {
     private ListView lwPrislister = new ListView<>();
     private ListView lwProdukter = new ListView<>();
     private ListView lwValgtPrisliste = new ListView<>();
+    private TextField txfOpretPrisliste = new TextField();
+    private Label lblError = new Label();
 
 
     public OpretPrisPane(ControllerInterface controller){
@@ -27,7 +33,6 @@ public class OpretPrisPane extends GridPane {
         Label lblPrislister = new Label("Vælg prisliste: ");
         Label lblEllerOpretNy = new Label("Eller opret ny prisliste: ");
         Label lblOpretPrisListe = new Label("Prisliste navn: ");
-        TextField txfOpretPrisliste = new TextField();
         Button btnOpret = new Button("Opret");
 
 
@@ -38,6 +43,9 @@ public class OpretPrisPane extends GridPane {
         this.add(lblOpretPrisListe, 0, 19);
         this.add(txfOpretPrisliste,1,19);
         this.add(btnOpret, 0, 20);
+        this.add(lblError, 1, 20);
+        lblError.setStyle("-fx-text-fill: red");
+
 
         //Oprettelse af elementer i række 2
         Label lblProdukter = new Label("Produkter:");
@@ -84,15 +92,54 @@ public class OpretPrisPane extends GridPane {
         this.add(lblValgtPrisliste, 6, 0);
         this.add(lwValgtPrisliste, 6, 1,2,16);
         this.add(btnFjern, 6, 17);
-
-
-
+        
         //Vinduestørrelse preset
         this.setPrefHeight(400);
         this.setPrefWidth(1000);
+        
+        //Indsat data i listviews
+        lwPrislister.getItems().setAll(controller.getPrislister());
+        ChangeListener<Prisliste> prislisteListener = (ov, o, n) -> PrislisteItemSelected();
+        lwPrislister.getSelectionModel().selectedItemProperty().addListener(prislisteListener);
+
+        lwProdukter.getItems().setAll(controller.getProdukter());
+        //ChangeListener<Produkt> produktListener = (ov, o, n) -> ProduktItemSelected();
+        //lwPrislister.getSelectionModel().selectedItemProperty().addListener(produktListener);
+
+        //Buttons funktionalitet
+        btnOpret.setOnAction(event -> this.opretAction());
+        btnTilføj.setOnAction(event -> this.tilføjAction());
+        btnFjern.setOnAction(event -> this.fjernAction());
+    }
+
+    public void opretAction() {
+        String navn = txfOpretPrisliste.getText().trim();
+        if (navn.length() == 0) {
+            lblError.setText("Navn er tom");
+        } else {
+            controller.createPrisliste(navn);
+            txfOpretPrisliste.clear();
+            lwPrislister.getItems().setAll(controller.getPrislister());
+        }
+    }
+
+    public void tilføjAction() {
+
+    }
+
+    public void fjernAction() {
+
     }
 
     public void updateControls(){
-
+        Prisliste pl = (Prisliste) lwPrislister.getSelectionModel().getSelectedItem();
+        if (pl != null) {
+            lwValgtPrisliste.getItems().setAll(pl.getPrislisten());
+        }
     }
+
+    public void PrislisteItemSelected() {
+        this.updateControls();
+    }
+
 }
