@@ -36,6 +36,8 @@ public interface ControllerInterface {
 
     public String getProduktGruppeNavn(ProduktGruppe pg);
 
+    public void betalSalg(Salg salg, Salg.Betalingsform betalingsform);
+
     public void init();
 
 }

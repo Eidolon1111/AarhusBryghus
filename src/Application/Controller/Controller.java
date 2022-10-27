@@ -94,6 +94,10 @@ public class Controller implements ControllerInterface {
         return pg.getNavn();
     }
 
+    public void betalSalg(Salg salg, Salg.Betalingsform betalingsform) {
+        salg.setBetalingsform(betalingsform);
+    }
+
     @Override
     public ArrayList<ProduktGruppe> getProduktGupperIPrisliste(Prisliste prisliste) {
         ArrayList<ProduktGruppe> result = new ArrayList<>();
