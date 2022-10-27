@@ -76,12 +76,10 @@ public class Controller implements ControllerInterface {
         return s;
     }
 
-    @Override
     public ArrayList<String> printMellemRegning(Prisliste prisliste, Salg salg) {
         return salg.printMellemRegning(prisliste);
     }
 
-    @Override
     public String printSamletPrisDKKOgKlip(Prisliste prisliste, Salg salg) {
         return "DKK: " + salg.beregnSamletPrisDKK(prisliste) + " / Klip: " + salg.beregnSamletPrisKlip(prisliste);
     }

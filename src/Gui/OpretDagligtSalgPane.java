@@ -157,6 +157,7 @@ public class OpretDagligtSalgPane extends GridPane {
 
     public void btnFjernAction(){
 
+
     }
 
     public void btnKontantAction(){
