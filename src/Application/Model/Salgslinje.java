@@ -17,12 +17,17 @@ public class Salgslinje {
         return produkt;
     }
 
-    public double beregnPris(Prisliste prisliste){
-        return prisliste.findPrisPaaProdukt(produkt)*antal;
+    public double beregnPrisDKK(Prisliste prisliste){
+        return prisliste.findPrisPaaProduktDKK(produkt)*antal;
+    }
+
+    public int beregnPrisKlip(Prisliste prisliste){
+        return prisliste.findPrisPaaProduktKlip(produkt) * antal;
     }
 
     public String printMellemRegning(Prisliste prisliste){
-        return produkt + " antal: " + antal + " pris: " + beregnPris(prisliste);
+        return produkt + "\t" + "antal: " + antal + "\t" + "DKK: " +
+                beregnPrisDKK(prisliste) + " / Klip: " + beregnPrisKlip(prisliste);
     }
 
     @Override

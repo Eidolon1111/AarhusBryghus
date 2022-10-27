@@ -137,7 +137,7 @@ public class OpretDagligtSalgPane extends GridPane {
                     }
                     controller.createSalgslinje(currentSalg, antal, produkt);
                     lwSalgslinjer.getItems().setAll(controller.printMellemRegning(prisliste, currentSalg));
-                    txfTotal.setText("" + currentSalg.beregnSamletPris(prisliste));
+                    txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(prisliste, currentSalg));
                     lbError.setText("");
                 } else {
                     lbError.setText("antal skal være over 0");

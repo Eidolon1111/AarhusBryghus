@@ -15,8 +15,12 @@ public class Pris {
         return produkt;
     }
 
-    public double getPris() {
+    public double getPrisDKK() {
         return pris;
+    }
+
+    public int getPrisKlip(){
+        return klip;
     }
 
     @Override

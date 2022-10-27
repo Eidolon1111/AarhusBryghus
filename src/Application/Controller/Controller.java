@@ -81,6 +81,11 @@ public class Controller implements ControllerInterface {
         return salg.printMellemRegning(prisliste);
     }
 
+    @Override
+    public String printSamletPrisDKKOgKlip(Prisliste prisliste, Salg salg) {
+        return "DKK: " + salg.beregnSamletPrisDKK(prisliste) + " / Klip: " + salg.beregnSamletPrisKlip(prisliste);
+    }
+
     public Salgslinje createSalgslinje(Salg salg, int antal, Produkt produkt) {
         Salgslinje sl = salg.createSalgslinje(produkt, antal);
         return sl;

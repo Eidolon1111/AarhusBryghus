@@ -28,6 +28,8 @@ public interface ControllerInterface {
 
     public ArrayList<String> printMellemRegning(Prisliste prisliste, Salg salg);
 
+    public String printSamletPrisDKKOgKlip(Prisliste prisliste, Salg salg);
+
     public Salgslinje createSalgslinje(Salg salg, int antal, Produkt produkt);
 
     public ArrayList<ProduktGruppe> getProduktGupperIPrisliste(Prisliste prisliste);

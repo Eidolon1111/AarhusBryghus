@@ -26,15 +26,26 @@ public class Prisliste {
         }
     }
 
-    public double findPrisPaaProdukt(Produkt produkt){
+    public double findPrisPaaProduktDKK(Produkt produkt){
         double res = 0.0;
         for (Pris p : prislisten){
             if (p.getProdukt().getNavn().equals(produkt.getNavn())){
-                res = p.getPris();
+                res = p.getPrisDKK();
             }
         }
         return res;
     }
+
+    public int findPrisPaaProduktKlip(Produkt produkt){
+        int res = 0;
+        for (Pris p : prislisten){
+            if (p.getProdukt().getNavn().equals(produkt.getNavn())){
+                res = p.getPrisKlip();
+            }
+        }
+        return res;
+    }
+
     
     public String toString() {
         return navn;
