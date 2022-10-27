@@ -9,11 +9,14 @@ import javafx.scene.layout.GridPane;
 import org.w3c.dom.Text;
 
 public class OpretProduktPane extends GridPane {
+
+    private ControllerInterface controller;
     private ListView lwProduktgrupper = new ListView<>();
     private ListView lwProdukter = new ListView<>();
 
 
-    public OpretProduktPane(){
+    public OpretProduktPane(ControllerInterface controller){
+        this.controller = controller;
         this.setPadding(new Insets(10));
         this.setHgap(10);
         this.setVgap(10);

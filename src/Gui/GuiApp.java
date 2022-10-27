@@ -1,5 +1,7 @@
 package Gui;
 
+import Application.Controller.Controller;
+import Storage.Storage;
 import javafx.application.Application;
 
 public class GuiApp {

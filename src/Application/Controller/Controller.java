@@ -2,11 +2,12 @@ package Application.Controller;
 
 import Application.Model.*;
 import Application.StorageInterface;
+import Gui.ControllerInterface;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Controller {
+public class Controller implements ControllerInterface {
     private static Controller controller;
     private StorageInterface storage;
 
@@ -131,6 +132,4 @@ public class Controller {
         this.createPris(butik,p4, 36,2);
         this.createPris(butik,p5, 36,2);
     }
-
-
 }
