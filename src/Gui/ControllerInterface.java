@@ -26,6 +26,8 @@ public interface ControllerInterface {
 
     public Salgslinje createSalgslinje(Salg salg, int antal, Produkt produkt);
 
+    public ArrayList<ProduktGruppe> getProduktGupperIPrisliste(Prisliste prisliste);
+
     public void init();
 
 }
