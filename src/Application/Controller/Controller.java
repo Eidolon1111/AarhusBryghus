@@ -66,6 +66,17 @@ public class Controller implements ControllerInterface {
         return sl;
     }
 
+    @Override
+    public ArrayList<ProduktGruppe> getProduktGupperIPrisliste(Prisliste prisliste) {
+        ArrayList<ProduktGruppe> result = new ArrayList<>();
+        for(Pris p : prisliste.getPrislisten()){
+            ProduktGruppe pG = p.getProdukt().getProduktGruppe();
+            if(!result.contains(pG)){
+                result.add(pG);
+            }
+        }
+        return result;
+    }
 
 
     public void init(){

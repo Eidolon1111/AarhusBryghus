@@ -4,6 +4,7 @@ import Application.Model.Prisliste;
 import Application.Model.Produkt;
 import Application.Model.ProduktGruppe;
 import Application.Model.Salgslinje;
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -53,6 +54,9 @@ public class OpretDagligtSalgPane extends GridPane {
 
         this.add(lbPrisliser, 0, 0);
         this.add(cBPrislister, 0, 1);
+        cBPrislister.getItems().setAll(controller.getPrislister());
+        ChangeListener<Prisliste> listenerCBPrislister = (ov, oldPrisliste, newPrisliste) -> this.selectedPrislisteChanged();
+        cBPrislister.getSelectionModel().selectedItemProperty().addListener(listenerCBPrislister);
 
         this.add(lbProduktgrupper, 0, 2);
         this.add(lwProduktgrupper, 0, 3, 1, 8);
@@ -69,12 +73,25 @@ public class OpretDagligtSalgPane extends GridPane {
         this.add(lwSalgslinjer, 4, 1,1,7);
 
         this.add(hBoxTotal, 4, 8);
-        hBoxTotal.setSpacing(140);
+        hBoxTotal.setSpacing(130);
         this.add(hBoxBetaling, 4, 9);
-
     }
 
+    public void selectedPrislisteChanged(){
+        updateControls();
+    }
+
+
     public void updateControls(){
+        Prisliste prisliste = cBPrislister.getSelectionModel().getSelectedItem();
+        if(prisliste != null){
+            lwProduktgrupper.getItems().setAll(controller.getProduktGupperIPrisliste(prisliste));
+            ProduktGruppe produktGruppe = lwProduktgrupper.getSelectionModel().getSelectedItem();
+            if(produktGruppe != null){
+                //lwProdukter.getItems().setAll()
+            }
+        }
+
 
     }
 

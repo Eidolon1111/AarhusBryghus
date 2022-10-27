@@ -1,14 +1,16 @@
 package Application.Model;
 
 public class Produkt {
+    private ProduktGruppe produktGruppe;
     private String navn;
     private String enhed;
     private String beskrivelse;
 
-    public Produkt(String navn, String enhed, String beskrivelse) {
+    Produkt(String navn, String enhed, String beskrivelse, ProduktGruppe produktGruppe) {
         this.navn = navn;
         this.enhed = enhed;
         this.beskrivelse = beskrivelse;
+        this.produktGruppe = produktGruppe;
     }
 
     public String getNavn() {
@@ -21,6 +23,10 @@ public class Produkt {
 
     public String getEnhed(){
         return enhed;
+    }
+
+    public ProduktGruppe getProduktGruppe(){
+        return produktGruppe;
     }
 
     public String toString() {

@@ -12,7 +12,7 @@ public class ProduktGruppe {
     }
 
     public Produkt createProdukt(String navn, String enhed, String beskrivelse){
-        Produkt produkt = new Produkt(navn, enhed, beskrivelse);
+        Produkt produkt = new Produkt(navn, enhed, beskrivelse, this);
         produkts.add(produkt);
         return produkt;
     }
