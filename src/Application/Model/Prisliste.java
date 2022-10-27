@@ -12,14 +12,31 @@ public class Prisliste {
 
     public Pris createPrisTilPrisliste(Produkt produkt, double pris, int klip) {
         Pris prisListeProdukt = new Pris(pris, klip, produkt);
-        prislisten.add(prisListeProdukt);
+        //prislisten.add(prisListeProdukt);
+        addPris(prisListeProdukt);
         return prisListeProdukt;
     }
 
     public Pris createPrisTilPrisliste(Produkt produkt, double pris) {
         Pris prisListeProdukt = new Pris(pris, produkt);
-        prislisten.add(prisListeProdukt);
+        //prislisten.add(prisListeProdukt);
+        addPris(prisListeProdukt);
         return prisListeProdukt;
+    }
+    
+    private void addPris(Pris pris) {
+        for (Pris p : prislisten) {
+            if (p.getProdukt().compareTo(pris.getProdukt()) == 0) {
+                if (p.getPris() != pris.getPris()) {
+                    p.setPris(pris.getPris());
+                }
+                if (p.getKlip() != pris.getKlip()) {
+                    p.setKlip(pris.getKlip());
+                }
+            } else {
+                prislisten.add(pris);
+            }
+        }
     }
 
     public ArrayList<Pris> getPrislisten() {
@@ -42,6 +59,7 @@ public class Prisliste {
         return res;
     }
     
+    @Override
     public String toString() {
         return navn;
     }

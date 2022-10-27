@@ -1,6 +1,6 @@
 package Application.Model;
 
-public class Produkt {
+public class Produkt implements Comparable<Produkt> {
     private ProduktGruppe produktGruppe;
     private String navn;
     private String enhed;
@@ -29,7 +29,17 @@ public class Produkt {
         return produktGruppe;
     }
 
+    @Override
     public String toString() {
         return navn + ", " + enhed + ", " + beskrivelse;
+    }
+
+    @Override
+    public int compareTo(Produkt produkt) {
+        int comp = navn.compareTo(produkt.getNavn());
+        if (comp == 0) {
+            comp = produktGruppe.getNavn().compareTo(produkt.getProduktGruppe().getNavn());
+        }
+        return comp;
     }
 }
