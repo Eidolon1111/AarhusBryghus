@@ -70,6 +70,14 @@ public class Controller implements ControllerInterface {
         return sl;
     }
 
+    public ArrayList<Produkt> getProdukterFraProduktgruppe(ProduktGruppe pg){
+        return new ArrayList<>(pg.getProdukts());
+    }
+
+    public String getProduktGruppeNavn(ProduktGruppe pg) {
+        return pg.getNavn();
+    }
+
     @Override
     public ArrayList<ProduktGruppe> getProduktGupperIPrisliste(Prisliste prisliste) {
         ArrayList<ProduktGruppe> result = new ArrayList<>();

@@ -28,6 +28,10 @@ public interface ControllerInterface {
 
     public ArrayList<ProduktGruppe> getProduktGupperIPrisliste(Prisliste prisliste);
 
+    public ArrayList<Produkt> getProdukterFraProduktgruppe(ProduktGruppe pg);
+
+    public String getProduktGruppeNavn(ProduktGruppe pg);
+
     public void init();
 
 }

@@ -1,11 +1,15 @@
 package Gui;
 
+import Application.Controller.Controller;
+import Application.Model.ProduktGruppe;
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import org.w3c.dom.Text;
 
 public class OpretProduktPane extends GridPane {
@@ -13,6 +17,8 @@ public class OpretProduktPane extends GridPane {
     private ControllerInterface controller;
     private ListView lwProduktgrupper = new ListView<>();
     private ListView lwProdukter = new ListView<>();
+    private TextField txfNavn, txfEnhed, txfBeskrivelse, txfOpretProduktgruppe;
+    private Label produktError, produktGruppeError1, produktGruppeError2;
 
 
     public OpretProduktPane(ControllerInterface controller){
@@ -26,8 +32,9 @@ public class OpretProduktPane extends GridPane {
         Label lblProduktgrupper = new Label("Vælg produktgruppe: ");
         Label lblEllerOpretNy = new Label("Eller opret ny produktgruppe: ");
         Label lblOpretProduktgruppe = new Label("Produktgruppe navn: ");
-        TextField txfOpretProduktgruppe = new TextField();
+        txfOpretProduktgruppe = new TextField();
         Button btnOpret = new Button("Opret");
+        btnOpret.setOnAction(event -> this.createProduktgruppeAction());
 
 
         //Tilføjelse af elementer i række 1
@@ -42,15 +49,16 @@ public class OpretProduktPane extends GridPane {
         Label lblOpretNytProdukt = new Label("Opret nyt produkt: ");
 
         Label lblNavn = new Label("Navn: ");
-        TextField txfNavn = new TextField();
+        txfNavn = new TextField();
 
         Label lblEnhed = new Label("Enhed: ");
-        TextField txfEnhed = new TextField();
+        txfEnhed = new TextField();
 
         Label lblBeskrivelse = new Label("Beskrivelse: ");
-        TextField txfBeskrivelse = new TextField();
+        txfBeskrivelse = new TextField();
 
         Button btnTilføj = new Button("Tilføj");
+        btnTilføj.setOnAction(event -> this.createProduktAction());
 
         Label lblProdukter = new Label("Produkter:");
 
@@ -70,9 +78,71 @@ public class OpretProduktPane extends GridPane {
         //Vinduestørrelse preset
         this.setPrefHeight(600);
         this.setPrefWidth(1000);
+
+        //Setter Listview Produktgrupper, skaber og tilføjer listener til listviewet
+        lwProduktgrupper.getItems().setAll(controller.getProduktGrupper());
+        ChangeListener<ProduktGruppe> listener = (ov, oldProduktGruppe, newProduktGruppe) -> this.selectedProduktGruppeChanged();
+        lwProduktgrupper.getSelectionModel().selectedItemProperty().addListener(listener);
     }
 
+    //
     public void updateControls(){
+        lwProduktgrupper.getItems().setAll(controller.getProduktGrupper());
+        ProduktGruppe produktGruppe = (ProduktGruppe) lwProduktgrupper.getSelectionModel().getSelectedItem();
+        if (produktGruppe != null) {
+            lwProdukter.getItems().setAll(controller.getProdukterFraProduktgruppe((ProduktGruppe) lwProduktgrupper.getSelectionModel().getSelectedItem()));
+        }
+    }
 
+    public void selectedProduktGruppeChanged(){
+        this.updateControls();
+    }
+
+    public void createProduktgruppeAction() {
+        if (!txfOpretProduktgruppe.getText().equals("") && !dublet()){
+            controller.createProduktGruppe(txfOpretProduktgruppe.getText());
+            txfOpretProduktgruppe.clear();
+            this.updateControls();
+            produktGruppeError1.setVisible(false);
+            produktGruppeError2.setVisible(false);
+        } else if (dublet()){
+            if (produktGruppeError2!=null){
+                produktGruppeError2.setVisible(false);
+            }
+            produktGruppeError1 = new Label("Produktgruppe eksisterer!");
+            produktGruppeError1.setTextFill(Color.color(1, 0, 0));
+            this.add(produktGruppeError1, 1, 13);
+        } else {
+            if(produktGruppeError1!=null) {
+                produktGruppeError1.setVisible(false);
+            }
+            produktGruppeError2 = new Label("Felt skal udfyldes!");
+            produktGruppeError2.setTextFill(Color.color(1, 0, 0));
+            this.add(produktGruppeError2, 1, 13);
+        }
+    }
+
+    public void createProduktAction(){
+        ProduktGruppe produktGruppe = (ProduktGruppe) lwProduktgrupper.getSelectionModel().getSelectedItem();
+        if (!txfNavn.getText().equals("") && !txfBeskrivelse.getText().equals("") && !txfEnhed.getText().equals("")){
+            controller.createProdukt(produktGruppe,txfNavn.getText(),txfBeskrivelse.getText(), txfBeskrivelse.getText());
+            txfEnhed.clear(); txfNavn.clear(); txfBeskrivelse.clear();
+            lwProdukter.getItems().setAll(controller.getProdukterFraProduktgruppe((ProduktGruppe) lwProduktgrupper.getSelectionModel().getSelectedItem()));
+            produktError.setVisible(false);
+
+        } else {
+            produktError = new Label("Alle 3 felter skal udfyldes!");
+            produktError.setTextFill(Color.color(1, 0, 0));
+            this.add(produktError, 7, 1);
+        }
+    }
+
+    public boolean dublet(){
+        boolean res = false;
+        for (ProduktGruppe pg : controller.getProduktGrupper()){
+            if (txfOpretProduktgruppe.getText().equals(pg.getNavn())){
+                res = true;
+            }
+        } return res;
     }
 }
