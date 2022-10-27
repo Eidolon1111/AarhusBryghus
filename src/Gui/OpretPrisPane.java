@@ -19,6 +19,7 @@ public class OpretPrisPane extends GridPane {
     private ListView lwProdukter = new ListView<>();
     private ListView lwValgtPrisliste = new ListView<>();
     private TextField txfOpretPrisliste = new TextField();
+    private TextField txfDkkPris, txfKlipPris;
     private Label lblError = new Label();
 
 
@@ -62,14 +63,14 @@ public class OpretPrisPane extends GridPane {
 //        txfNuDkk.setEditable(false);
 
         Label lblDkkPris = new Label("DKK pris: ");
-        TextField txfDkkPris = new TextField();
+        txfDkkPris = new TextField();
 
 //        Label lblNuKlip = new Label("Nuværende klip: ");
 //        TextField txfNuKlip = new TextField();
 //        txfNuKlip.setEditable(false);
 
         Label lblKlipPris = new Label("Klip pris: ");
-        TextField txfKlipPris = new TextField();
+        txfKlipPris = new TextField();
 
 
         //Tilføjelse af elementer i række 3
@@ -124,7 +125,14 @@ public class OpretPrisPane extends GridPane {
     }
 
     public void tilføjAction() {
-
+        Prisliste pl = (Prisliste) lwPrislister.getSelectionModel().getSelectedItem();
+        Produkt p = (Produkt) lwProdukter.getSelectionModel().getSelectedItem();
+        if (p != null && pl != null) {
+            double pris = Integer.parseInt(txfDkkPris.getText());
+            int klip = Integer.parseInt(txfKlipPris.getText());
+            controller.createPris(pl,p,pris, klip);
+            updateControls();
+        }
     }
 
     public void fjernAction() {
@@ -136,6 +144,8 @@ public class OpretPrisPane extends GridPane {
         if (pl != null) {
             lwValgtPrisliste.getItems().setAll(pl.getPrislisten());
         }
+        txfDkkPris.clear();
+        txfKlipPris.clear();
     }
 
     public void PrislisteItemSelected() {
