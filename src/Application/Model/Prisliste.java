@@ -25,16 +25,23 @@ public class Prisliste {
     }
     
     private void addPris(Pris pris) {
-        for (Pris p : prislisten) {
-            if (p.getProdukt().compareTo(pris.getProdukt()) == 0) {
-                if (p.getPris() != pris.getPris()) {
-                    p.setPris(pris.getPris());
+        if (prislisten.isEmpty()) {
+            prislisten.add(pris);
+        } else {
+            for (int i = 0; i < prislisten.size(); i++) {
+                Pris p = prislisten.get(i);
+                if (p.getProdukt().compareTo(pris.getProdukt()) == 0) {
+                    if (p.getPris() != pris.getPris()) {
+                        p.setPris(pris.getPris());
+                    }
+                    if (p.getKlip() != pris.getKlip()) {
+                        p.setKlip(pris.getKlip());
+                    }
+                    return;
+                } else {
+                    prislisten.add(pris);
+                    return;
                 }
-                if (p.getKlip() != pris.getKlip()) {
-                    p.setKlip(pris.getKlip());
-                }
-            } else {
-                prislisten.add(pris);
             }
         }
     }
