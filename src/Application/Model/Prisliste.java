@@ -19,6 +19,12 @@ public class Prisliste {
     public ArrayList<Pris> getPrislisten() {
         return new ArrayList<>(prislisten);
     }
+    
+    public void fjernPris(Pris pris) {
+        if (prislisten.contains(pris)) {
+            prislisten.remove(pris);
+        }
+    }
 
     public double findPrisPaaProdukt(Produkt produkt){
         double res = 0.0;

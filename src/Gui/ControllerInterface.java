@@ -16,6 +16,8 @@ public interface ControllerInterface {
 
     public Pris createPris(Prisliste prisliste, Produkt produkt, double pris, int klip);
 
+    public void fjernPris(Prisliste prisliste, Pris pris);
+        
     public ProduktGruppe createProduktGruppe(String navn);
 
     public Produkt createProdukt(ProduktGruppe produktGruppe, String navn, String beskrivelse, String enhed);

@@ -43,6 +43,10 @@ public class Controller implements ControllerInterface {
         Pris p = prisliste.createPrisTilPrisliste(produkt, pris, klip);
         return p;
     }
+    
+    public void fjernPris(Prisliste prisliste, Pris pris) {
+        prisliste.fjernPris(pris);
+    }
 
     public ProduktGruppe createProduktGruppe(String navn) {
         ProduktGruppe pg = new ProduktGruppe(navn);
