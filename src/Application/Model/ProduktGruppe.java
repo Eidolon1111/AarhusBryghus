@@ -16,8 +16,17 @@ public class ProduktGruppe {
         produkts.add(produkt);
         return produkt;
     }
+
+    public String getNavn() {
+        return navn;
+    }
     
     public ArrayList<Produkt> getProdukts() {
         return new ArrayList<>(produkts);
+    }
+
+    @Override
+    public String toString() {
+        return navn;
     }
 }
