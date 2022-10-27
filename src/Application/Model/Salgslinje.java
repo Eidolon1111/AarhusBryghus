@@ -26,7 +26,7 @@ public class Salgslinje {
     }
 
     public String printMellemRegning(Prisliste prisliste){
-        return produkt + "\t" + "antal: " + antal + "\t" + "DKK: " +
+        return produkt.printNavn() + "\t" + "antal: " + antal + "\t" + "DKK: " +
                 beregnPrisDKK(prisliste) + " / Klip: " + beregnPrisKlip(prisliste);
     }
 

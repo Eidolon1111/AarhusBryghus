@@ -27,6 +27,8 @@ public class OpretDagligtSalgPane extends GridPane {
     private TextField txfAntal = new TextField();
     private Button btnTilføj = new Button("Tilføj");
 
+    private Button btnFjern = new Button("Fjern");
+
     private Label lbKurv = new Label("Kurv: ");
     private ListView<String> lwSalgslinjer = new ListView<>();
 
@@ -52,8 +54,8 @@ public class OpretDagligtSalgPane extends GridPane {
         this.setHgap(10);
         this.setVgap(10);
         this.setGridLinesVisible(false);
-        this.setPrefWidth(800);
-        this.setPrefHeight(350);
+        this.setPrefWidth(1000);
+        this.setPrefHeight(800);
 
         this.add(lbPrisliser, 0, 0);
         this.add(cBPrislister, 0, 1);
@@ -76,6 +78,9 @@ public class OpretDagligtSalgPane extends GridPane {
         txfAntal.setPrefWidth(40);
         this.add(btnTilføj, 2, 6);
         btnTilføj.setOnAction(actionEvent -> btnTilføjAction());
+
+        this.add(btnFjern, 3, 6);
+        btnFjern.setOnAction(event -> btnFjernAction());
 
         this.add(lbKurv, 4, 0);
         this.add(lwSalgslinjer, 4, 1,1,7);
@@ -148,6 +153,10 @@ public class OpretDagligtSalgPane extends GridPane {
         } else{
             lbError.setText("Vælg et produkt!");
         }
+    }
+
+    public void btnFjernAction(){
+
     }
 
     public void btnKontantAction(){

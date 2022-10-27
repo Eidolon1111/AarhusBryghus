@@ -29,6 +29,10 @@ public class Produkt {
         return produktGruppe;
     }
 
+    public String printNavn(){
+        return navn;
+    }
+
     public String toString() {
         return navn + ", " + enhed + ", " + beskrivelse;
     }
