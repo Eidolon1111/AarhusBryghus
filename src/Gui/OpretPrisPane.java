@@ -85,7 +85,6 @@ public class OpretPrisPane extends GridPane {
 
 
 
-
         //Vinduestørrelse preset
         this.setPrefHeight(400);
         this.setPrefWidth(1000);
