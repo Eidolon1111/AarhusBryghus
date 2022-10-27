@@ -10,6 +10,11 @@ public class Pris {
         this.klip = klip;
         this.produkt = produkt;
     }
+    
+    Pris(double pris, Produkt produkt) {
+        this.pris = pris;
+        this.produkt = produkt;
+    }
 
     public Produkt getProdukt() {
         return produkt;

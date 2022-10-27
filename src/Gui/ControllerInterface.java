@@ -15,6 +15,8 @@ public interface ControllerInterface {
     public Prisliste createPrisliste(String navn);
 
     public Pris createPris(Prisliste prisliste, Produkt produkt, double pris, int klip);
+    
+    public Pris createPris(Prisliste prisliste, Produkt produkt, double pris);
 
     public void fjernPris(Prisliste prisliste, Pris pris);
         

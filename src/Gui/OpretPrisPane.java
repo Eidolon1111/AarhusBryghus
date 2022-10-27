@@ -123,9 +123,8 @@ public class OpretPrisPane extends GridPane {
             lblErrorPrisliste.setText("Navn er tom");
         } else {
             controller.createPrisliste(navn);
-            txfOpretPrisliste.clear();
             lwPrislister.getItems().setAll(controller.getPrislister());
-            lblErrorPrisliste.setText("");
+            updateControls();
         }
     }
 
@@ -133,11 +132,17 @@ public class OpretPrisPane extends GridPane {
         Prisliste pl = (Prisliste) lwPrislister.getSelectionModel().getSelectedItem();
         Produkt p = (Produkt) lwProdukter.getSelectionModel().getSelectedItem();
         if (p != null && pl != null) {
-            //TODO tjek for tom pris
-            double pris = Integer.parseInt(txfDkkPris.getText());
-            int klip = Integer.parseInt(txfKlipPris.getText());
-            controller.createPris(pl,p,pris, klip);
-            updateControls();
+            if (txfDkkPris.getText().isEmpty()) {
+                lblErrorPris.setText("Pris mangler");
+            } else if (txfKlipPris.getText().isEmpty()) {
+                double pris = Integer.parseInt(txfDkkPris.getText());
+                controller.createPris(pl, p, pris);
+            } else {
+                double pris = Integer.parseInt(txfDkkPris.getText());
+                int klip = Integer.parseInt(txfKlipPris.getText());
+                controller.createPris(pl,p,pris, klip);
+                updateControls();
+            }
         } else {
             lblErrorPris.setText("Der mangler at blive valgt prisliste og/eller produkt");
         }
@@ -159,7 +164,9 @@ public class OpretPrisPane extends GridPane {
         }
         txfDkkPris.clear();
         txfKlipPris.clear();
+        txfOpretPrisliste.clear();
         lblErrorPris.setText("");
+        lblErrorPrisliste.setText("");
     }
 
     public void PrislisteItemSelected() {

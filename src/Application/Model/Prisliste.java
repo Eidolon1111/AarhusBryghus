@@ -16,6 +16,12 @@ public class Prisliste {
         return prisListeProdukt;
     }
 
+    public Pris createPrisTilPrisliste(Produkt produkt, double pris) {
+        Pris prisListeProdukt = new Pris(pris, produkt);
+        prislisten.add(prisListeProdukt);
+        return prisListeProdukt;
+    }
+
     public ArrayList<Pris> getPrislisten() {
         return new ArrayList<>(prislisten);
     }
