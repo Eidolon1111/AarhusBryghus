@@ -140,7 +140,7 @@ public class OpretPrisPane extends GridPane {
                 updateControls();
             } else if (Integer.parseInt(txfDkkPris.getText()) <= 0){
                 lblErrorPris.setText("Pris skal være et positivt tal");
-            }else {
+            }else if (Integer.parseInt(txfDkkPris.getText()) >= 0 && Integer.parseInt(txfKlipPris.getText()) >= 0){
                 double pris = Integer.parseInt(txfDkkPris.getText());
                 int klip = Integer.parseInt(txfKlipPris.getText());
                 controller.createPris(pl,p,pris, klip);
