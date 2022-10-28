@@ -124,14 +124,14 @@ public class OpretProduktPane extends GridPane {
 
     public void createProduktAction(){
         ProduktGruppe produktGruppe = (ProduktGruppe) lwProduktgrupper.getSelectionModel().getSelectedItem();
-        if (!txfNavn.getText().equals("") && !txfBeskrivelse.getText().equals("") && !txfEnhed.getText().equals("")){
+        if (!txfNavn.getText().equals("")){
             controller.createProdukt(produktGruppe,txfNavn.getText(),txfBeskrivelse.getText(), txfBeskrivelse.getText());
             txfEnhed.clear(); txfNavn.clear(); txfBeskrivelse.clear();
             lwProdukter.getItems().setAll(controller.getProdukterFraProduktgruppe((ProduktGruppe) lwProduktgrupper.getSelectionModel().getSelectedItem()));
             produktError.setVisible(false);
 
         } else {
-            produktError = new Label("Alle 3 felter skal udfyldes!");
+            produktError = new Label("Produktnavn skal udfyldes!");
             produktError.setTextFill(Color.color(1, 0, 0));
             this.add(produktError, 7, 1);
         }
