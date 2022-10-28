@@ -134,24 +134,28 @@ public class OpretDagligtSalgPane extends GridPane {
         int antal;
         if(produkt != null) {
             if (!txfAntal.getText().equals("")) {
-                antal = Integer.parseInt(txfAntal.getText());
-                if (antal > 0) {
-                    if (currentSalg == null) {
-                        currentSalg = controller.createSalg();
+                try {
+                    antal = Integer.parseInt(txfAntal.getText());
+                    if (antal > 0) {
+                        if (currentSalg == null) {
+                            currentSalg = controller.createSalg();
+                            lbError.setText("");
+                        }
+                        controller.createSalgslinje(currentSalg, antal, produkt);
+                        lwSalgslinjer.getItems().setAll(controller.printMellemRegning(prisliste, currentSalg));
+                        txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(prisliste, currentSalg));
                         lbError.setText("");
+                    } else {
+                        lbError.setText("antal skal være over 0");
                     }
-                    controller.createSalgslinje(currentSalg, antal, produkt);
-                    lwSalgslinjer.getItems().setAll(controller.printMellemRegning(prisliste, currentSalg));
-                    txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(prisliste, currentSalg));
-                    lbError.setText("");
-                } else {
-                    lbError.setText("antal skal være over 0");
+                } catch (NumberFormatException e){
+                    lbError.setText("Antal skal være et helt tal!");
                 }
             } else {
-                lbError.setText("indtast et antal!");
+                    lbError.setText("indtast et antal!");
             }
-        } else{
-            lbError.setText("Vælg et produkt!");
+        } else {
+                lbError.setText("Vælg et produkt!");
         }
     }
 
@@ -162,7 +166,8 @@ public class OpretDagligtSalgPane extends GridPane {
         if(result == true){
             lwSalgslinjer.getItems().setAll(controller.printMellemRegning(prisliste, currentSalg));
             txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(prisliste, currentSalg));
-            lbSucces.setText("Salgslinje fjernet");
+            lbError.setText("Salgslinje fjernet");
+            txfAntal.clear();
         } else {
             lwSalgslinjer.getItems().setAll(controller.printMellemRegning(prisliste, currentSalg));
             lbError.setText("fejl");
@@ -178,6 +183,7 @@ public class OpretDagligtSalgPane extends GridPane {
                 lbSucces.setText("Salg betalt " + betalingsform);
                 lwSalgslinjer.getItems().clear();
                 currentSalg = null;
+                txfTotal.clear();
             } else {
                 lbError.setText("Vælg betalingsform!");
             }
