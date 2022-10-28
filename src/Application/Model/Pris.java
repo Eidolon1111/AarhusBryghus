@@ -22,11 +22,13 @@ public class Pris {
     public void setPris(double pris) {
         this.pris = pris;
     }
-    
+
     public int getKlip() {
         return klip;
     }
-    
+
+
+
     public void setKlip(int klip) {
         this.klip = klip;
     }

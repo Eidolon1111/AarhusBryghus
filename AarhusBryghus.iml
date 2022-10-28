@@ -6,7 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Test" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="openjdk-19" jdkType="JavaSDK" />
+    <orderEntry type="jdk" jdkName="19" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="sqljdbc4" level="application" />
     <orderEntry type="module-library" scope="TEST">
@@ -35,6 +35,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="lib" level="application" />
+    <orderEntry type="library" name="JavaFX" level="application" />
   </component>
 </module>
