@@ -118,10 +118,10 @@ public class OpretDagligtSalgPane extends GridPane {
     public void updateControls(){
         Prisliste prisliste = cBPrislister.getSelectionModel().getSelectedItem();
         if(prisliste != null){
-            lwProduktgrupper.getItems().setAll(controller.getProduktGupperIPrisliste(prisliste));
+            lwProduktgrupper.getItems().setAll(controller.getProduktGrupperIPrisliste(prisliste));
             ProduktGruppe produktGruppe = lwProduktgrupper.getSelectionModel().getSelectedItem();
             if(produktGruppe != null){
-                lwProdukter.getItems().setAll(controller.getProdukterIProduktGruppe(produktGruppe));
+                lwProdukter.getItems().setAll(controller.getProdukterFraProduktgruppe(produktGruppe));
                 Produkt produkt = lwProdukter.getSelectionModel().getSelectedItem();
             }
         }

@@ -31,16 +31,6 @@ public class Controller implements ControllerInterface {
         return result;
     }
 
-    public ArrayList<Produkt> getProdukterIProduktGruppe(ProduktGruppe produktGruppe) {
-        ArrayList<Produkt> result = new ArrayList<>();
-        for(Produkt p : produktGruppe.getProdukts()){
-            if(!result.contains(p)){
-                result.add(p);
-            }
-        }
-        return result;
-    }
-
     public ArrayList<Salg> getSalg() {return storage.getSalg(); }
 
     public Prisliste createPrisliste(String navn) {
@@ -105,15 +95,8 @@ public class Controller implements ControllerInterface {
         return found;
     }
 
-//        for (Salgslinje salgslinje : salg.getSalgslinjer()){
-//            Salgslinje kandidat = salgslinje;
-//            if(kandidat.printMellemRegning(prisliste).equals(target)){
-//                salg.fjernSalgsLinje(kandidat);
-//            }
-//        }
-
     public ArrayList<Produkt> getProdukterFraProduktgruppe(ProduktGruppe pg){
-        return new ArrayList<>(pg.getProdukts());
+        return pg.getProdukts();
     }
 
     public String getProduktGruppeNavn(ProduktGruppe pg) {
@@ -124,8 +107,7 @@ public class Controller implements ControllerInterface {
         salg.setBetalingsform(betalingsform);
     }
 
-    @Override
-    public ArrayList<ProduktGruppe> getProduktGupperIPrisliste(Prisliste prisliste) {
+    public ArrayList<ProduktGruppe> getProduktGrupperIPrisliste(Prisliste prisliste) {
         ArrayList<ProduktGruppe> result = new ArrayList<>();
         for(Pris p : prisliste.getPrislisten()){
             ProduktGruppe pG = p.getProdukt().getProduktGruppe();

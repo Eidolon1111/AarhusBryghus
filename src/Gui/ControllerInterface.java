@@ -12,8 +12,6 @@ public interface ControllerInterface {
     
     public ArrayList<Produkt> getProdukter();
 
-    public ArrayList<Produkt> getProdukterIProduktGruppe(ProduktGruppe produktGruppe);
-
     public Prisliste createPrisliste(String navn);
 
     public Pris createPris(Prisliste prisliste, Produkt produkt, double pris, int klip);
@@ -34,7 +32,7 @@ public interface ControllerInterface {
 
     public boolean fjernSalgslinje(Prisliste prisliste, Salg salg, String target);
 
-    public ArrayList<ProduktGruppe> getProduktGupperIPrisliste(Prisliste prisliste);
+    public ArrayList<ProduktGruppe> getProduktGrupperIPrisliste(Prisliste prisliste);
 
     public ArrayList<Produkt> getProdukterFraProduktgruppe(ProduktGruppe pg);
 
