@@ -19,6 +19,10 @@ public class Salg {
         return salgslinje;
     }
 
+    public void fjernSalgsLinje(Salgslinje salgslinje){
+        salgslinjer.remove(salgslinje);
+    }
+
     public double beregnSamletPrisDKK(Prisliste prisliste) {
         double result = 0;
         for (Salgslinje s : salgslinjer){

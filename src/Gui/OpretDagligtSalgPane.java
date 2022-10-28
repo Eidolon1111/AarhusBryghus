@@ -45,8 +45,8 @@ public class OpretDagligtSalgPane extends GridPane {
     private HBox hBoxBetaling = new HBox(btnKontant, btnDankort, btnMp, btnKlip, btnRegning);
 
     private Label lbError = new Label();
-    private Label lbSalgSucces = new Label();
-    private HBox hBoxErrorAndSucces = new HBox(lbError, lbSalgSucces);
+    private Label lbSucces = new Label();
+    private HBox hBoxErrorAndSucces = new HBox(lbError, lbSucces);
 
     public OpretDagligtSalgPane(ControllerInterface controller){
         this.controller = controller;
@@ -98,7 +98,7 @@ public class OpretDagligtSalgPane extends GridPane {
 
         this.add(hBoxErrorAndSucces, 4, 10);
         lbError.setStyle("-fx-text-fill: red");
-        lbSalgSucces.setStyle("-fx-text-fill: green");
+        lbSucces.setStyle("-fx-text-fill: green");
 
     }
 
@@ -128,7 +128,7 @@ public class OpretDagligtSalgPane extends GridPane {
     }
 
     public void btnTilføjAction() {
-        lbSalgSucces.setText("");
+        lbSucces.setText("");
         Produkt produkt = lwProdukter.getSelectionModel().getSelectedItem();
         Prisliste prisliste = cBPrislister.getSelectionModel().getSelectedItem();
         int antal;
@@ -156,14 +156,23 @@ public class OpretDagligtSalgPane extends GridPane {
     }
 
     public void btnFjernAction(){
-
-
+        Prisliste prisliste = cBPrislister.getSelectionModel().getSelectedItem();
+        String s = lwSalgslinjer.getSelectionModel().getSelectedItem();
+        boolean result = controller.fjernSalgslinje(prisliste, currentSalg, s);
+        if(result == true){
+            lwSalgslinjer.getItems().setAll(controller.printMellemRegning(prisliste, currentSalg));
+            txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(prisliste, currentSalg));
+            lbSucces.setText("Salgslinje fjernet");
+        } else {
+            lwSalgslinjer.getItems().setAll(controller.printMellemRegning(prisliste, currentSalg));
+            lbError.setText("fejl");
+        }
     }
 
     public void btnKontantAction(){
         if(currentSalg != null){
             controller.betalSalg(currentSalg, Salg.Betalingsform.KONTANT);
-            lbSalgSucces.setText("Salg betalt Kontant");
+            lbSucces.setText("Salg betalt Kontant");
             lwSalgslinjer.getItems().clear();
             currentSalg = null;
         }
@@ -172,7 +181,7 @@ public class OpretDagligtSalgPane extends GridPane {
     public void btnDankortAction(){
         if(currentSalg != null){
             controller.betalSalg(currentSalg, Salg.Betalingsform.DANKORT);
-            lbSalgSucces.setText("Salg betalt Dankort");
+            lbSucces.setText("Salg betalt Dankort");
             lwSalgslinjer.getItems().clear();
             currentSalg = null;
         }
@@ -182,7 +191,7 @@ public class OpretDagligtSalgPane extends GridPane {
     public void btnMobilePayAction(){
         if(currentSalg != null){
             controller.betalSalg(currentSalg, Salg.Betalingsform.MOBILEPAY);
-            lbSalgSucces.setText("Salg betalt MobilePay");
+            lbSucces.setText("Salg betalt MobilePay");
             lwSalgslinjer.getItems().clear();
             currentSalg = null;
         }
@@ -191,7 +200,7 @@ public class OpretDagligtSalgPane extends GridPane {
     public void btnKlipAction(){
         if(currentSalg != null) {
             controller.betalSalg(currentSalg, Salg.Betalingsform.KLIPPEKORT);
-            lbSalgSucces.setText("Salg betalt Klip");
+            lbSucces.setText("Salg betalt Klip");
             lwSalgslinjer.getItems().clear();
             currentSalg = null;
         }
@@ -200,7 +209,7 @@ public class OpretDagligtSalgPane extends GridPane {
     public void btnRegningAction(){
         if(currentSalg != null){
             controller.betalSalg(currentSalg, Salg.Betalingsform.REGNING);
-            lbSalgSucces.setText("Salg betalt Regning");
+            lbSucces.setText("Salg betalt Regning");
             lwSalgslinjer.getItems().clear();
             currentSalg = null;
         }

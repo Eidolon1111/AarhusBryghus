@@ -89,6 +89,29 @@ public class Controller implements ControllerInterface {
         return sl;
     }
 
+    public boolean fjernSalgslinje(Prisliste prisliste, Salg salg, String target) {
+        int index = 0;
+        boolean found = false;
+        Salgslinje kandidat;
+        while (found == false && index <= salg.getSalgslinjer().size()) {
+            kandidat = salg.getSalgslinjer().get(index);
+            if (kandidat.printMellemRegning(prisliste).equals(target)) {
+                salg.fjernSalgsLinje(kandidat);
+                found = true;
+            } else {
+                index++;
+            }
+        }
+        return found;
+    }
+
+//        for (Salgslinje salgslinje : salg.getSalgslinjer()){
+//            Salgslinje kandidat = salgslinje;
+//            if(kandidat.printMellemRegning(prisliste).equals(target)){
+//                salg.fjernSalgsLinje(kandidat);
+//            }
+//        }
+
     public ArrayList<Produkt> getProdukterFraProduktgruppe(ProduktGruppe pg){
         return new ArrayList<>(pg.getProdukts());
     }

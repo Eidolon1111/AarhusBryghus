@@ -32,6 +32,8 @@ public interface ControllerInterface {
 
     public Salgslinje createSalgslinje(Salg salg, int antal, Produkt produkt);
 
+    public boolean fjernSalgslinje(Prisliste prisliste, Salg salg, String target);
+
     public ArrayList<ProduktGruppe> getProduktGupperIPrisliste(Prisliste prisliste);
 
     public ArrayList<Produkt> getProdukterFraProduktgruppe(ProduktGruppe pg);
