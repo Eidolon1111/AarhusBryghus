@@ -3,8 +3,6 @@ package Application.Controller;
 import Application.Model.*;
 import Application.StorageInterface;
 import Gui.ControllerInterface;
-
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Controller implements ControllerInterface {
@@ -117,7 +115,6 @@ public class Controller implements ControllerInterface {
         }
         return result;
     }
-
 
     public void init(){
         Prisliste fredagsbar = this.createPrisliste("Fredagsbar");
