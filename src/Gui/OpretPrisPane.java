@@ -134,11 +134,13 @@ public class OpretPrisPane extends GridPane {
         if (p != null && pl != null) {
             if (txfDkkPris.getText().isEmpty()) {
                 lblErrorPris.setText("Pris mangler");
-            } else if (txfKlipPris.getText().isEmpty()) {
+            } else if (txfKlipPris.getText().isEmpty() && Integer.parseInt(txfDkkPris.getText()) >= 0) {
                 double pris = Integer.parseInt(txfDkkPris.getText());
                 controller.createPris(pl, p, pris, 0);
                 updateControls();
-            } else {
+            } else if (Integer.parseInt(txfDkkPris.getText()) <= 0){
+                lblErrorPris.setText("Pris skal være et positivt tal");
+            }else {
                 double pris = Integer.parseInt(txfDkkPris.getText());
                 int klip = Integer.parseInt(txfKlipPris.getText());
                 controller.createPris(pl,p,pris, klip);
