@@ -1,6 +1,6 @@
 package Gui;
 
-import Application.Controller.Controller;
+
 import Application.Model.*;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
@@ -27,6 +27,8 @@ public class OpretDagligtSalgPane extends GridPane {
     private TextField txfAntal = new TextField();
     private Button btnTilføj = new Button("Tilføj");
 
+    private Button btnFjern = new Button("Fjern");
+
     private Label lbKurv = new Label("Kurv: ");
     private ListView<String> lwSalgslinjer = new ListView<>();
 
@@ -42,14 +44,18 @@ public class OpretDagligtSalgPane extends GridPane {
 
     private HBox hBoxBetaling = new HBox(btnKontant, btnDankort, btnMp, btnKlip, btnRegning);
 
+    private Label lbError = new Label();
+    private Label lbSucces = new Label();
+    private HBox hBoxErrorAndSucces = new HBox(lbError, lbSucces);
+
     public OpretDagligtSalgPane(ControllerInterface controller){
         this.controller = controller;
         this.setPadding(new Insets(10));
         this.setHgap(10);
         this.setVgap(10);
         this.setGridLinesVisible(false);
-        this.setPrefWidth(800);
-        this.setPrefHeight(350);
+        this.setPrefWidth(1000);
+        this.setPrefHeight(800);
 
         this.add(lbPrisliser, 0, 0);
         this.add(cBPrislister, 0, 1);
@@ -71,7 +77,10 @@ public class OpretDagligtSalgPane extends GridPane {
         this.add(txfAntal, 3, 5);
         txfAntal.setPrefWidth(40);
         this.add(btnTilføj, 2, 6);
-        btnTilføj.setOnAction(actionEvent -> setBtnTilføjAction());
+        btnTilføj.setOnAction(actionEvent -> btnTilføjAction());
+
+        this.add(btnFjern, 3, 6);
+        btnFjern.setOnAction(event -> btnFjernAction());
 
         this.add(lbKurv, 4, 0);
         this.add(lwSalgslinjer, 4, 1,1,7);
@@ -80,6 +89,17 @@ public class OpretDagligtSalgPane extends GridPane {
         hBoxTotal.setSpacing(130);
         this.add(hBoxBetaling, 4, 9);
         txfTotal.setEditable(false);
+
+        btnKontant.setOnAction(actionEvent -> btnKontantAction());
+        btnDankort.setOnAction(actionEvent -> btnDankortAction());
+        btnMp.setOnAction(actionEvent -> btnMobilePayAction());
+        btnKlip.setOnAction(actionEvent -> btnKlipAction());
+        btnRegning.setOnAction(actionEvent -> btnRegningAction());
+
+        this.add(hBoxErrorAndSucces, 4, 10);
+        lbError.setStyle("-fx-text-fill: red");
+        lbSucces.setStyle("-fx-text-fill: green");
+
     }
 
     public void selectedPrislisteChanged(){
@@ -98,31 +118,100 @@ public class OpretDagligtSalgPane extends GridPane {
     public void updateControls(){
         Prisliste prisliste = cBPrislister.getSelectionModel().getSelectedItem();
         if(prisliste != null){
-            lwProduktgrupper.getItems().setAll(controller.getProduktGupperIPrisliste(prisliste));
+            lwProduktgrupper.getItems().setAll(controller.getProduktGrupperIPrisliste(prisliste));
             ProduktGruppe produktGruppe = lwProduktgrupper.getSelectionModel().getSelectedItem();
             if(produktGruppe != null){
-                lwProdukter.getItems().setAll(controller.getProdukterIProduktGruppe(produktGruppe));
+                lwProdukter.getItems().setAll(controller.getProdukterFraProduktgruppe(produktGruppe));
                 Produkt produkt = lwProdukter.getSelectionModel().getSelectedItem();
             }
         }
     }
 
-    public void setBtnTilføjAction(){
+    public void btnTilføjAction() {
+        lbSucces.setText("");
         Produkt produkt = lwProdukter.getSelectionModel().getSelectedItem();
         Prisliste prisliste = cBPrislister.getSelectionModel().getSelectedItem();
-        int antal = Integer.parseInt(txfAntal.getText());
-        if(produkt != null && antal > 0){
-            if(currentSalg == null){
-                currentSalg = controller.createSalg();
-                controller.createSalgslinje(currentSalg, antal, produkt);
-                lwSalgslinjer.getItems().setAll(controller.printMellemRegning(prisliste, currentSalg));
-                txfTotal.setText("" + currentSalg.beregnSamletPris(prisliste));
+        int antal;
+        if(produkt != null) {
+            if (!txfAntal.getText().equals("")) {
+                antal = Integer.parseInt(txfAntal.getText());
+                if (antal > 0) {
+                    if (currentSalg == null) {
+                        currentSalg = controller.createSalg();
+                        lbError.setText("");
+                    }
+                    controller.createSalgslinje(currentSalg, antal, produkt);
+                    lwSalgslinjer.getItems().setAll(controller.printMellemRegning(prisliste, currentSalg));
+                    txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(prisliste, currentSalg));
+                    lbError.setText("");
+                } else {
+                    lbError.setText("antal skal være over 0");
+                }
             } else {
-                controller.createSalgslinje(currentSalg, antal, produkt);
-                lwSalgslinjer.getItems().setAll(controller.printMellemRegning(prisliste, currentSalg));
-                txfTotal.setText("" + currentSalg.beregnSamletPris(prisliste));
+                lbError.setText("indtast et antal!");
             }
+        } else{
+            lbError.setText("Vælg et produkt!");
+        }
+    }
 
+    public void btnFjernAction(){
+        Prisliste prisliste = cBPrislister.getSelectionModel().getSelectedItem();
+        String s = lwSalgslinjer.getSelectionModel().getSelectedItem();
+        boolean result = controller.fjernSalgslinje(prisliste, currentSalg, s);
+        if(result == true){
+            lwSalgslinjer.getItems().setAll(controller.printMellemRegning(prisliste, currentSalg));
+            txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(prisliste, currentSalg));
+            lbSucces.setText("Salgslinje fjernet");
+        } else {
+            lwSalgslinjer.getItems().setAll(controller.printMellemRegning(prisliste, currentSalg));
+            lbError.setText("fejl");
+        }
+    }
+
+    public void btnKontantAction(){
+        if(currentSalg != null){
+            controller.betalSalg(currentSalg, Salg.Betalingsform.KONTANT);
+            lbSucces.setText("Salg betalt Kontant");
+            lwSalgslinjer.getItems().clear();
+            currentSalg = null;
+        }
+
+    }
+    public void btnDankortAction(){
+        if(currentSalg != null){
+            controller.betalSalg(currentSalg, Salg.Betalingsform.DANKORT);
+            lbSucces.setText("Salg betalt Dankort");
+            lwSalgslinjer.getItems().clear();
+            currentSalg = null;
+        }
+
+    }
+
+    public void btnMobilePayAction(){
+        if(currentSalg != null){
+            controller.betalSalg(currentSalg, Salg.Betalingsform.MOBILEPAY);
+            lbSucces.setText("Salg betalt MobilePay");
+            lwSalgslinjer.getItems().clear();
+            currentSalg = null;
+        }
+    }
+
+    public void btnKlipAction(){
+        if(currentSalg != null) {
+            controller.betalSalg(currentSalg, Salg.Betalingsform.KLIPPEKORT);
+            lbSucces.setText("Salg betalt Klip");
+            lwSalgslinjer.getItems().clear();
+            currentSalg = null;
+        }
+    }
+
+    public void btnRegningAction(){
+        if(currentSalg != null){
+            controller.betalSalg(currentSalg, Salg.Betalingsform.REGNING);
+            lbSucces.setText("Salg betalt Regning");
+            lwSalgslinjer.getItems().clear();
+            currentSalg = null;
         }
     }
 }

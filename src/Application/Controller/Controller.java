@@ -31,16 +31,6 @@ public class Controller implements ControllerInterface {
         return result;
     }
 
-    public ArrayList<Produkt> getProdukterIProduktGruppe(ProduktGruppe produktGruppe) {
-        ArrayList<Produkt> result = new ArrayList<>();
-        for(Produkt p : produktGruppe.getProdukts()){
-            if(!result.contains(p)){
-                result.add(p);
-            }
-        }
-        return result;
-    }
-
     public ArrayList<Salg> getSalg() {return storage.getSalg(); }
 
     public Prisliste createPrisliste(String navn) {
@@ -76,9 +66,12 @@ public class Controller implements ControllerInterface {
         return s;
     }
 
-    @Override
     public ArrayList<String> printMellemRegning(Prisliste prisliste, Salg salg) {
         return salg.printMellemRegning(prisliste);
+    }
+
+    public String printSamletPrisDKKOgKlip(Prisliste prisliste, Salg salg) {
+        return "DKK: " + salg.beregnSamletPrisDKK(prisliste) + " / Klip: " + salg.beregnSamletPrisKlip(prisliste);
     }
 
     public Salgslinje createSalgslinje(Salg salg, int antal, Produkt produkt) {
@@ -86,16 +79,35 @@ public class Controller implements ControllerInterface {
         return sl;
     }
 
+    public boolean fjernSalgslinje(Prisliste prisliste, Salg salg, String target) {
+        int index = 0;
+        boolean found = false;
+        Salgslinje kandidat;
+        while (found == false && index <= salg.getSalgslinjer().size()) {
+            kandidat = salg.getSalgslinjer().get(index);
+            if (kandidat.printMellemRegning(prisliste).equals(target)) {
+                salg.fjernSalgsLinje(kandidat);
+                found = true;
+            } else {
+                index++;
+            }
+        }
+        return found;
+    }
+
     public ArrayList<Produkt> getProdukterFraProduktgruppe(ProduktGruppe pg){
-        return new ArrayList<>(pg.getProdukts());
+        return pg.getProdukts();
     }
 
     public String getProduktGruppeNavn(ProduktGruppe pg) {
         return pg.getNavn();
     }
 
-    @Override
-    public ArrayList<ProduktGruppe> getProduktGupperIPrisliste(Prisliste prisliste) {
+    public void betalSalg(Salg salg, Salg.Betalingsform betalingsform) {
+        salg.setBetalingsform(betalingsform);
+    }
+
+    public ArrayList<ProduktGruppe> getProduktGrupperIPrisliste(Prisliste prisliste) {
         ArrayList<ProduktGruppe> result = new ArrayList<>();
         for(Pris p : prisliste.getPrislisten()){
             ProduktGruppe pG = p.getProdukt().getProduktGruppe();

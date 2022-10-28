@@ -12,8 +12,6 @@ public interface ControllerInterface {
     
     public ArrayList<Produkt> getProdukter();
 
-    public ArrayList<Produkt> getProdukterIProduktGruppe(ProduktGruppe produktGruppe);
-
     public Prisliste createPrisliste(String navn);
 
     public Pris createPris(Prisliste prisliste, Produkt produkt, double pris, int klip);
@@ -28,13 +26,19 @@ public interface ControllerInterface {
 
     public ArrayList<String> printMellemRegning(Prisliste prisliste, Salg salg);
 
+    public String printSamletPrisDKKOgKlip(Prisliste prisliste, Salg salg);
+
     public Salgslinje createSalgslinje(Salg salg, int antal, Produkt produkt);
 
-    public ArrayList<ProduktGruppe> getProduktGupperIPrisliste(Prisliste prisliste);
+    public boolean fjernSalgslinje(Prisliste prisliste, Salg salg, String target);
+
+    public ArrayList<ProduktGruppe> getProduktGrupperIPrisliste(Prisliste prisliste);
 
     public ArrayList<Produkt> getProdukterFraProduktgruppe(ProduktGruppe pg);
 
     public String getProduktGruppeNavn(ProduktGruppe pg);
+
+    public void betalSalg(Salg salg, Salg.Betalingsform betalingsform);
 
     public void init();
 

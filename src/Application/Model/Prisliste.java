@@ -12,7 +12,6 @@ public class Prisliste {
 
     public Pris createPrisTilPrisliste(Produkt produkt, double pris, int klip) {
         Pris prisListeProdukt = new Pris(pris, klip, produkt);
-        //prislisten.add(prisListeProdukt);
         addPris(prisListeProdukt);
         return prisListeProdukt;
     }
@@ -27,15 +26,13 @@ public class Prisliste {
                     if (p.getPris() != pris.getPris()) {
                         p.setPris(pris.getPris());
                     }
-                    if (p.getKlip() != pris.getKlip()) {
+                    if (p.getKlip() != pris.getKlip() && pris.getKlip() > 0) {
                         p.setKlip(pris.getKlip());
                     }
                     return;
-                } else {
-                    prislisten.add(pris);
-                    return;
                 }
             }
+            prislisten.add(pris);
         }
     }
 
@@ -49,7 +46,7 @@ public class Prisliste {
         }
     }
 
-    public double findPrisPaaProdukt(Produkt produkt){
+    public double findPrisPaaProduktDKK(Produkt produkt){
         double res = 0.0;
         for (Pris p : prislisten){
             if (p.getProdukt().getNavn().equals(produkt.getNavn())){
@@ -58,6 +55,17 @@ public class Prisliste {
         }
         return res;
     }
+
+    public int findPrisPaaProduktKlip(Produkt produkt){
+        int res = 0;
+        for (Pris p : prislisten){
+            if (p.getProdukt().getNavn().equals(produkt.getNavn())){
+                res = p.getKlip();
+            }
+        }
+        return res;
+    }
+
     
     @Override
     public String toString() {

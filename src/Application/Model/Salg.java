@@ -19,10 +19,22 @@ public class Salg {
         return salgslinje;
     }
 
-    public double beregnSamletPris(Prisliste prisliste) {
+    public void fjernSalgsLinje(Salgslinje salgslinje){
+        salgslinjer.remove(salgslinje);
+    }
+
+    public double beregnSamletPrisDKK(Prisliste prisliste) {
         double result = 0;
         for (Salgslinje s : salgslinjer){
-            result += prisliste.findPrisPaaProdukt(s.getProdukt()) * s.getAntal();
+            result += prisliste.findPrisPaaProduktDKK(s.getProdukt()) * s.getAntal();
+        }
+        return result;
+    }
+
+    public int beregnSamletPrisKlip(Prisliste prisliste) {
+        int result = 0;
+        for (Salgslinje s : salgslinjer){
+            result += prisliste.findPrisPaaProduktKlip(s.getProdukt()) * s.getAntal();
         }
         return result;
     }

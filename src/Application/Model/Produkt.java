@@ -29,6 +29,10 @@ public class Produkt implements Comparable<Produkt> {
         return produktGruppe;
     }
 
+    public String printNavn(){
+        return navn;
+    }
+
     @Override
     public String toString() {
         return navn + ", " + enhed + ", " + beskrivelse;

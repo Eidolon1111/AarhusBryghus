@@ -42,6 +42,8 @@ public class AarhusBryghusTabWindow extends Application {
     }
 
     private void initTabPane(TabPane tabPane) {
+        tabPane.setPrefWidth(1010);
+        tabPane.setPrefHeight(500);
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
         //OpretDagligtSalg
