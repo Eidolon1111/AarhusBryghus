@@ -7,6 +7,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class OpretDagligtSalgPane extends GridPane {
 
@@ -36,13 +37,11 @@ public class OpretDagligtSalgPane extends GridPane {
     private TextField txfTotal = new TextField();
     private HBox hBoxTotal = new HBox(lbTotal, txfTotal);
 
-    private Button btnKontant = new Button("Kontant");
-    private Button btnDankort = new Button("Dankort");
-    private Button btnMp = new Button("MobilePay");
-    private Button btnKlip = new Button("Klippekort");
-    private Button btnRegning = new Button("Regning");
-
-    private HBox hBoxBetaling = new HBox(btnKontant, btnDankort, btnMp, btnKlip, btnRegning);
+    private Label lbBetalingsformer = new Label("Vælg Betalingsform:");
+    private ComboBox<Salg.Betalingsform> comboBoxbetalingsformer = new ComboBox<>();
+    private Button btnBetal = new Button("Betal");
+    private VBox vBoxBetalingsFormer = new VBox(lbBetalingsformer, comboBoxbetalingsformer);
+    private HBox hBoxBetaling = new HBox(vBoxBetalingsFormer, btnBetal);
 
     private Label lbError = new Label();
     private Label lbSucces = new Label();
@@ -86,15 +85,17 @@ public class OpretDagligtSalgPane extends GridPane {
         this.add(lwSalgslinjer, 4, 1,1,7);
 
         this.add(hBoxTotal, 4, 8);
-        hBoxTotal.setSpacing(130);
-        this.add(hBoxBetaling, 4, 9);
+        hBoxTotal.setSpacing(135);
         txfTotal.setEditable(false);
+        txfTotal.setPrefWidth(150);
+        //txfTotal.setPrefHeight();
 
-        btnKontant.setOnAction(actionEvent -> btnKontantAction());
-        btnDankort.setOnAction(actionEvent -> btnDankortAction());
-        btnMp.setOnAction(actionEvent -> btnMobilePayAction());
-        btnKlip.setOnAction(actionEvent -> btnKlipAction());
-        btnRegning.setOnAction(actionEvent -> btnRegningAction());
+        this.add(hBoxBetaling, 4, 9);
+        hBoxBetaling.setSpacing(100);
+        btnBetal.setPrefWidth(100);
+        btnBetal.setPrefHeight(50);
+        comboBoxbetalingsformer.getItems().setAll(Salg.Betalingsform.values());
+        btnBetal.setOnAction(actionEvent -> btnBetalAction());
 
         this.add(hBoxErrorAndSucces, 4, 10);
         lbError.setStyle("-fx-text-fill: red");
@@ -122,7 +123,6 @@ public class OpretDagligtSalgPane extends GridPane {
             ProduktGruppe produktGruppe = lwProduktgrupper.getSelectionModel().getSelectedItem();
             if(produktGruppe != null){
                 lwProdukter.getItems().setAll(controller.getProdukterFraProduktgruppe(produktGruppe));
-                Produkt produkt = lwProdukter.getSelectionModel().getSelectedItem();
             }
         }
     }
@@ -169,49 +169,18 @@ public class OpretDagligtSalgPane extends GridPane {
         }
     }
 
-    public void btnKontantAction(){
+    public void btnBetalAction(){
         if(currentSalg != null){
-            controller.betalSalg(currentSalg, Salg.Betalingsform.KONTANT);
-            lbSucces.setText("Salg betalt Kontant");
-            lwSalgslinjer.getItems().clear();
-            currentSalg = null;
-        }
-
-    }
-    public void btnDankortAction(){
-        if(currentSalg != null){
-            controller.betalSalg(currentSalg, Salg.Betalingsform.DANKORT);
-            lbSucces.setText("Salg betalt Dankort");
-            lwSalgslinjer.getItems().clear();
-            currentSalg = null;
-        }
-
-    }
-
-    public void btnMobilePayAction(){
-        if(currentSalg != null){
-            controller.betalSalg(currentSalg, Salg.Betalingsform.MOBILEPAY);
-            lbSucces.setText("Salg betalt MobilePay");
-            lwSalgslinjer.getItems().clear();
-            currentSalg = null;
-        }
-    }
-
-    public void btnKlipAction(){
-        if(currentSalg != null) {
-            controller.betalSalg(currentSalg, Salg.Betalingsform.KLIPPEKORT);
-            lbSucces.setText("Salg betalt Klip");
-            lwSalgslinjer.getItems().clear();
-            currentSalg = null;
-        }
-    }
-
-    public void btnRegningAction(){
-        if(currentSalg != null){
-            controller.betalSalg(currentSalg, Salg.Betalingsform.REGNING);
-            lbSucces.setText("Salg betalt Regning");
-            lwSalgslinjer.getItems().clear();
-            currentSalg = null;
+            Salg.Betalingsform betalingsform = comboBoxbetalingsformer.getSelectionModel().getSelectedItem();
+            if(betalingsform != null) {
+                controller.betalSalg(currentSalg, betalingsform);
+                lbError.setText("");
+                lbSucces.setText("Salg betalt " + betalingsform);
+                lwSalgslinjer.getItems().clear();
+                currentSalg = null;
+            } else {
+                lbError.setText("Vælg betalingsform!");
+            }
         }
     }
 }
