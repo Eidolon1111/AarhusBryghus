@@ -53,11 +53,6 @@ public class Controller implements ControllerInterface {
         Pris p = prisliste.createPrisTilPrisliste(produkt, pris, klip);
         return p;
     }
-
-    public Pris createPris(Prisliste prisliste, Produkt produkt, double pris) {
-        Pris p = prisliste.createPrisTilPrisliste(produkt, pris);
-        return p;
-    }
     
     public void fjernPris(Prisliste prisliste, Pris pris) {
         prisliste.fjernPris(pris);

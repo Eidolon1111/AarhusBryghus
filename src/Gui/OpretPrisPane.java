@@ -136,7 +136,7 @@ public class OpretPrisPane extends GridPane {
                 lblErrorPris.setText("Pris mangler");
             } else if (txfKlipPris.getText().isEmpty()) {
                 double pris = Integer.parseInt(txfDkkPris.getText());
-                controller.createPris(pl, p, pris);
+                controller.createPris(pl, p, pris, 0);
                 updateControls();
             } else {
                 double pris = Integer.parseInt(txfDkkPris.getText());

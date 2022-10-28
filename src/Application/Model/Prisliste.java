@@ -16,13 +16,6 @@ public class Prisliste {
         addPris(prisListeProdukt);
         return prisListeProdukt;
     }
-
-    public Pris createPrisTilPrisliste(Produkt produkt, double pris) {
-        Pris prisListeProdukt = new Pris(pris, produkt);
-        //prislisten.add(prisListeProdukt);
-        addPris(prisListeProdukt);
-        return prisListeProdukt;
-    }
     
     private void addPris(Pris pris) {
         if (prislisten.isEmpty()) {
