@@ -5,6 +5,7 @@ import Application.StorageInterface;
 import Gui.ControllerInterface;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Controller implements ControllerInterface {
     private static Controller controller;
@@ -120,19 +121,23 @@ public class Controller implements ControllerInterface {
         return result;
     }
 
-    public ArrayList<Salg.Betalingsform> getBetalingsformer(){
-        return new ArrayList<>(Arrays.asList(Salg.Betalingsform.values()));
+    public boolean klippeKortBetalingMuligt(Salg salg) {
+        return salg.klippeKortBetalingMuligt();
     }
 
-    @Override
+    public ArrayList<Salg.Betalingsform> getMuligeBetalingsformer(Salg salg){
+        ArrayList<Salg.Betalingsform> muligeBetalingsformer = new ArrayList<>(Arrays.asList(Salg.Betalingsform.values()));
+        if(!salg.klippeKortBetalingMuligt()){
+            muligeBetalingsformer.remove(Salg.Betalingsform.KLIPPEKORT);
+        }
+        return  muligeBetalingsformer;
+    }
+
     public Pris findPrisPaaProdukt(Prisliste prisliste, Produkt produkt) {
         return prisliste.findPrisPaaProdukt(produkt);
     }
 
-    //TODO
-    public boolean klippeKortBetalingMuligt(Salg salg) {
-        return false;
-    }
+
 
 
     public void init(){

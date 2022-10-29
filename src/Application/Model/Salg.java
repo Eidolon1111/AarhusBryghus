@@ -55,6 +55,20 @@ public class Salg {
         this.betalingsform = betalingsform;
     }
 
+    public boolean klippeKortBetalingMuligt() {
+        boolean result = false;
+        int count = 0;
+        for (Salgslinje salgslinje : salgslinjer){
+            if(salgslinje.klippeKortBetalingMuligt()){
+                count++;
+            }
+        }
+        if(count == salgslinjer.size()){
+            result = true;
+        }
+        return result;
+    }
+
     public Betalingsform getBetalingsform() {
         return this.betalingsform;
     }

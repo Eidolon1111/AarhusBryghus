@@ -30,9 +30,11 @@ public class Salgslinje {
                 beregnPrisDKK(prisliste) + " / Klip: " + beregnPrisKlip(prisliste);
     }
 
-    //TODO
     public boolean klippeKortBetalingMuligt(){
         boolean result = false;
+        if(pris.getKlip() != 0){
+            result = true;
+        }
         return result;
     }
 

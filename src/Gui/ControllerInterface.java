@@ -1,7 +1,7 @@
 package Gui;
 
 import Application.Model.*;
-import java.time.LocalDate;
+
 import java.util.ArrayList;
 
 public interface ControllerInterface {
@@ -42,7 +42,7 @@ public interface ControllerInterface {
 
     public void betalSalg(Salg salg, Salg.Betalingsform betalingsform);
 
-    public ArrayList<Salg.Betalingsform> getBetalingsformer();
+    public ArrayList<Salg.Betalingsform> getMuligeBetalingsformer(Salg salg);
 
     public Pris findPrisPaaProdukt(Prisliste prisliste, Produkt produkt);
 

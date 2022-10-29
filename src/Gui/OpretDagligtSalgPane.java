@@ -94,7 +94,6 @@ public class OpretDagligtSalgPane extends GridPane {
         hBoxBetaling.setSpacing(100);
         btnBetal.setPrefWidth(100);
         btnBetal.setPrefHeight(50);
-        comboBoxbetalingsformer.getItems().setAll(controller.getBetalingsformer());
         btnBetal.setOnAction(actionEvent -> btnBetalAction());
 
         this.add(hBoxErrorAndSucces, 4, 10);
@@ -146,7 +145,7 @@ public class OpretDagligtSalgPane extends GridPane {
                         lwSalgslinjer.getItems().setAll(controller.printMellemRegning(prisliste, currentSalg));
                         txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(prisliste, currentSalg));
                         lbError.setText("");
-                        //TODO KLIPPEKOTBETALING
+                        comboBoxbetalingsformer.getItems().setAll(controller.getMuligeBetalingsformer(currentSalg));
                     } else {
                         lbError.setText("antal skal være over 0");
                     }
@@ -170,6 +169,7 @@ public class OpretDagligtSalgPane extends GridPane {
             lwSalgslinjer.getItems().setAll(controller.printMellemRegning(prisliste, currentSalg));
             txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(prisliste, currentSalg));
             lbError.setText("Salgslinje fjernet");
+            comboBoxbetalingsformer.getItems().setAll(controller.getMuligeBetalingsformer(currentSalg));
             txfAntal.clear();
         } else {
             lwSalgslinjer.getItems().setAll(controller.printMellemRegning(prisliste, currentSalg));
