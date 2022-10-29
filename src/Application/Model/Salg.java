@@ -13,8 +13,8 @@ public class Salg {
         this.registreringsDato = LocalDate.now();
     }
 
-    public Salgslinje createSalgslinje(Produkt produkt, int antal){
-        Salgslinje salgslinje = new Salgslinje(antal, produkt);
+    public Salgslinje createSalgslinje(Pris Pris, int antal){
+        Salgslinje salgslinje = new Salgslinje(antal, Pris);
         salgslinjer.add(salgslinje);
         return salgslinje;
     }
@@ -26,7 +26,7 @@ public class Salg {
     public double beregnSamletPrisDKK(Prisliste prisliste) {
         double result = 0;
         for (Salgslinje s : salgslinjer){
-            result += prisliste.findPrisPaaProduktDKK(s.getProdukt()) * s.getAntal();
+            result += prisliste.findPrisPaaProdukt(s.getProdukt()).getPris() * s.getAntal();
         }
         return result;
     }
@@ -34,7 +34,7 @@ public class Salg {
     public int beregnSamletPrisKlip(Prisliste prisliste) {
         int result = 0;
         for (Salgslinje s : salgslinjer){
-            result += prisliste.findPrisPaaProduktKlip(s.getProdukt()) * s.getAntal();
+            result += prisliste.findPrisPaaProdukt(s.getProdukt()).getKlip() * s.getAntal();
         }
         return result;
     }

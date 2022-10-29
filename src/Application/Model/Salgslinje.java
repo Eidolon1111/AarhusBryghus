@@ -2,11 +2,11 @@ package Application.Model;
 
 public class Salgslinje {
     private int antal;
-    private Produkt produkt;
+    private Pris pris;
 
-    public Salgslinje(int antal, Produkt produkt) {
+    public Salgslinje(int antal, Pris pris) {
         this.antal = antal;
-        this.produkt = produkt;
+        this.pris = pris;
     }
 
     public int getAntal() {
@@ -14,24 +14,30 @@ public class Salgslinje {
     }
 
     public Produkt getProdukt() {
-        return produkt;
+        return pris.getProdukt();
     }
 
     public double beregnPrisDKK(Prisliste prisliste){
-        return prisliste.findPrisPaaProduktDKK(produkt)*antal;
+        return pris.getPris() * antal;
     }
 
     public int beregnPrisKlip(Prisliste prisliste){
-        return prisliste.findPrisPaaProduktKlip(produkt) * antal;
+        return pris.getKlip() * antal;
     }
 
     public String printMellemRegning(Prisliste prisliste){
-        return produkt.printNavn() + "\t" + "antal: " + antal + "\t" + "DKK: " +
+        return pris.getProdukt().printNavn() + "\t" + "antal: " + antal + "\t" + "DKK: " +
                 beregnPrisDKK(prisliste) + " / Klip: " + beregnPrisKlip(prisliste);
+    }
+
+    //TODO
+    public boolean klippeKortBetalingMuligt(){
+        boolean result = false;
+        return result;
     }
 
     @Override
     public String toString() {
-        return produkt + " " + antal + " ";
+        return pris.getProdukt() + " " + antal + " ";
     }
 }

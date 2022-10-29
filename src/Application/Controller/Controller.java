@@ -4,6 +4,7 @@ import Application.Model.*;
 import Application.StorageInterface;
 import Gui.ControllerInterface;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Controller implements ControllerInterface {
     private static Controller controller;
@@ -72,25 +73,28 @@ public class Controller implements ControllerInterface {
         return "DKK: " + salg.beregnSamletPrisDKK(prisliste) + " / Klip: " + salg.beregnSamletPrisKlip(prisliste);
     }
 
-    public Salgslinje createSalgslinje(Salg salg, int antal, Produkt produkt) {
-        Salgslinje sl = salg.createSalgslinje(produkt, antal);
+    public Salgslinje createSalgslinje(Salg salg, int antal, Pris pris) {
+        Salgslinje sl = salg.createSalgslinje(pris, antal);
         return sl;
     }
 
-    public boolean fjernSalgslinje(Prisliste prisliste, Salg salg, String target) {
+    public Salgslinje findSalgslinjeFraKurv(Prisliste prisliste, Salg salg, String target){
         int index = 0;
-        boolean found = false;
         Salgslinje kandidat;
-        while (found == false && index <= salg.getSalgslinjer().size()) {
+        Salgslinje result = null;
+        while (result == null && index <= salg.getSalgslinjer().size()) {
             kandidat = salg.getSalgslinjer().get(index);
             if (kandidat.printMellemRegning(prisliste).equals(target)) {
-                salg.fjernSalgsLinje(kandidat);
-                found = true;
+                result = kandidat;
             } else {
                 index++;
             }
         }
-        return found;
+        return result;
+    }
+
+    public void fjernSalgslinje(Salg salg, Salgslinje salgslinje) {
+        salg.fjernSalgsLinje(salgslinje);
     }
 
     public ArrayList<Produkt> getProdukterFraProduktgruppe(ProduktGruppe pg){
@@ -115,6 +119,21 @@ public class Controller implements ControllerInterface {
         }
         return result;
     }
+
+    public ArrayList<Salg.Betalingsform> getBetalingsformer(){
+        return new ArrayList<>(Arrays.asList(Salg.Betalingsform.values()));
+    }
+
+    @Override
+    public Pris findPrisPaaProdukt(Prisliste prisliste, Produkt produkt) {
+        return prisliste.findPrisPaaProdukt(produkt);
+    }
+
+    //TODO
+    public boolean klippeKortBetalingMuligt(Salg salg) {
+        return false;
+    }
+
 
     public void init(){
         Prisliste fredagsbar = this.createPrisliste("Fredagsbar");
