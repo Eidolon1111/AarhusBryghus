@@ -145,6 +145,7 @@ public class OpretDagligtSalgPane extends GridPane {
                         lwSalgslinjer.getItems().setAll(controller.printMellemRegning(prisliste, currentSalg));
                         txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(prisliste, currentSalg));
                         lbError.setText("");
+                        //TODO fjern mulighed for at vælge klippekort
                     } else {
                         lbError.setText("antal skal være over 0");
                     }

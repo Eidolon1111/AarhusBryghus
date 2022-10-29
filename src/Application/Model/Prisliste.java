@@ -26,7 +26,8 @@ public class Prisliste {
                     if (p.getPris() != pris.getPris()) {
                         p.setPris(pris.getPris());
                     }
-                    if (p.getKlip() != pris.getKlip() && pris.getKlip() > 0) {
+                    //Klip må gerne sættes til 0
+                    if (p.getKlip() != pris.getKlip() && pris.getKlip() >= 0) {
                         p.setKlip(pris.getKlip());
                     }
                     return;
