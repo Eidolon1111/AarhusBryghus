@@ -35,7 +35,13 @@ public class Produkt implements Comparable<Produkt> {
 
     @Override
     public String toString() {
-        return navn + ", " + enhed + ", " + beskrivelse;
+        if (navn != "" && enhed != "" && beskrivelse != "") {
+            return navn + ", " + enhed + ", " + beskrivelse;
+        } else if (enhed == "" && beskrivelse != "") {
+            return navn + ", " + beskrivelse;
+        } else if (enhed != "" && beskrivelse == ""){
+            return navn + ", " + enhed;
+        } else { return navn; }
     }
 
     @Override
