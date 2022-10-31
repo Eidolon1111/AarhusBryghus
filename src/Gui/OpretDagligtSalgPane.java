@@ -94,7 +94,6 @@ public class OpretDagligtSalgPane extends GridPane {
         hBoxBetaling.setSpacing(100);
         btnBetal.setPrefWidth(100);
         btnBetal.setPrefHeight(50);
-        comboBoxbetalingsformer.getItems().setAll(Salg.Betalingsform.values());
         btnBetal.setOnAction(actionEvent -> btnBetalAction());
 
         this.add(hBoxErrorAndSucces, 4, 10);
@@ -131,6 +130,7 @@ public class OpretDagligtSalgPane extends GridPane {
         lbSucces.setText("");
         Produkt produkt = lwProdukter.getSelectionModel().getSelectedItem();
         Prisliste prisliste = cBPrislister.getSelectionModel().getSelectedItem();
+        Pris pris = controller.findPrisPaaProdukt(prisliste, produkt);
         int antal;
         if(produkt != null) {
             if (!txfAntal.getText().equals("")) {
@@ -141,10 +141,11 @@ public class OpretDagligtSalgPane extends GridPane {
                             currentSalg = controller.createSalg();
                             lbError.setText("");
                         }
-                        controller.createSalgslinje(currentSalg, antal, produkt);
+                        controller.createSalgslinje(currentSalg, antal, pris);
                         lwSalgslinjer.getItems().setAll(controller.printMellemRegning(prisliste, currentSalg));
                         txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(prisliste, currentSalg));
                         lbError.setText("");
+                        comboBoxbetalingsformer.getItems().setAll(controller.getMuligeBetalingsformer(currentSalg));
                     } else {
                         lbError.setText("antal skal være over 0");
                     }
@@ -162,11 +163,13 @@ public class OpretDagligtSalgPane extends GridPane {
     public void btnFjernAction(){
         Prisliste prisliste = cBPrislister.getSelectionModel().getSelectedItem();
         String s = lwSalgslinjer.getSelectionModel().getSelectedItem();
-        boolean result = controller.fjernSalgslinje(prisliste, currentSalg, s);
-        if(result == true){
+        Salgslinje result = controller.findSalgslinjeFraKurv(prisliste, currentSalg, s);
+        if(result != null){
+            controller.fjernSalgslinje(currentSalg, result);
             lwSalgslinjer.getItems().setAll(controller.printMellemRegning(prisliste, currentSalg));
             txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(prisliste, currentSalg));
             lbError.setText("Salgslinje fjernet");
+            comboBoxbetalingsformer.getItems().setAll(controller.getMuligeBetalingsformer(currentSalg));
             txfAntal.clear();
         } else {
             lwSalgslinjer.getItems().setAll(controller.printMellemRegning(prisliste, currentSalg));

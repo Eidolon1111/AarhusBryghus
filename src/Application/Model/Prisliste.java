@@ -26,7 +26,7 @@ public class Prisliste {
                     if (p.getPris() != pris.getPris()) {
                         p.setPris(pris.getPris());
                     }
-                    if (p.getKlip() != pris.getKlip() && pris.getKlip() > 0) {
+                    if (p.getKlip() != pris.getKlip() && pris.getKlip() >= 0) {
                         p.setKlip(pris.getKlip());
                     }
                     return;
@@ -46,24 +46,34 @@ public class Prisliste {
         }
     }
 
-    public double findPrisPaaProduktDKK(Produkt produkt){
-        double res = 0.0;
-        for (Pris p : prislisten){
-            if (p.getProdukt().getNavn().equals(produkt.getNavn())){
-                res = p.getPris();
-            }
-        }
-        return res;
-    }
+//    public double findPrisPaaProduktDKK(Produkt produkt){
+//        double res = 0.0;
+//        for (Pris p : prislisten){
+//            if (p.getProdukt().getNavn().equals(produkt.getNavn())){
+//                res = p.getPris();
+//            }
+//        }
+//        return res;
+//    }
 
-    public int findPrisPaaProduktKlip(Produkt produkt){
-        int res = 0;
-        for (Pris p : prislisten){
-            if (p.getProdukt().getNavn().equals(produkt.getNavn())){
-                res = p.getKlip();
+//    public int findPrisPaaProduktKlip(Produkt produkt){
+//        int res = 0;
+//        for (Pris p : prislisten){
+//            if (p.getProdukt().getNavn().equals(produkt.getNavn())){
+//                res = p.getKlip();
+//            }
+//        }
+//        return res;
+//    }
+
+    public Pris findPrisPaaProdukt(Produkt produkt){
+        Pris result = null;
+        for (Pris pris : prislisten){
+            if (pris.getProdukt() == produkt) {
+                result = pris;
             }
         }
-        return res;
+        return result;
     }
 
     

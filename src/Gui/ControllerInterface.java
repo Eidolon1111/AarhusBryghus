@@ -1,7 +1,7 @@
 package Gui;
 
 import Application.Model.*;
-import java.time.LocalDate;
+
 import java.util.ArrayList;
 
 public interface ControllerInterface {
@@ -28,9 +28,11 @@ public interface ControllerInterface {
 
     public String printSamletPrisDKKOgKlip(Prisliste prisliste, Salg salg);
 
-    public Salgslinje createSalgslinje(Salg salg, int antal, Produkt produkt);
+    public Salgslinje createSalgslinje(Salg salg, int antal, Pris pris);
 
-    public boolean fjernSalgslinje(Prisliste prisliste, Salg salg, String target);
+    public Salgslinje findSalgslinjeFraKurv(Prisliste prisliste, Salg salg, String target);
+
+    public void fjernSalgslinje(Salg salg, Salgslinje salgslinje);
 
     public ArrayList<ProduktGruppe> getProduktGrupperIPrisliste(Prisliste prisliste);
 
@@ -39,6 +41,12 @@ public interface ControllerInterface {
     public String getProduktGruppeNavn(ProduktGruppe pg);
 
     public void betalSalg(Salg salg, Salg.Betalingsform betalingsform);
+
+    public ArrayList<Salg.Betalingsform> getMuligeBetalingsformer(Salg salg);
+
+    public Pris findPrisPaaProdukt(Prisliste prisliste, Produkt produkt);
+
+    public boolean klippeKortBetalingMuligt(Salg salg);
 
     public void init();
 
