@@ -206,10 +206,10 @@ public class Controller implements ControllerInterface {
         this.createPris(fredagsbar,p5, 70,2);
 
         //Priser for butik for flasker
-        this.createPris(butik,p1, 36,2);
-        this.createPris(butik,p2, 36,2);
-        this.createPris(butik,p3, 36,2);
-        this.createPris(butik,p4, 36,2);
-        this.createPris(butik,p5, 36,2);
+        this.createPris(butik,p1, 36,0);
+        this.createPris(butik,p2, 36,0);
+        this.createPris(butik,p3, 36,0);
+        this.createPris(butik,p4, 36,0);
+        this.createPris(butik,p5, 36,0);
     }
 }

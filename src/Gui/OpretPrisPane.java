@@ -15,8 +15,8 @@ import javafx.scene.layout.GridPane;
 public class OpretPrisPane extends GridPane {
 
     private ControllerInterface controller;
-    private ListView lwPrislister = new ListView<>();
-    private ListView lwProdukter = new ListView<>();
+    private ListView<Prisliste> lwPrislister = new ListView<>();
+    private ListView<Produkt> lwProdukter = new ListView<>();
     private ListView lwValgtPrisliste = new ListView<>();
     private TextField txfOpretPrisliste = new TextField();
     private TextField txfDkkPris, txfKlipPris;
@@ -129,8 +129,8 @@ public class OpretPrisPane extends GridPane {
     }
 
     public void tilføjAction() {
-        Prisliste pl = (Prisliste) lwPrislister.getSelectionModel().getSelectedItem();
-        Produkt p = (Produkt) lwProdukter.getSelectionModel().getSelectedItem();
+        Prisliste pl = lwPrislister.getSelectionModel().getSelectedItem();
+        Produkt p = lwProdukter.getSelectionModel().getSelectedItem();
         if (p != null && pl != null) {
             if (txfDkkPris.getText().isEmpty()) {
                 lblErrorPris.setText("Pris mangler");
@@ -152,7 +152,7 @@ public class OpretPrisPane extends GridPane {
     }
 
     public void fjernAction() {
-        Prisliste pl = (Prisliste) lwPrislister.getSelectionModel().getSelectedItem();
+        Prisliste pl = lwPrislister.getSelectionModel().getSelectedItem();
         Pris p = (Pris) lwValgtPrisliste.getSelectionModel().getSelectedItem();
         if (p != null) {
             controller.fjernPris(pl,p);
@@ -161,7 +161,7 @@ public class OpretPrisPane extends GridPane {
     }
 
     public void updateControls(){
-        Prisliste pl = (Prisliste) lwPrislister.getSelectionModel().getSelectedItem();
+        Prisliste pl = lwPrislister.getSelectionModel().getSelectedItem();
         if (pl != null) {
             lwValgtPrisliste.getItems().setAll(pl.getPrislisten());
         }
