@@ -5,7 +5,6 @@ import Application.StorageInterface;
 import Gui.ControllerInterface;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class Controller implements ControllerInterface {
     private static Controller controller;
@@ -60,8 +59,14 @@ public class Controller implements ControllerInterface {
     }
 
 
-    public Salg createSalg() {
-        Salg s = new Salg();
+    public Salg createSimpelSalg() {
+        Salg s = new SimpelSalg();
+        storage.addSalg(s);
+        return s;
+    }
+
+    public Salg createKompleksSalg(Kunde kunde) {
+        Salg s = new KompleksSalg(kunde);
         storage.addSalg(s);
         return s;
     }

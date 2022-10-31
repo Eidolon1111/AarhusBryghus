@@ -138,7 +138,7 @@ public class OpretDagligtSalgPane extends GridPane {
                     antal = Integer.parseInt(txfAntal.getText());
                     if (antal > 0) {
                         if (currentSalg == null) {
-                            currentSalg = controller.createSalg();
+                            currentSalg = controller.createSimpelSalg();
                             lbError.setText("");
                         }
                         controller.createSalgslinje(currentSalg, antal, pris);

@@ -22,7 +22,9 @@ public interface ControllerInterface {
 
     public Produkt createProdukt(ProduktGruppe produktGruppe, String navn, String beskrivelse, String enhed);
 
-    public Salg createSalg();
+    public Salg createSimpelSalg();
+
+    public Salg createKompleksSalg(Kunde kunde);
 
     public ArrayList<String> printMellemRegning(Prisliste prisliste, Salg salg);
 

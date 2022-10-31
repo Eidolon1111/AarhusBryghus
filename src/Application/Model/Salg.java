@@ -3,7 +3,7 @@ package Application.Model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Salg {
+public abstract class Salg {
     private LocalDate registreringsDato;
     private ArrayList<Salgslinje> salgslinjer = new ArrayList<Salgslinje>();
     private Betalingsform betalingsform;
@@ -71,7 +71,7 @@ public class Salg {
 
     public Betalingsform getBetalingsform() {
         return this.betalingsform;
-    }
+   }
 
     public enum Betalingsform {
         DANKORT, KONTANT, KLIPPEKORT, MOBILEPAY, REGNING;
