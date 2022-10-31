@@ -114,7 +114,6 @@ public class OpretDagligtSalgPane extends GridPane {
         updateControls();
     }
 
-
     public void updateControls(){
         Prisliste prisliste = cBPrislister.getSelectionModel().getSelectedItem();
         if(prisliste != null){
