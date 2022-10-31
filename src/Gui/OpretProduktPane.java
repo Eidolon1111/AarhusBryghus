@@ -10,7 +10,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import org.w3c.dom.Text;
+
 
 public class OpretProduktPane extends GridPane {
 
@@ -87,7 +87,6 @@ public class OpretProduktPane extends GridPane {
 
     //
     public void updateControls(){
-        lwProduktgrupper.getItems().setAll(controller.getProduktGrupper());
         ProduktGruppe produktGruppe = (ProduktGruppe) lwProduktgrupper.getSelectionModel().getSelectedItem();
         if (produktGruppe != null) {
             lwProdukter.getItems().setAll(controller.getProdukterFraProduktgruppe((ProduktGruppe) lwProduktgrupper.getSelectionModel().getSelectedItem()));
@@ -103,8 +102,12 @@ public class OpretProduktPane extends GridPane {
             controller.createProduktGruppe(txfOpretProduktgruppe.getText());
             txfOpretProduktgruppe.clear();
             this.updateControls();
-            produktGruppeError1.setVisible(false);
-            produktGruppeError2.setVisible(false);
+            if(produktGruppeError1 != null) {
+                produktGruppeError1.setVisible(false);
+            }
+            if (produktGruppeError2 != null) {
+                produktGruppeError2.setVisible(false);
+            }
         } else if (dublet()){
             if (produktGruppeError2!=null){
                 produktGruppeError2.setVisible(false);
@@ -128,8 +131,9 @@ public class OpretProduktPane extends GridPane {
             controller.createProdukt(produktGruppe,txfNavn.getText(),txfBeskrivelse.getText(), txfBeskrivelse.getText());
             txfEnhed.clear(); txfNavn.clear(); txfBeskrivelse.clear();
             lwProdukter.getItems().setAll(controller.getProdukterFraProduktgruppe((ProduktGruppe) lwProduktgrupper.getSelectionModel().getSelectedItem()));
-            produktError.setVisible(false);
-
+            if(produktError != null) {
+                produktError.setVisible(false);
+            }
         } else {
             produktError = new Label("Produktnavn skal udfyldes!");
             produktError.setTextFill(Color.color(1, 0, 0));
