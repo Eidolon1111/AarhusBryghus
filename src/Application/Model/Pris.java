@@ -27,8 +27,6 @@ public class Pris {
         return klip;
     }
 
-
-
     public void setKlip(int klip) {
         this.klip = klip;
     }
