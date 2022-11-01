@@ -73,12 +73,12 @@ public class Controller implements ControllerInterface {
         return komplekstSalg;
     }
 
-    public ArrayList<String> printMellemRegning(Prisliste prisliste, SimpeltSalg salg) {
-        return salg.printMellemRegning(prisliste);
+    public ArrayList<String> printMellemRegning(SimpeltSalg salg) {
+        return salg.printMellemRegning();
     }
 
-    public String printSamletPrisDKKOgKlip(Prisliste prisliste, SimpeltSalg salg) {
-        return "DKK: " + salg.beregnSamletPrisDKK(prisliste) + " / Klip: " + salg.beregnSamletPrisKlip(prisliste);
+    public String printSamletPrisDKKOgKlip(SimpeltSalg salg) {
+        return "DKK: " + salg.beregnSamletPrisDKK() + " / Klip: " + salg.beregnSamletPrisKlip();
     }
 
     public Salgslinje createSalgslinje(SimpeltSalg salg, int antal, Pris pris) {
@@ -92,7 +92,7 @@ public class Controller implements ControllerInterface {
         Salgslinje result = null;
         while (result == null && index <= salg.getSalgslinjer().size()) {
             kandidat = salg.getSalgslinjer().get(index);
-            if (kandidat.printMellemRegning(prisliste).equals(target)) {
+            if (kandidat.printMellemRegning().equals(target)) {
                 result = kandidat;
             } else {
                 index++;

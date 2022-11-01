@@ -7,6 +7,7 @@ public class SimpeltSalg {
     private LocalDate registreringsDato;
     private ArrayList<Salgslinje> salgslinjer = new ArrayList<Salgslinje>();
     private Betalingsform betalingsform;
+    private double rabat;
 
 
     public SimpeltSalg() {
@@ -23,18 +24,24 @@ public class SimpeltSalg {
         salgslinjer.remove(salgslinje);
     }
 
-    public double beregnSamletPrisDKK(Prisliste prisliste) {
+
+    public double beregnSamletPrisDKK() {
         double result = 0;
         for (Salgslinje s : salgslinjer){
-            result += prisliste.findPrisPaaProdukt(s.getProdukt()).getPris() * s.getAntal();
+            result += s.beregnPrisDKK();
+        }
+        if(rabat < 1){
+            result = (result) * rabat;
+        } else {
+            result = (result) - rabat;
         }
         return result;
     }
 
-    public int beregnSamletPrisKlip(Prisliste prisliste) {
+    public int beregnSamletPrisKlip() {
         int result = 0;
         for (Salgslinje s : salgslinjer){
-            result += prisliste.findPrisPaaProdukt(s.getProdukt()).getKlip() * s.getAntal();
+            result += s.beregnPrisDKK();
         }
         return result;
     }
@@ -43,10 +50,10 @@ public class SimpeltSalg {
         return new ArrayList<>(salgslinjer);
     }
 
-    public ArrayList<String> printMellemRegning(Prisliste prisliste){
+    public ArrayList<String> printMellemRegning(){
         ArrayList<String> result = new ArrayList<>();
         for (Salgslinje salgslinje : salgslinjer){
-            result.add(salgslinje.printMellemRegning(prisliste));
+            result.add(salgslinje.printMellemRegning());
         }
         return result;
     }
@@ -74,11 +81,7 @@ public class SimpeltSalg {
    }
 
     public void setRabatSalg(double rabat){
-        for(Salgslinje salgslinje : salgslinjer){
-            if(salgslinje.beregnPrisDKK() > 0){
-                salgslinje.setRabat(rabat);
-            }
-        }
+        this.rabat = rabat;
     }
 
     public enum Betalingsform {

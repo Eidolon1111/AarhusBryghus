@@ -27,9 +27,9 @@ public interface ControllerInterface {
 
     public SimpeltSalg createKompleksSalg(Kunde kunde);
 
-    public ArrayList<String> printMellemRegning(Prisliste prisliste, SimpeltSalg salg);
+    public ArrayList<String> printMellemRegning(SimpeltSalg salg);
 
-    public String printSamletPrisDKKOgKlip(Prisliste prisliste, SimpeltSalg salg);
+    public String printSamletPrisDKKOgKlip(SimpeltSalg salg);
 
     public Salgslinje createSalgslinje(SimpeltSalg salg, int antal, Pris pris);
 

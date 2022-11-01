@@ -28,10 +28,12 @@ public class OpretDagligtSalgPane extends GridPane {
     private TextField txfAntal = new TextField();
     private Button btnTilføj = new Button("Tilføj");
 
-    private Button btnFjern = new Button("Fjern");
-
     private Label lbKurv = new Label("Kurv: ");
     private ListView<String> lwSalgslinjer = new ListView<>();
+
+    private Button btnFjern = new Button("Fjern salgslinje");
+    private Button btnSalgslinjeRabat = new Button("rabat salgslinje");
+    private HBox hBoxRabatogFjern = new HBox(btnFjern, btnSalgslinjeRabat);
 
     private Label lbTotal = new Label("Total: ");
     private TextField txfTotal = new TextField();
@@ -39,9 +41,11 @@ public class OpretDagligtSalgPane extends GridPane {
 
     private Label lbBetalingsformer = new Label("Vælg Betalingsform:");
     private ComboBox<SimpeltSalg.Betalingsform> comboBoxbetalingsformer = new ComboBox<>();
+    private Button btnSalgRabat = new Button("rabat Salg");
     private Button btnBetal = new Button("Betal");
     private VBox vBoxBetalingsFormer = new VBox(lbBetalingsformer, comboBoxbetalingsformer);
-    private HBox hBoxBetaling = new HBox(vBoxBetalingsFormer, btnBetal);
+    private VBox vBoxBetalingRabat = new VBox(btnSalgRabat, btnBetal);
+    private HBox hBoxBetaling = new HBox(vBoxBetalingsFormer, vBoxBetalingRabat);
 
     private Label lbError = new Label();
     private Label lbSucces = new Label();
@@ -63,12 +67,12 @@ public class OpretDagligtSalgPane extends GridPane {
         cBPrislister.getSelectionModel().selectedItemProperty().addListener(listenerCBPrislister);
 
         this.add(lbProduktgrupper, 0, 2);
-        this.add(lwProduktgrupper, 0, 3, 1, 8);
+        this.add(lwProduktgrupper, 0, 3, 1, 10);
         ChangeListener<ProduktGruppe> listenerProduktGruppe = (ov, oldProduktGruppe, newProduktGruppe) -> this.selectedProduktGruppeChanged();
         lwProduktgrupper.getSelectionModel().selectedItemProperty().addListener(listenerProduktGruppe);
 
         this.add(lbProdukt, 1, 0);
-        this.add(lwProdukter, 1, 1,1,10);
+        this.add(lwProdukter, 1, 1,1,12);
         ChangeListener<Produkt> listenerProdukt = (ov, oldProdukt, newProdukt) -> this.selectedProdukt();
         lwProdukter.getSelectionModel().selectedItemProperty().addListener(listenerProdukt);
 
@@ -78,25 +82,26 @@ public class OpretDagligtSalgPane extends GridPane {
         this.add(btnTilføj, 2, 6);
         btnTilføj.setOnAction(actionEvent -> btnTilføjAction());
 
-        this.add(btnFjern, 3, 6);
+        this.add(hBoxRabatogFjern, 4, 8);
+        hBoxRabatogFjern.setSpacing(65);
         btnFjern.setOnAction(event -> btnFjernAction());
 
         this.add(lbKurv, 4, 0);
         this.add(lwSalgslinjer, 4, 1,1,7);
 
-        this.add(hBoxTotal, 4, 8);
-        hBoxTotal.setSpacing(135);
+        this.add(hBoxTotal, 4, 9);
+        hBoxTotal.setSpacing(75);
         txfTotal.setEditable(false);
         txfTotal.setPrefWidth(150);
-        //txfTotal.setPrefHeight();
 
-        this.add(hBoxBetaling, 4, 9);
-        hBoxBetaling.setSpacing(100);
-        btnBetal.setPrefWidth(100);
+        this.add(hBoxBetaling, 4, 11);
+        hBoxBetaling.setSpacing(50);
+        btnBetal.setPrefWidth(75);
+        btnSalgRabat.setPrefWidth(75);
         btnBetal.setPrefHeight(50);
         btnBetal.setOnAction(actionEvent -> btnBetalAction());
 
-        this.add(hBoxErrorAndSucces, 4, 10);
+        this.add(hBoxErrorAndSucces, 4, 12);
         lbError.setStyle("-fx-text-fill: red");
         lbSucces.setStyle("-fx-text-fill: green");
 
@@ -141,8 +146,8 @@ public class OpretDagligtSalgPane extends GridPane {
                             lbError.setText("");
                         }
                         controller.createSalgslinje(currentSimpeltSalg, antal, pris);
-                        lwSalgslinjer.getItems().setAll(controller.printMellemRegning(prisliste, currentSimpeltSalg));
-                        txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(prisliste, currentSimpeltSalg));
+                        lwSalgslinjer.getItems().setAll(controller.printMellemRegning(currentSimpeltSalg));
+                        txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(currentSimpeltSalg));
                         lbError.setText("");
                         comboBoxbetalingsformer.getItems().setAll(controller.getMuligeBetalingsformer(currentSimpeltSalg));
                     } else {
@@ -165,13 +170,13 @@ public class OpretDagligtSalgPane extends GridPane {
         Salgslinje result = controller.findSalgslinjeFraKurv(prisliste, currentSimpeltSalg, s);
         if(result != null){
             controller.fjernSalgslinje(currentSimpeltSalg, result);
-            lwSalgslinjer.getItems().setAll(controller.printMellemRegning(prisliste, currentSimpeltSalg));
-            txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(prisliste, currentSimpeltSalg));
+            lwSalgslinjer.getItems().setAll(controller.printMellemRegning(currentSimpeltSalg));
+            txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(currentSimpeltSalg));
             lbError.setText("Salgslinje fjernet");
             comboBoxbetalingsformer.getItems().setAll(controller.getMuligeBetalingsformer(currentSimpeltSalg));
             txfAntal.clear();
         } else {
-            lwSalgslinjer.getItems().setAll(controller.printMellemRegning(prisliste, currentSimpeltSalg));
+            lwSalgslinjer.getItems().setAll(controller.printMellemRegning(currentSimpeltSalg));
             lbError.setText("fejl");
         }
     }
@@ -191,4 +196,15 @@ public class OpretDagligtSalgPane extends GridPane {
             }
         }
     }
+
+    public void btnSalgslinjeRabat(){
+        RabatWindow dia = new RabatWindow("Rabat Salgslinje");
+        dia.showAndWait();
+    }
+
+    public void btnSalgRabat(){
+        RabatWindow dia = new RabatWindow("Rabat Salgslinje");
+        dia.showAndWait();
+    }
+
 }

@@ -19,14 +19,20 @@ public class Salgslinje {
     }
 
     public double beregnPrisDKK(){
-        return (pris.getPris() * antal) - rabat;
+        double result;
+        if(rabat < 1){
+            result = (pris.getPris() * antal) * rabat;
+        } else {
+            result = (pris.getPris() * antal) - rabat;
+        }
+        return result;
     }
 
     public int beregnPrisKlip(){
         return pris.getKlip() * antal;
     }
 
-    public String printMellemRegning(Prisliste prisliste){
+    public String printMellemRegning(){
         return pris.getProdukt().printNavn() + "\t" + "antal: " + antal + "\t" + "DKK: " +
                 beregnPrisDKK() + " / Klip: " + beregnPrisKlip();
     }
