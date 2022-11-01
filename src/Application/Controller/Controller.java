@@ -3,6 +3,8 @@ package Application.Controller;
 import Application.Model.*;
 import Application.StorageInterface;
 import Gui.ControllerInterface;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -142,6 +144,20 @@ public class Controller implements ControllerInterface {
         return prisliste.findPrisPaaProdukt(produkt);
     }
 
+    public ArrayList<Kunde> getKunder() {
+        return storage.getKunder();
+    }
+
+    public void createKunde(String navn, String tlfNr, String email) {
+        Kunde kunde = new Kunde(navn, tlfNr, email);
+        storage.addKunde(kunde);
+    }
+
+    public void createRundvisning(Kunde kunde, LocalDateTime afholdesesDato) {
+        KomplekstSalg Rundvisning = new KomplekstSalg(kunde);
+        Rundvisning.setAfholdelsesDag(afholdesesDato);
+        storage.addSalg(Rundvisning);
+    }
 
 
 
@@ -216,5 +232,10 @@ public class Controller implements ControllerInterface {
         this.createPris(butik,p3, 36,0);
         this.createPris(butik,p4, 36,0);
         this.createPris(butik,p5, 36,0);
+
+        //Kunder
+        this.createKunde("Hans", "60453980", "Hans@gmail.com");
+        this.createKunde("Jens", "61235789", "Jens@gmail.com");
+        this.createKunde("Poul", "23466892", "Poul@gmail.com");
     }
 }

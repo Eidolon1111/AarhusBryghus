@@ -1,5 +1,6 @@
 package Application;
 
+import Application.Model.Kunde;
 import Application.Model.Prisliste;
 import Application.Model.ProduktGruppe;
 import Application.Model.SimpeltSalg;
@@ -18,5 +19,9 @@ public interface StorageInterface {
     public ArrayList<SimpeltSalg> getSalg();
 
     public void addSalg(SimpeltSalg salg);
+
+    public void addKunde(Kunde kunde);
+
+    public ArrayList<Kunde> getKunder();
 
 }

@@ -1,8 +1,11 @@
 package Application.Model;
 
+import java.time.LocalDateTime;
+
 public class KomplekstSalg extends SimpeltSalg {
     private Status status;
     private Kunde kunde;
+    private LocalDateTime dato2; //Anvendes til afregning af udlejelse og booking
 
     public KomplekstSalg(Kunde kunde) {
         super();
@@ -25,6 +28,10 @@ public class KomplekstSalg extends SimpeltSalg {
 
     public Kunde getKunde() {
         return kunde;
+    }
+
+    public void setAfholdelsesDag(LocalDateTime afregningsDag){
+        this.dato2 = afregningsDag;
     }
 
 

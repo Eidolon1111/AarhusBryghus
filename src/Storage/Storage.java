@@ -1,5 +1,6 @@
 package Storage;
 
+import Application.Model.Kunde;
 import Application.Model.Prisliste;
 import Application.Model.ProduktGruppe;
 import Application.Model.SimpeltSalg;
@@ -11,6 +12,7 @@ public class Storage implements StorageInterface {
     private ArrayList<Prisliste> prislister = new ArrayList<>();
     private ArrayList<ProduktGruppe> produktGrupper = new ArrayList<>();
     private ArrayList<SimpeltSalg> salg = new ArrayList<>();
+    private ArrayList<Kunde> kunder = new ArrayList<>();
 
     public ArrayList<Prisliste> getPrislister() {
         return new ArrayList<>(prislister);
@@ -41,5 +43,17 @@ public class Storage implements StorageInterface {
             salg.add(s);
         }
     }
+
+    public void addKunde(Kunde kunde) {
+        if(!kunder.contains(kunde)) {
+            kunder.add(kunde);
+        }
+    }
+
+    public ArrayList<Kunde> getKunder() {
+        return new ArrayList<>(kunder);
+    }
+
+
 
 }
