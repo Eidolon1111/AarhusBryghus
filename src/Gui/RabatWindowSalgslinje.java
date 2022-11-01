@@ -68,6 +68,7 @@ public class RabatWindowSalgslinje extends Stage{
         lbError.setStyle("-fx-text-fill: red");
     }
 
+    //TODO tjek for ugyldigt data!
     public void btnGemAction(){
         try {
             double rabat = Double.parseDouble(txfRabat.getText());

@@ -23,7 +23,6 @@ public class OpretDagligtSalgPane extends GridPane {
     private Label lbProdukt = new Label("Vælg produkt: ");
     private ListView<Produkt> lwProdukter = new ListView<>();
 
-
     private Label lbAntal = new Label("Indtast antal: ");
     private TextField txfAntal = new TextField();
     private Button btnTilføj = new Button("Tilføj");
@@ -32,7 +31,7 @@ public class OpretDagligtSalgPane extends GridPane {
     private ListView<String> lwSalgslinjer = new ListView<>();
 
     private Button btnFjern = new Button("Fjern salgslinje");
-    private Button btnSalgslinjeRabat = new Button("rabat salgslinje");
+    private Button btnSalgslinjeRabat = new Button("Rabat salgslinje");
     private HBox hBoxRabatogFjern = new HBox(btnFjern, btnSalgslinjeRabat);
 
     private Label lbTotal = new Label("Total: ");
@@ -41,7 +40,7 @@ public class OpretDagligtSalgPane extends GridPane {
 
     private Label lbBetalingsformer = new Label("Vælg Betalingsform:");
     private ComboBox<SimpeltSalg.Betalingsform> comboBoxbetalingsformer = new ComboBox<>();
-    private Button btnSalgRabat = new Button("rabat Salg");
+    private Button btnSalgRabat = new Button("Rabat Salg");
     private Button btnBetal = new Button("Betal");
     private VBox vBoxBetalingsFormer = new VBox(lbBetalingsformer, comboBoxbetalingsformer);
     private VBox vBoxBetalingRabat = new VBox(btnSalgRabat, btnBetal);
@@ -82,28 +81,27 @@ public class OpretDagligtSalgPane extends GridPane {
         this.add(btnTilføj, 2, 6);
         btnTilføj.setOnAction(actionEvent -> btnTilføjAction());
 
-        this.add(hBoxRabatogFjern, 4, 8);
-        hBoxRabatogFjern.setSpacing(65);
+        this.add(hBoxRabatogFjern, 4, 9);
+        hBoxRabatogFjern.setSpacing(20);
         btnFjern.setOnAction(event -> btnFjernAction());
         btnSalgslinjeRabat.setOnAction(event -> btnSalgslinjeRabat());
 
         this.add(lbKurv, 4, 0);
-        this.add(lwSalgslinjer, 4, 1,1,7);
+        this.add(lwSalgslinjer, 4, 1,1,9);
 
-        this.add(hBoxTotal, 4, 9);
-        hBoxTotal.setSpacing(75);
+        this.add(hBoxTotal, 4, 11);
+        hBoxTotal.setSpacing(20);
         txfTotal.setEditable(false);
-        txfTotal.setPrefWidth(170);
 
-        this.add(hBoxBetaling, 4, 11);
-        hBoxBetaling.setSpacing(50);
-        btnBetal.setPrefWidth(75);
-        btnSalgRabat.setPrefWidth(75);
-        btnBetal.setPrefHeight(50);
+        this.add(hBoxBetaling, 4, 12);
+        vBoxBetalingRabat.setSpacing(10);
+        vBoxBetalingsFormer.setSpacing(10);
+        hBoxBetaling.setSpacing(20);
+
         btnBetal.setOnAction(actionEvent -> btnBetalAction());
         btnSalgRabat.setOnAction(event -> btnSalgRabat());
 
-        this.add(hBoxErrorAndSucces, 4, 12);
+        this.add(hBoxErrorAndSucces, 4, 13);
         lbError.setStyle("-fx-text-fill: red");
         lbSucces.setStyle("-fx-text-fill: green");
 

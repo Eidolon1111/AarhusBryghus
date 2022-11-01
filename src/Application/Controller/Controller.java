@@ -274,12 +274,17 @@ public class Controller implements ControllerInterface {
         Prisliste dag = this.createPrisliste("Dag");
         Prisliste aften = this.createPrisliste("Aften");
         Prisliste student = this.createPrisliste("Student");
+        Prisliste udlejning = this.createPrisliste("Udlejning");
 
         //Rundvisning produkt
         Produkt Rundvisning = this.createProdukt(pg11,
                 "Rundvisning",
                 "kan variere afhængig af dag/aften/studierabat",
                 "pr person dag");
+
+        //TODO
+        //Udlejnings Produkter
+
 
         //Priser
         dag.createPrisTilPrisliste(Rundvisning, 100, 0);

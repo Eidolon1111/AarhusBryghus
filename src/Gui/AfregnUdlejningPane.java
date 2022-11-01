@@ -6,7 +6,7 @@ import javafx.scene.layout.GridPane;
 public class AfregnUdlejningPane extends GridPane {
 
     private ControllerInterface controller;
-
+    //TODO
     public AfregnUdlejningPane(ControllerInterface controller){
         this.controller = controller;
         this.setPadding(new Insets(10));
