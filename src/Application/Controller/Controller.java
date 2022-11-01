@@ -78,7 +78,17 @@ public class Controller implements ControllerInterface {
     }
 
     public String printSamletPrisDKKOgKlip(SimpeltSalg salg) {
-        return "DKK: " + salg.beregnSamletPrisDKK() + " / Klip: " + salg.beregnSamletPrisKlip();
+        String result;
+        if(salg.getRabat() != 0 && salg.getRabat() < 1){
+            result = "DKK: " + salg.beregnSamletPrisDKK() + " / Klip: " + salg.beregnSamletPrisKlip() + " -"
+                    + (salg.getRabat() * 100) + "%";
+        } else if(salg.getRabat() > 1){
+            result = result = "DKK: " + salg.beregnSamletPrisDKK() + " / Klip: " + salg.beregnSamletPrisKlip() + " -"
+                    + salg.getRabat() + " DKK";
+        } else {
+            result = "DKK: " + salg.beregnSamletPrisDKK() + " / Klip: " + salg.beregnSamletPrisKlip();
+        }
+        return result;
     }
 
     public Salgslinje createSalgslinje(SimpeltSalg salg, int antal, Pris pris) {
@@ -174,7 +184,13 @@ public class Controller implements ControllerInterface {
         } return res;
     }
 
+    public void setRabatSalg(SimpeltSalg salg, double rabat) {
+        salg.setRabatSalg(rabat);
+    }
 
+    public void setRabatSalgslinje(Salgslinje salgslinje, double rabat) {
+        salgslinje.setRabat(rabat);
+    }
 
 
     public void init(){

@@ -20,10 +20,14 @@ public class Salgslinje {
 
     public double beregnPrisDKK(){
         double result;
-        if(rabat < 1){
-            result = (pris.getPris() * antal) * rabat;
-        } else {
-            result = (pris.getPris() * antal) - rabat;
+        if(rabat != 0){
+            if(rabat < 1 ){
+                result = (pris.getPris() * antal) - ((pris.getPris() * antal) * rabat);
+            } else {
+                result = (pris.getPris() * antal) - rabat;
+            }
+        }else {
+            result = (pris.getPris() * antal);
         }
         return result;
     }
@@ -33,8 +37,18 @@ public class Salgslinje {
     }
 
     public String printMellemRegning(){
-        return pris.getProdukt().printNavn() + "\t" + "antal: " + antal + "\t" + "DKK: " +
-                beregnPrisDKK() + " / Klip: " + beregnPrisKlip();
+        String result;
+        if(rabat != 0 && rabat < 1){
+            result = pris.getProdukt().printNavn() + "\t" + "antal: " + antal + "\t" + "DKK: " +
+                    beregnPrisDKK() + " / Klip: " + beregnPrisKlip() + " -" + (rabat * 100) + "%";
+        } else if (rabat != 0 && rabat > 1){
+            result = pris.getProdukt().printNavn() + "\t" + "antal: " + antal + "\t" + "DKK: " +
+                    beregnPrisDKK() + " / Klip: " + beregnPrisKlip() + " -" + rabat + " DKK";
+        } else {
+            result = pris.getProdukt().printNavn() + "\t" + "antal: " + antal + "\t" + "DKK: " +
+                    beregnPrisDKK() + " / Klip: " + beregnPrisKlip();
+        }
+        return result;
     }
 
     public boolean klippeKortBetalingMuligt(){

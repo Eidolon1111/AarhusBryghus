@@ -30,10 +30,12 @@ public class SimpeltSalg {
         for (Salgslinje s : salgslinjer){
             result += s.beregnPrisDKK();
         }
-        if(rabat < 1){
-            result = (result) * rabat;
-        } else {
-            result = (result) - rabat;
+        if (rabat != 0){
+            if(rabat < 1){
+                result = (result) - ((result) * rabat);
+            } else {
+                result = (result) - rabat;
+            }
         }
         return result;
     }
@@ -41,7 +43,7 @@ public class SimpeltSalg {
     public int beregnSamletPrisKlip() {
         int result = 0;
         for (Salgslinje s : salgslinjer){
-            result += s.beregnPrisDKK();
+            result += s.beregnPrisKlip();
         }
         return result;
     }
@@ -82,6 +84,10 @@ public class SimpeltSalg {
 
     public void setRabatSalg(double rabat){
         this.rabat = rabat;
+    }
+
+    public double getRabat(){
+        return rabat;
     }
 
     public enum Betalingsform {

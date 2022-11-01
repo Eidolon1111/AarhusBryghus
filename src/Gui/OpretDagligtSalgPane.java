@@ -85,6 +85,7 @@ public class OpretDagligtSalgPane extends GridPane {
         this.add(hBoxRabatogFjern, 4, 8);
         hBoxRabatogFjern.setSpacing(65);
         btnFjern.setOnAction(event -> btnFjernAction());
+        btnSalgslinjeRabat.setOnAction(event -> btnSalgslinjeRabat());
 
         this.add(lbKurv, 4, 0);
         this.add(lwSalgslinjer, 4, 1,1,7);
@@ -92,7 +93,7 @@ public class OpretDagligtSalgPane extends GridPane {
         this.add(hBoxTotal, 4, 9);
         hBoxTotal.setSpacing(75);
         txfTotal.setEditable(false);
-        txfTotal.setPrefWidth(150);
+        txfTotal.setPrefWidth(170);
 
         this.add(hBoxBetaling, 4, 11);
         hBoxBetaling.setSpacing(50);
@@ -100,6 +101,7 @@ public class OpretDagligtSalgPane extends GridPane {
         btnSalgRabat.setPrefWidth(75);
         btnBetal.setPrefHeight(50);
         btnBetal.setOnAction(actionEvent -> btnBetalAction());
+        btnSalgRabat.setOnAction(event -> btnSalgRabat());
 
         this.add(hBoxErrorAndSucces, 4, 12);
         lbError.setStyle("-fx-text-fill: red");
@@ -198,13 +200,21 @@ public class OpretDagligtSalgPane extends GridPane {
     }
 
     public void btnSalgslinjeRabat(){
-        RabatWindow dia = new RabatWindow("Rabat Salgslinje");
+        Prisliste prisliste = cBPrislister.getSelectionModel().getSelectedItem();
+        String target = lwSalgslinjer.getSelectionModel().getSelectedItem();
+        Salgslinje salgslinje = controller.findSalgslinjeFraKurv(prisliste, currentSimpeltSalg, target);
+        RabatWindowSalgslinje dia = new RabatWindowSalgslinje(controller, "Rabat Salgslinje", salgslinje);
         dia.showAndWait();
+        lwSalgslinjer.getItems().setAll(controller.printMellemRegning(currentSimpeltSalg));
+        txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(currentSimpeltSalg));
     }
 
     public void btnSalgRabat(){
-        RabatWindow dia = new RabatWindow("Rabat Salgslinje");
+        RabatWindowSalg dia = new RabatWindowSalg(controller,"Rabat Salgslinje", currentSimpeltSalg);
         dia.showAndWait();
+        updateControls();
+        lwSalgslinjer.getItems().setAll(controller.printMellemRegning(currentSimpeltSalg));
+        txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(currentSimpeltSalg));
     }
 
 }

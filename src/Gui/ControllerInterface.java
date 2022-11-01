@@ -59,6 +59,10 @@ public interface ControllerInterface {
 
     public ArrayList<Prisliste> getPrislisterMedSpecifiktProdukt(String Produktnavn);
 
+    public void setRabatSalg(SimpeltSalg salg, double rabat);
+
+    public void setRabatSalgslinje(Salgslinje salgslinje, double rabat);
+
     public void init();
 
     public void createKunde(String navn, String tlfNr, String email);
