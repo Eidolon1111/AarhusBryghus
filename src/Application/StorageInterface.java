@@ -2,7 +2,7 @@ package Application;
 
 import Application.Model.Prisliste;
 import Application.Model.ProduktGruppe;
-import Application.Model.Salg;
+import Application.Model.SimpeltSalg;
 
 import java.util.ArrayList;
 
@@ -15,8 +15,8 @@ public interface StorageInterface {
 
     public void addProduktGruppe(ProduktGruppe produktGruppe);
 
-    public ArrayList<Salg> getSalg();
+    public ArrayList<SimpeltSalg> getSalg();
 
-    public void addSalg(Salg salg);
+    public void addSalg(SimpeltSalg salg);
 
 }

@@ -30,7 +30,7 @@ public class Controller implements ControllerInterface {
         return result;
     }
 
-    public ArrayList<Salg> getSalg() {return storage.getSalg(); }
+    public ArrayList<SimpeltSalg> getSalg() {return storage.getSalg(); }
 
     public Prisliste createPrisliste(String navn) {
         Prisliste pl = new Prisliste(navn);
@@ -58,33 +58,33 @@ public class Controller implements ControllerInterface {
         return p;
     }
 
-
-    public Salg createSimpelSalg() {
-        Salg s = new SimpelSalg();
-        storage.addSalg(s);
-        return s;
+    @Override
+    public SimpeltSalg createSimpelSalg() {
+        SimpeltSalg simpeltSalg = new SimpeltSalg();
+        storage.addSalg(simpeltSalg);
+        return simpeltSalg;
     }
 
-    public Salg createKompleksSalg(Kunde kunde) {
-        Salg s = new KompleksSalg(kunde);
-        storage.addSalg(s);
-        return s;
+    public SimpeltSalg createKompleksSalg(Kunde kunde) {
+        KomplekstSalg komplekstSalg = new KomplekstSalg(kunde);
+        storage.addSalg(komplekstSalg);
+        return komplekstSalg;
     }
 
-    public ArrayList<String> printMellemRegning(Prisliste prisliste, Salg salg) {
+    public ArrayList<String> printMellemRegning(Prisliste prisliste, SimpeltSalg salg) {
         return salg.printMellemRegning(prisliste);
     }
 
-    public String printSamletPrisDKKOgKlip(Prisliste prisliste, Salg salg) {
+    public String printSamletPrisDKKOgKlip(Prisliste prisliste, SimpeltSalg salg) {
         return "DKK: " + salg.beregnSamletPrisDKK(prisliste) + " / Klip: " + salg.beregnSamletPrisKlip(prisliste);
     }
 
-    public Salgslinje createSalgslinje(Salg salg, int antal, Pris pris) {
+    public Salgslinje createSalgslinje(SimpeltSalg salg, int antal, Pris pris) {
         Salgslinje sl = salg.createSalgslinje(pris, antal);
         return sl;
     }
 
-    public Salgslinje findSalgslinjeFraKurv(Prisliste prisliste, Salg salg, String target){
+    public Salgslinje findSalgslinjeFraKurv(Prisliste prisliste, SimpeltSalg salg, String target){
         int index = 0;
         Salgslinje kandidat;
         Salgslinje result = null;
@@ -99,7 +99,7 @@ public class Controller implements ControllerInterface {
         return result;
     }
 
-    public void fjernSalgslinje(Salg salg, Salgslinje salgslinje) {
+    public void fjernSalgslinje(SimpeltSalg salg, Salgslinje salgslinje) {
         salg.fjernSalgsLinje(salgslinje);
     }
 
@@ -111,7 +111,7 @@ public class Controller implements ControllerInterface {
         return pg.getNavn();
     }
 
-    public void betalSalg(Salg salg, Salg.Betalingsform betalingsform) {
+    public void betalSalg(SimpeltSalg salg, SimpeltSalg.Betalingsform betalingsform) {
         salg.setBetalingsform(betalingsform);
     }
 
@@ -126,14 +126,14 @@ public class Controller implements ControllerInterface {
         return result;
     }
 
-    public boolean klippeKortBetalingMuligt(Salg salg) {
+    public boolean klippeKortBetalingMuligt(SimpeltSalg salg) {
         return salg.klippeKortBetalingMuligt();
     }
 
-    public ArrayList<Salg.Betalingsform> getMuligeBetalingsformer(Salg salg){
-        ArrayList<Salg.Betalingsform> muligeBetalingsformer = new ArrayList<>(Arrays.asList(Salg.Betalingsform.values()));
+    public ArrayList<SimpeltSalg.Betalingsform> getMuligeBetalingsformer(SimpeltSalg salg){
+        ArrayList<SimpeltSalg.Betalingsform> muligeBetalingsformer = new ArrayList<>(Arrays.asList(SimpeltSalg.Betalingsform.values()));
         if(!salg.klippeKortBetalingMuligt()){
-            muligeBetalingsformer.remove(Salg.Betalingsform.KLIPPEKORT);
+            muligeBetalingsformer.remove(SimpeltSalg.Betalingsform.KLIPPEKORT);
         }
         return  muligeBetalingsformer;
     }

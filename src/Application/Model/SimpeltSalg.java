@@ -3,13 +3,13 @@ package Application.Model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public abstract class Salg {
+public class SimpeltSalg {
     private LocalDate registreringsDato;
     private ArrayList<Salgslinje> salgslinjer = new ArrayList<Salgslinje>();
     private Betalingsform betalingsform;
 
 
-    public Salg() {
+    public SimpeltSalg() {
         this.registreringsDato = LocalDate.now();
     }
 

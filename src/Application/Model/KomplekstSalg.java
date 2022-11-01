@@ -1,14 +1,18 @@
 package Application.Model;
 
-public class KompleksSalg extends Salg {
+public class KomplekstSalg extends SimpeltSalg {
     private Status status;
     private Kunde kunde;
-    private SimpelSalg afregning;
 
-    public KompleksSalg(Kunde kunde) {
+    public KomplekstSalg(Kunde kunde) {
         super();
         this.status = Status.REGISTRERET;
         this.kunde = kunde;
+    }
+
+    public Salgslinje createModregning(Salgslinje salgslinje, Prisliste prisliste){
+        Pris pris = new Pris(-salgslinje.beregnPrisDKK(prisliste),0,salgslinje.getProdukt());
+        return super.createSalgslinje(pris,salgslinje.getAntal());
     }
 
     public Status getStatus() {
@@ -23,18 +27,6 @@ public class KompleksSalg extends Salg {
         return kunde;
     }
 
-    public void createAfregning() {
-        SimpelSalg afregning = new SimpelSalg();
-        this.afregning = afregning;
-    }
-
-    public SimpelSalg getAfregning() {
-        return afregning;
-    }
-
-    public double getModregning(){
-        return 0;
-    }
 
     public enum Status {
         REGISTRERET, PANTBETALT, AFREGNET;
