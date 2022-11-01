@@ -13,9 +13,9 @@ public class KomplekstSalg extends SimpeltSalg {
         this.kunde = kunde;
     }
 
-    public Salgslinje createModregning(Salgslinje salgslinje, Prisliste prisliste){
+    public Salgslinje createModregning(Salgslinje salgslinje, int antal, Prisliste prisliste){
         Pris pris = new Pris(-salgslinje.beregnPrisDKK(prisliste),0,salgslinje.getProdukt());
-        return super.createSalgslinje(pris,salgslinje.getAntal());
+        return super.createSalgslinje(pris, antal);
     }
 
     public Status getStatus() {
