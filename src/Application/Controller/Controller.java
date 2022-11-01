@@ -177,7 +177,6 @@ public class Controller implements ControllerInterface {
 
 
 
-
     public void init(){
         Prisliste fredagsbar = this.createPrisliste("Fredagsbar");
         Prisliste butik = this.createPrisliste("Butik");

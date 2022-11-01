@@ -65,4 +65,8 @@ public interface ControllerInterface {
 
     public void init();
 
+    public void createKunde(String navn, String tlfNr, String email);
+
+    public ArrayList<Kunde> getKunder();
+
 }
