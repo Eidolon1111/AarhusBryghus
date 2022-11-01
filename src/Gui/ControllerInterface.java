@@ -35,6 +35,8 @@ public interface ControllerInterface {
 
     public Salgslinje findSalgslinjeFraKurv(Prisliste prisliste, SimpeltSalg salg, String target);
 
+    public ArrayList<SimpeltSalg> getSalg();
+
     public void fjernSalgslinje(SimpeltSalg salg, Salgslinje salgslinje);
 
     public ArrayList<ProduktGruppe> getProduktGrupperIPrisliste(Prisliste prisliste);
@@ -56,6 +58,10 @@ public interface ControllerInterface {
     public void createKunde(String navn, String tlfNr, String email);
 
     public void createRundvisning(Kunde kunde, LocalDateTime afholdesesDato);
+
+    public Pris findPrisIPrisliste(Prisliste prisliste, String Produktnavn);
+
+    public ArrayList<Prisliste> getPrislisterMedSpecifiktProdukt(String Produktnavn);
 
     public void init();
 

@@ -38,4 +38,9 @@ public class KomplekstSalg extends SimpeltSalg {
     public enum Status {
         REGISTRERET, PANTBETALT, AFREGNET;
     }
+
+    @Override
+    public String toString() {
+        return kunde.getNavn() + " " + status;
+    }
 }

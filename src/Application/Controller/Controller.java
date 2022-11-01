@@ -159,6 +159,23 @@ public class Controller implements ControllerInterface {
         storage.addSalg(Rundvisning);
     }
 
+    public Pris findPrisIPrisliste(Prisliste prisliste, String Produktnavn) {
+        return prisliste.findPris(Produktnavn);
+    }
+
+    public ArrayList<Prisliste> getPrislisterMedSpecifiktProdukt(String Produktnavn){
+        ArrayList<Prisliste> res = new ArrayList<>();
+        for (Prisliste pl : storage.getPrislister()) {
+            for (Pris p : pl.getPrislisten()){
+                if (p.getProdukt().getNavn().equals(Produktnavn)){
+                    res.add(pl);
+                }
+            }
+        } return res;
+    }
+
+
+
 
 
     public void init(){
@@ -215,9 +232,6 @@ public class Controller implements ControllerInterface {
         //Sampakninger
         this.createProdukt(pg10, "Gaveæske", "2 øl, 2 glas", "");
 
-        //Rundvisning
-        this.createProdukt(pg11, "Rundvisning", "kan variere afhængig af dag/aften/studierabat", "pr person dag");
-
 
         //Priser for fredagsbar for flasker
         this.createPris(fredagsbar,p1, 70,2);
@@ -233,9 +247,28 @@ public class Controller implements ControllerInterface {
         this.createPris(butik,p4, 36,0);
         this.createPris(butik,p5, 36,0);
 
+
+        //Initialisering af objekter anvendt i rundvisning
+
         //Kunder
         this.createKunde("Hans", "60453980", "Hans@gmail.com");
         this.createKunde("Jens", "61235789", "Jens@gmail.com");
         this.createKunde("Poul", "23466892", "Poul@gmail.com");
+
+        //Prislister
+        Prisliste dag = this.createPrisliste("Dag");
+        Prisliste aften = this.createPrisliste("Aften");
+        Prisliste student = this.createPrisliste("Student");
+
+        //Rundvisning produkt
+        Produkt Rundvisning = this.createProdukt(pg11,
+                "Rundvisning",
+                "kan variere afhængig af dag/aften/studierabat",
+                "pr person dag");
+
+        //Priser
+        dag.createPrisTilPrisliste(Rundvisning, 100, 0);
+        aften.createPrisTilPrisliste(Rundvisning, 150, 0);
+        student.createPrisTilPrisliste(Rundvisning, 50, 0);
     }
 }
