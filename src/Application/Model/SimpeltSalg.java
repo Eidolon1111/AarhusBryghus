@@ -73,6 +73,14 @@ public class SimpeltSalg {
         return this.betalingsform;
    }
 
+    public void setRabatSalg(double rabat){
+        for(Salgslinje salgslinje : salgslinjer){
+            if(salgslinje.beregnPrisDKK() > 0){
+                salgslinje.setRabat(rabat);
+            }
+        }
+    }
+
     public enum Betalingsform {
         DANKORT, KONTANT, KLIPPEKORT, MOBILEPAY, REGNING;
     }

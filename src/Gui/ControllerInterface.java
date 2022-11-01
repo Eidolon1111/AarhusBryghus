@@ -53,10 +53,6 @@ public interface ControllerInterface {
 
     public boolean klippeKortBetalingMuligt(SimpeltSalg salg);
 
-    public ArrayList<Kunde> getKunder();
-
-    public void createKunde(String navn, String tlfNr, String email);
-
     public void createRundvisning(Kunde kunde, LocalDateTime afholdesesDato);
 
     public Pris findPrisIPrisliste(Prisliste prisliste, String Produktnavn);

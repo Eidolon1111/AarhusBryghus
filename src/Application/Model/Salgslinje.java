@@ -3,6 +3,7 @@ package Application.Model;
 public class Salgslinje {
     private int antal;
     private Pris pris;
+    private double rabat;
 
     public Salgslinje(int antal, Pris pris) {
         this.antal = antal;
@@ -17,17 +18,17 @@ public class Salgslinje {
         return pris.getProdukt();
     }
 
-    public double beregnPrisDKK(Prisliste prisliste){
-        return pris.getPris() * antal;
+    public double beregnPrisDKK(){
+        return (pris.getPris() * antal) - rabat;
     }
 
-    public int beregnPrisKlip(Prisliste prisliste){
+    public int beregnPrisKlip(){
         return pris.getKlip() * antal;
     }
 
     public String printMellemRegning(Prisliste prisliste){
         return pris.getProdukt().printNavn() + "\t" + "antal: " + antal + "\t" + "DKK: " +
-                beregnPrisDKK(prisliste) + " / Klip: " + beregnPrisKlip(prisliste);
+                beregnPrisDKK() + " / Klip: " + beregnPrisKlip();
     }
 
     public boolean klippeKortBetalingMuligt(){
@@ -36,6 +37,14 @@ public class Salgslinje {
             result = true;
         }
         return result;
+    }
+
+    public void setRabat(double rabat){
+        this.rabat = rabat;
+    }
+
+    public double getRabat(){
+        return rabat;
     }
 
     @Override
