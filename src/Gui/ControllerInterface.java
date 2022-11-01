@@ -2,6 +2,7 @@ package Gui;
 
 import Application.Model.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public interface ControllerInterface {
@@ -49,6 +50,12 @@ public interface ControllerInterface {
     public Pris findPrisPaaProdukt(Prisliste prisliste, Produkt produkt);
 
     public boolean klippeKortBetalingMuligt(SimpeltSalg salg);
+
+    public ArrayList<Kunde> getKunder();
+
+    public void createKunde(String navn, String tlfNr, String email);
+
+    public void createRundvisning(Kunde kunde, LocalDateTime afholdesesDato);
 
     public void init();
 
