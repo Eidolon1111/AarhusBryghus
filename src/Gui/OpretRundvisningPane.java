@@ -15,7 +15,7 @@ public class OpretRundvisningPane extends GridPane {
     private TextField txfNavn, txfTlfNr, txfEmail, txfAntalPers,txfTime, txfMinut;
     private ListView lwKunder = new ListView<Kunde>();
     private Label lblKunder, lblEllerOpretNy, lblNavn, lblTlfNr, lblEmail, lblVælgDato, lblAntalPers, lblTime, lblMinut, lblPrisliste;
-    private Label lblKundeError; //Fejlbesked label
+    private Label lblKundeError, lblRundvisningError; //Fejlbeskeder label
     private DatePicker datePicker = new DatePicker();
     private ComboBox<Prisliste> cbPrislister = new ComboBox<>();
 
@@ -117,13 +117,25 @@ public class OpretRundvisningPane extends GridPane {
 
     public void opretRundvisningAction() {
         Kunde kunde = (Kunde) lwKunder.getSelectionModel().getSelectedItem();
-        LocalDateTime tidspunkt = LocalDateTime.from(datePicker.getValue().atTime(Integer.parseInt(txfTime.getText()),Integer.parseInt(txfMinut.getText())));
+        LocalDateTime tidspunkt = null;
+        if (datePicker != null) {
+            tidspunkt = LocalDateTime.from(
+                    datePicker.getValue().atTime(Integer.parseInt(txfTime.getText()),
+                            Integer.parseInt(txfMinut.getText())));
+        } else { tidspunkt = LocalDateTime.now(); }
         Prisliste prisliste = cbPrislister.getSelectionModel().getSelectedItem();
-        if (kunde != null && tidspunkt != null && !txfAntalPers.equals("")) {
+        if (kunde != null && tidspunkt != null && !txfAntalPers.getText().isBlank() && prisliste != null) {
             KomplekstSalg ks = (KomplekstSalg) controller.createKompleksSalg(kunde);
             ks.createSalgslinje(prisliste.findPris("Rundvisning"), Integer.parseInt(txfAntalPers.getText()));
             ks.setAfholdelsesDag(tidspunkt);
             this.updateControls();
+            if(lblRundvisningError != null) {
+                lblRundvisningError.setVisible(false);
+            }
+        } else {
+            lblRundvisningError = new Label("Alle felter skal udfyldes!");
+            lblRundvisningError.setTextFill(Color.color(1, 0, 0));
+            this.add(lblRundvisningError, 4, 10);
         }
     }
 }
