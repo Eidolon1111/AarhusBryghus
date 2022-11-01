@@ -87,7 +87,7 @@ public class AarhusBryghusTabWindow extends Application {
         tabAfregnUdlejning.setOnSelectionChanged(event -> afregnUdlejningPane.updateControls());
 
         //Opret Produkt
-        Tab tabOpretProdukt = new Tab("Opret Produkt");
+        Tab tabOpretProdukt = new Tab("Opret ProduktGruppe/ Produkt");
         tabPane.getTabs().add(tabOpretProdukt);
 
         OpretProduktPane opretProduktPane = new OpretProduktPane(controller);
@@ -95,7 +95,7 @@ public class AarhusBryghusTabWindow extends Application {
         tabOpretProdukt.setOnSelectionChanged(event -> opretProduktPane.updateControls());
 
         //Opret Prisliste
-        Tab tabOpretPris = new Tab("Opret Pris");
+        Tab tabOpretPris = new Tab("Opret Prisliste/ Pris");
         tabPane.getTabs().add(tabOpretPris);
 
         OpretPrisPane opretPrisPane = new OpretPrisPane(controller);
@@ -103,11 +103,11 @@ public class AarhusBryghusTabWindow extends Application {
         tabOpretPris.setOnSelectionChanged(event -> opretPrisPane.updateControls());
 
         //Opret Kunde
-        Tab tabOpretKunde = new Tab("Opret Kunde");
-        tabPane.getTabs().add(tabOpretKunde);
+        Tab tabDagsrapporter = new Tab("Dagsrapporter");
+        tabPane.getTabs().add(tabDagsrapporter);
 
-        OpretKundePane opretKundePane = new OpretKundePane(controller);
-        tabAfregnUdlejning.setContent(opretKundePane);
-        tabAfregnUdlejning.setOnSelectionChanged(event -> opretKundePane.updateControls());
+        DagsrapporterPane dagsrapporterPane = new DagsrapporterPane(controller);
+        tabAfregnUdlejning.setContent(dagsrapporterPane);
+        tabAfregnUdlejning.setOnSelectionChanged(event -> dagsrapporterPane.updateControls());
     }
 }

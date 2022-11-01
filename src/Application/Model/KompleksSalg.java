@@ -5,7 +5,7 @@ public class KompleksSalg extends Salg {
     private Kunde kunde;
     private SimpelSalg afregning;
 
-    public KompleksSalg (Kunde kunde) {
+    public KompleksSalg(Kunde kunde) {
         super();
         this.status = Status.REGISTRERET;
         this.kunde = kunde;
@@ -30,6 +30,10 @@ public class KompleksSalg extends Salg {
 
     public SimpelSalg getAfregning() {
         return afregning;
+    }
+
+    public double getModregning(){
+        return 0;
     }
 
     public enum Status {
