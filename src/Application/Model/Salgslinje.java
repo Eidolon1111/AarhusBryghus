@@ -67,6 +67,10 @@ public class Salgslinje {
         return rabat;
     }
 
+    public Pris getPris(){
+        return pris;
+    }
+
     @Override
     public String toString() {
         return pris.getProdukt() + " " + antal + " ";

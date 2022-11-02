@@ -34,6 +34,8 @@ public class KomplekstSalg extends Salg {
         this.dato2 = afregningsDag;
     }
 
+    public LocalDateTime getAfholdelsesdag() {return dato2;}
+
 
     public enum Status {
         REGISTRERET, PANTBETALT, AFREGNET;
@@ -41,6 +43,10 @@ public class KomplekstSalg extends Salg {
 
     @Override
     public String toString() {
-        return kunde.getNavn() + " " + status;
+        if (dato2 == null) {
+            return kunde.getNavn() + " Registrerings dato: " + super.getRegistreringsDato();
+        } else {
+            return kunde.getNavn() + ", " + dato2;
+        }
     }
 }

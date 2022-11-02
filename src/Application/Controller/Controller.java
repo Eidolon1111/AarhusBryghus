@@ -159,14 +159,16 @@ public class Controller implements ControllerInterface {
         return storage.getKunder();
     }
 
-    public void createKunde(String navn, String tlfNr, String email) {
+    public Kunde createKunde(String navn, String tlfNr, String email) {
         Kunde kunde = new Kunde(navn, tlfNr, email);
         storage.addKunde(kunde);
+        return kunde;
     }
 
-    public void createRundvisning(Kunde kunde, LocalDateTime afholdesesDato) {
+    public void createRundvisning(Kunde kunde, LocalDateTime afholdesesDato,Pris pris, int antal) {
         KomplekstSalg Rundvisning = new KomplekstSalg(kunde);
         Rundvisning.setAfholdelsesDag(afholdesesDato);
+        Rundvisning.createSalgslinje(pris, antal);
         storage.addSalg(Rundvisning);
     }
 
@@ -228,6 +230,17 @@ public class Controller implements ControllerInterface {
                 res = pl;
             }
         } return res;
+    }
+
+    public ArrayList<KomplekstSalg> getRundvisninger() {
+        ArrayList<KomplekstSalg> rundvisninger = new ArrayList<>();
+        for (Salg ss : storage.getSalg()){
+            if(ss instanceof KomplekstSalg){
+                if(((KomplekstSalg) ss).getAfholdelsesdag() != null && ((KomplekstSalg) ss).getStatus() == KomplekstSalg.Status.REGISTRERET) {
+                    rundvisninger.add((KomplekstSalg) ss);
+                }
+            }
+        } return rundvisninger;
     }
 
 
@@ -321,9 +334,9 @@ public class Controller implements ControllerInterface {
         //Initialisering af objekter anvendt i rundvisning
 
         //Kunder
-        this.createKunde("Hans", "60453980", "Hans@gmail.com");
-        this.createKunde("Jens", "61235789", "Jens@gmail.com");
-        this.createKunde("Poul", "23466892", "Poul@gmail.com");
+        Kunde k1 = this.createKunde("Hans", "60453980", "Hans@gmail.com");
+        Kunde k2 = this.createKunde("Jens", "61235789", "Jens@gmail.com");
+        Kunde k3 = this.createKunde("Poul", "23466892", "Poul@gmail.com");
 
         //Prislister
         Prisliste rundvisning = this.createPrisliste("Rundvisning");
@@ -336,8 +349,13 @@ public class Controller implements ControllerInterface {
                 "Rundvisning aften", "", "Pris pr person");
 
         //Priser til rundvisningsprodukter
-        rundvisning.createPrisTilPrisliste(rundvisningDag, 100, 0);
-        rundvisning.createPrisTilPrisliste(rundvisningAften, 150, 0);
+        Pris rundvisningDagPris = rundvisning.createPrisTilPrisliste(rundvisningDag, 100, 0);
+        Pris rundvisningAftenPris = rundvisning.createPrisTilPrisliste(rundvisningAften, 150, 0);
+
+        //Oprettelse af rundvisninger
+        this.createRundvisning(k1,LocalDateTime.of(2023, 1, 20, 10, 0),rundvisningDagPris,20);
+        this.createRundvisning(k2,LocalDateTime.of(2022, 12, 20, 20, 0),rundvisningAftenPris,30);
+        this.createRundvisning(k3,LocalDateTime.of(2022, 11, 30, 10, 0),rundvisningDagPris,40);
 
         //Priser til Udlejning
         udlejning.createPrisTilPrisliste(anlæg1hane,250, 0);

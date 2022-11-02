@@ -54,7 +54,7 @@ public interface ControllerInterface {
 
     public boolean klippeKortBetalingMuligt(Salg salg);
 
-    public void createRundvisning(Kunde kunde, LocalDateTime afholdesesDato);
+    public void createRundvisning(Kunde kunde, LocalDateTime afholdesesDato,Pris pris, int antal);
 
     public void setRabatSalg(Salg salg, double rabat);
 
@@ -62,7 +62,7 @@ public interface ControllerInterface {
 
     public void init();
 
-    public void createKunde(String navn, String tlfNr, String email);
+    public Kunde createKunde(String navn, String tlfNr, String email);
 
     public ArrayList<Kunde> getKunder();
 
@@ -75,5 +75,7 @@ public interface ControllerInterface {
     public double beregnDagsomsætning(LocalDate dato);
 
     public int solgteKlipForPeriode(LocalDate fraDato, LocalDate tilDato);
+
+    public ArrayList<KomplekstSalg> getRundvisninger();
 
 }
