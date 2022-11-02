@@ -88,4 +88,6 @@ public interface ControllerInterface {
 
     public double beregnReturBeløbUdlejning(KomplekstSalg udlejning);
 
+    public void udbetalModregning(KomplekstSalg udlejning);
+
 }

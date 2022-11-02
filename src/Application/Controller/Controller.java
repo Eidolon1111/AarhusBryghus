@@ -258,6 +258,10 @@ public class Controller implements ControllerInterface {
         return udlejning.beregnReturBeløbUdlejning();
     }
 
+    public void udbetalModregning(KomplekstSalg udlejning) {
+        udlejning.setStatus(KomplekstSalg.Status.AFREGNET);
+    }
+
     public Prisliste getPrisliste(String navn) {
         Prisliste res = null;
         for (Prisliste pl : getPrislister()) {
@@ -313,7 +317,7 @@ public class Controller implements ControllerInterface {
         this.createProdukt(pg3, "Whisky", "45%", "50 cl rør");
 
         //Fustage produkter
-        Produkt fustageKlosterbrug = this.createProdukt(pg4, "Klosterbryg", "","20 liter");
+        Produkt fustageKlosterbryg = this.createProdukt(pg4, "Klosterbryg", "","20 liter");
         Produkt fustageJazzClassic = this.createProdukt(pg4, "Jazz Classic", "", "25 liter");
         Produkt fustageEkstraPilsner = this.createProdukt(pg4, "Ekstra Pilsner", "", "25 liter");
         Produkt fustageCelebration = this.createProdukt(pg4, "Celebration", "", "20 liter");
@@ -322,13 +326,13 @@ public class Controller implements ControllerInterface {
         Produkt fustageIndiaPaleAle = this.createProdukt(pg4, "India Pale Ale", "", "20 liter");
         Produkt fustageJuleBryg = this.createProdukt(pg4, "Julebryg", "", "20 liter");
         Produkt fustageImperialStout = this.createProdukt(pg4, "Imperial Stout", "", "20 liter");
-        Produkt fustagePant = this.createProdukt(pg4, "Pant", "", "");
+        Produkt fustagePant = this.createProdukt(pg4, "Fustage Pant", "", "");
 
         //Kulsyre
         Produkt kulsyre10kg = this.createProdukt(pg5, "10 kg", "", "");
         Produkt kulsyre6kg = this.createProdukt(pg5, "6 kg", "", "");
         Produkt kulsyre4kg = this.createProdukt(pg5, "4 kg", "", "");
-        Produkt kulsyrePant = this.createProdukt(pg5, "Pant", "", "");
+        Produkt kulsyrePant = this.createProdukt(pg5, "Kulsyre Pant", "", "");
 
 
         //Malt
@@ -393,14 +397,14 @@ public class Controller implements ControllerInterface {
         this.createRundvisning(k3,LocalDateTime.of(2022, 11, 30, 10, 0),rundvisningDagPris,40);
 
         //Priser til Udlejning
-        udlejning.createPrisTilPrisliste(anlæg1hane,250, 0);
+        Pris pris1Hane = udlejning.createPrisTilPrisliste(anlæg1hane,250, 0);
         udlejning.createPrisTilPrisliste(anlæg2hane,400, 0);
         udlejning.createPrisTilPrisliste(anlægBarflerehaner,500, 0);
         udlejning.createPrisTilPrisliste(anlægLevering,500, 0);
         udlejning.createPrisTilPrisliste(anlægKrus,60, 0);
         udlejning.createPrisTilPrisliste(anlæg1hane,250, 0);
 
-        udlejning.createPrisTilPrisliste(fustageKlosterbrug,775, 0);
+        Pris prisFustageKlosterbryg = udlejning.createPrisTilPrisliste(fustageKlosterbryg,775, 0);
         udlejning.createPrisTilPrisliste(fustageJazzClassic,625, 0);
         udlejning.createPrisTilPrisliste(fustageEkstraPilsner,575, 0);
         udlejning.createPrisTilPrisliste(fustageCelebration, 775, 0);
@@ -409,13 +413,20 @@ public class Controller implements ControllerInterface {
         udlejning.createPrisTilPrisliste(fustageIndiaPaleAle,775, 0);
         udlejning.createPrisTilPrisliste(fustageJuleBryg,775, 0);
         udlejning.createPrisTilPrisliste(fustageImperialStout,775, 0);
-        udlejning.createPrisTilPrisliste(fustagePant,200, 0);
+        Pris prisFustagePant = udlejning.createPrisTilPrisliste(fustagePant,200, 0);
 
         udlejning.createPrisTilPrisliste(kulsyre10kg,600, 0);
         udlejning.createPrisTilPrisliste(kulsyre6kg,400, 0);
-        udlejning.createPrisTilPrisliste(kulsyre4kg,300, 0);
-        udlejning.createPrisTilPrisliste(kulsyrePant,1000, 0);
+        Pris prisKulsyre4kg = udlejning.createPrisTilPrisliste(kulsyre4kg,300, 0);
+        Pris prisKulsyrePant = udlejning.createPrisTilPrisliste(kulsyrePant,1000, 0);
 
+        KomplekstSalg testUdlejning = this.createKompleksSalg(k1);
+        this.createSalgslinje(testUdlejning, 1, pris1Hane);
+        this.createSalgslinje(testUdlejning, 3, prisFustageKlosterbryg);
+        this.createSalgslinje(testUdlejning, 3, prisFustagePant);
+        this.createSalgslinje(testUdlejning, 1, prisKulsyre4kg);
+        this.createSalgslinje(testUdlejning, 1, prisKulsyrePant);
+        this.betalSalg(testUdlejning, Salg.Betalingsform.DANKORT);
 
     }
 }
