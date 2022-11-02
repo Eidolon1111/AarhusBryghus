@@ -81,7 +81,7 @@ public class OpretDagligtSalgPane extends GridPane {
         this.add(btnTilføj, 2, 6);
         btnTilføj.setOnAction(actionEvent -> btnTilføjAction());
 
-        this.add(hBoxRabatogFjern, 4, 9);
+        this.add(hBoxRabatogFjern, 4, 10);
         hBoxRabatogFjern.setSpacing(20);
         btnFjern.setOnAction(event -> btnFjernAction());
         btnSalgslinjeRabat.setOnAction(event -> btnSalgslinjeRabat());
