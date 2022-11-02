@@ -75,4 +75,7 @@ public interface ControllerInterface {
     public ArrayList<Salg> dagsRapport(LocalDate dato);
 
     public double beregnDagsomsætning(LocalDate dato);
+
+    public Prisliste getPrisliste (String navn);
+
 }

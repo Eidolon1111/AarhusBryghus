@@ -14,10 +14,10 @@ public class OpretRundvisningPane extends GridPane {
 
     private TextField txfNavn, txfTlfNr, txfEmail, txfAntalPers,txfTime, txfMinut;
     private ListView lwKunder = new ListView<Kunde>();
-    private Label lblKunder, lblEllerOpretNy, lblNavn, lblTlfNr, lblEmail, lblVælgDato, lblAntalPers, lblTime, lblMinut, lblPrisliste;
+    private Label lblKunder, lblEllerOpretNy, lblNavn, lblTlfNr, lblEmail, lblVælgDato, lblAntalPers, lblTime, lblMinut, lblPrisliste, lblRundvisningOprettet;
     private Label lblKundeError, lblRundvisningError; //Fejlbeskeder label
     private DatePicker datePicker = new DatePicker();
-    private ComboBox<Prisliste> cbPrislister = new ComboBox<>();
+    private ComboBox<Pris> cbPrislister = new ComboBox<>();
 
     private ControllerInterface controller;
 
@@ -62,7 +62,7 @@ public class OpretRundvisningPane extends GridPane {
         txfTime = new TextField();
         lblMinut = new Label("Minut ");
         txfMinut = new TextField();
-        lblPrisliste = new Label("Vælg prisliste");
+        lblPrisliste = new Label("Vælg produkt");
 
         Button btnOpretRundvisning = new Button("Opret Rundvisning");
         btnOpretRundvisning.setOnAction(event -> opretRundvisningAction());
@@ -86,8 +86,8 @@ public class OpretRundvisningPane extends GridPane {
         lwKunder.getSelectionModel().selectedItemProperty().addListener(listener);
 
         //Setter muligheder på combobox prislister og tilføjer listener
-        cbPrislister.getItems().setAll(controller.getPrislisterMedSpecifiktProdukt("Rundvisning"));
-        ChangeListener<Prisliste> listenerCBPrislister = (ov, oldPrisliste, newPrisliste) -> this.selectedPrislisteChanged();
+        cbPrislister.getItems().setAll(controller.getPrisliste("Rundvisning").getPrislisten());
+        ChangeListener<Pris> listenerCBPrislister = (ov, oldPrisliste, newPrisliste) -> this.selectedPrisChanged();
         cbPrislister.getSelectionModel().selectedItemProperty().addListener(listenerCBPrislister);
     }
 
@@ -99,7 +99,7 @@ public class OpretRundvisningPane extends GridPane {
 
     public void selectedKundeChanged() { this.updateControls(); }
 
-    public void selectedPrislisteChanged() { }
+    public void selectedPrisChanged() { }
 
     public void opretKundeAction() {
         if (!txfNavn.getText().equals("") && !txfTlfNr.getText().equals("") && !txfEmail.getText().equals("")){
@@ -123,16 +123,22 @@ public class OpretRundvisningPane extends GridPane {
                     datePicker.getValue().atTime(Integer.parseInt(txfTime.getText()),
                             Integer.parseInt(txfMinut.getText())));
         } else { tidspunkt = LocalDateTime.now(); }
-        Prisliste prisliste = cbPrislister.getSelectionModel().getSelectedItem();
-        if (kunde != null && tidspunkt != null && !txfAntalPers.getText().isBlank() && prisliste != null) {
+        Pris pris = cbPrislister.getSelectionModel().getSelectedItem();
+        if (kunde != null && tidspunkt != null && !txfAntalPers.getText().isBlank() && pris != null) {
             KomplekstSalg ks = (KomplekstSalg) controller.createKompleksSalg(kunde);
-            controller.createSalgslinje(ks, Integer.parseInt(txfAntalPers.getText()), prisliste.findPris("Rundvisning"));
+            controller.createSalgslinje(ks, Integer.parseInt(txfAntalPers.getText()), pris);
             controller.setAfholdelsesDag(ks, tidspunkt);
             this.updateControls();
             if(lblRundvisningError != null) {
                 lblRundvisningError.setVisible(false);
             }
+            lblRundvisningOprettet = new Label("Rundvisning oprettet");
+            lblRundvisningOprettet.setTextFill(Color.color(0, 1, 0));
+            this.add(lblRundvisningOprettet, 4, 10);
         } else {
+            if (lblRundvisningOprettet != null){
+                lblRundvisningOprettet.setVisible(false);
+            }
             lblRundvisningError = new Label("Alle felter skal udfyldes!");
             lblRundvisningError.setTextFill(Color.color(1, 0, 0));
             this.add(lblRundvisningError, 4, 10);

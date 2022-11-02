@@ -65,6 +65,10 @@ public class Prisliste {
         } return res;
     }
 
+    public String getNavn() {
+        return navn;
+    }
+
     
     @Override
     public String toString() {
