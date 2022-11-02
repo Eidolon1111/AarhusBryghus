@@ -169,21 +169,6 @@ public class Controller implements ControllerInterface {
         storage.addSalg(Rundvisning);
     }
 
-    public Pris findPrisIPrisliste(Prisliste prisliste, String Produktnavn) {
-        return prisliste.findPris(Produktnavn);
-    }
-
-    public ArrayList<Prisliste> getPrislisterMedSpecifiktProdukt(String Produktnavn){
-        ArrayList<Prisliste> res = new ArrayList<>();
-        for (Prisliste pl : storage.getPrislister()) {
-            for (Pris p : pl.getPrislisten()){
-                if (p.getProdukt().getNavn().equals(Produktnavn)){
-                    res.add(pl);
-                }
-            }
-        } return res;
-    }
-
     public void setRabatSalg(SimpeltSalg salg, double rabat) {
         salg.setRabatSalg(rabat);
     }

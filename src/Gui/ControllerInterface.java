@@ -55,10 +55,6 @@ public interface ControllerInterface {
 
     public void createRundvisning(Kunde kunde, LocalDateTime afholdesesDato);
 
-    public Pris findPrisIPrisliste(Prisliste prisliste, String Produktnavn);
-
-    public ArrayList<Prisliste> getPrislisterMedSpecifiktProdukt(String Produktnavn);
-
     public void setRabatSalg(SimpeltSalg salg, double rabat);
 
     public void setRabatSalgslinje(Salgslinje salgslinje, double rabat);

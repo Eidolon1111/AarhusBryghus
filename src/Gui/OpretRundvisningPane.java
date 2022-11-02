@@ -62,7 +62,7 @@ public class OpretRundvisningPane extends GridPane {
         txfTime = new TextField();
         lblMinut = new Label("Minut ");
         txfMinut = new TextField();
-        lblPrisliste = new Label("Vælg pris");
+        lblPrisliste = new Label("Vælg produkt");
 
         Button btnOpretRundvisning = new Button("Opret Rundvisning");
         btnOpretRundvisning.setOnAction(event -> opretRundvisningAction());
