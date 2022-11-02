@@ -2,6 +2,7 @@ package Gui;
 
 import Application.Model.KomplekstSalg;
 import Application.Model.Salgslinje;
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -15,10 +16,10 @@ public class AfregnUdlejningPane extends GridPane {
     private ControllerInterface controller;
 
     private Label lbUdlejninger = new Label("Vælg Udlejning");
-    private ListView<KomplekstSalg> lWUdlejninger = new ListView<>();
+    private ListView<KomplekstSalg> lWUafsluttedeUdlejninger = new ListView<>();
 
     private Label lbSalgslinjeriUdlejning = new Label("Udlejede produkter");
-    private ListView<Salgslinje> lWSalgslinjeriUdlejning = new ListView<>();
+    private ListView<String> lWSalgslinjeriUdlejning = new ListView<>();
 
     private Label lbAntal = new Label("Antal");
     private TextField txfAntal = new TextField();
@@ -46,7 +47,11 @@ public class AfregnUdlejningPane extends GridPane {
         this.setPrefHeight(800);
 
         this.add(lbUdlejninger, 0, 0);
-        this.add(lWUdlejninger, 0, 1, 1, 12);
+        this.add(lWUafsluttedeUdlejninger, 0, 1, 1, 12);
+        lWUafsluttedeUdlejninger.getItems().setAll(controller.getUadsluttedeUdlejninger());
+        ChangeListener<KomplekstSalg> listenerUafsluttedeUdlejninger =
+                (ov, oldProduktGruppe, newProduktGruppe) -> this.selectedUafsluttedeUdlejninger();
+        lWUafsluttedeUdlejninger.getSelectionModel().selectedItemProperty().addListener(listenerUafsluttedeUdlejninger);
 
         this.add(lbSalgslinjeriUdlejning, 1, 0);
         this.add(lWSalgslinjeriUdlejning, 1, 1, 1, 12);
@@ -68,8 +73,17 @@ public class AfregnUdlejningPane extends GridPane {
         this.add(hBoxErrorAndSucces, 4, 12);
 
     }
-    //TODO
-    public void updateControls(){
 
+    public void updateControls(){
+        lWUafsluttedeUdlejninger.getItems().setAll(controller.getUadsluttedeUdlejninger());
+        KomplekstSalg udlejning = lWUafsluttedeUdlejninger.getSelectionModel().getSelectedItem();
+        if(udlejning != null){
+            //TODO
+            lWSalgslinjeriUdlejning.getItems().setAll(controller.printMellemRegning(udlejning));
+        }
+    }
+
+    public void selectedUafsluttedeUdlejninger(){
+        updateControls();
     }
 }

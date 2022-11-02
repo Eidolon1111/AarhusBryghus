@@ -80,4 +80,6 @@ public interface ControllerInterface {
 
     public ArrayList<KomplekstSalg> getRundvisninger();
 
+    public ArrayList<KomplekstSalg> getUadsluttedeUdlejninger();
+
 }

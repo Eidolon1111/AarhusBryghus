@@ -232,6 +232,16 @@ public class Controller implements ControllerInterface {
         return 0;
     }
 
+    public ArrayList<KomplekstSalg> getUadsluttedeUdlejninger() {
+        ArrayList<KomplekstSalg> result = new ArrayList<>();
+        for (Salg s : storage.getSalg()){
+            if(s instanceof KomplekstSalg && ((KomplekstSalg) s).getStatus() == KomplekstSalg.Status.PANTBETALT){
+                result.add((KomplekstSalg) s);
+            }
+        }
+        return result;
+    }
+
     public Prisliste getPrisliste(String navn) {
         Prisliste res = null;
         for (Prisliste pl : getPrislister()) {
