@@ -207,7 +207,7 @@ public class OpretUdlejningPane extends GridPane {
 
     public void btnBetalAction(){
         if(currentSalg != null){
-            SimpeltSalg.Betalingsform betalingsform = comboBoxbetalingsformer.getSelectionModel().getSelectedItem();
+            Salg.Betalingsform betalingsform = comboBoxbetalingsformer.getSelectionModel().getSelectedItem();
             if(betalingsform != null) {
                 controller.betalSalg(currentSalg, betalingsform);
                 lbError.setText("");

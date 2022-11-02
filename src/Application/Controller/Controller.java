@@ -68,7 +68,7 @@ public class Controller implements ControllerInterface {
         return salg;
     }
 
-    public Salg createKompleksSalg(Kunde kunde) {
+    public KomplekstSalg createKompleksSalg(Kunde kunde) {
         KomplekstSalg komplekstSalg = new KomplekstSalg(kunde);
         storage.addSalg(komplekstSalg);
         return komplekstSalg;
@@ -210,14 +210,14 @@ public class Controller implements ControllerInterface {
     public double beregnDagsomsætning(LocalDate dato) {
         double result = 0.0;
         for (Salg salg : storage.getSalg()) {
-            result += salg.beregnSamletPrisDKK();
+            if (salg.getRegistreringsDato().equals(dato)) {
+                result += salg.beregnSamletPrisDKK();
+            }
         }
         return result;
     }
 
-    @Override
     public int solgteKlipForPeriode(LocalDate fraDato, LocalDate tilDato) {
-
         return 0;
     }
 
