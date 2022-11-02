@@ -1,6 +1,7 @@
 package Gui;
 
 import Application.Model.KomplekstSalg;
+import Application.Model.Prisliste;
 import Application.Model.Salgslinje;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
@@ -14,6 +15,7 @@ import javafx.scene.layout.HBox;
 public class AfregnUdlejningPane extends GridPane {
 
     private ControllerInterface controller;
+    private Prisliste prisliste;
 
     private Label lbUdlejninger = new Label("Vælg Udlejning");
     private ListView<KomplekstSalg> lWUafsluttedeUdlejninger = new ListView<>();
@@ -39,6 +41,7 @@ public class AfregnUdlejningPane extends GridPane {
 
     public AfregnUdlejningPane(ControllerInterface controller){
         this.controller = controller;
+        this.prisliste = controller.getPrisliste("Udlejning");
         this.setPadding(new Insets(10));
         this.setHgap(10);
         this.setVgap(10);
@@ -50,17 +53,21 @@ public class AfregnUdlejningPane extends GridPane {
         this.add(lWUafsluttedeUdlejninger, 0, 1, 1, 12);
         lWUafsluttedeUdlejninger.getItems().setAll(controller.getUadsluttedeUdlejninger());
         ChangeListener<KomplekstSalg> listenerUafsluttedeUdlejninger =
-                (ov, oldProduktGruppe, newProduktGruppe) -> this.selectedUafsluttedeUdlejninger();
+                (ov, oldUdlejning, newUdlejning) -> this.selectedUafsluttedeUdlejningerChanged();
         lWUafsluttedeUdlejninger.getSelectionModel().selectedItemProperty().addListener(listenerUafsluttedeUdlejninger);
 
         this.add(lbSalgslinjeriUdlejning, 1, 0);
         this.add(lWSalgslinjeriUdlejning, 1, 1, 1, 12);
+        ChangeListener<String> listenerSalgslinjer =
+                (ov, oldSalgslinje, newSalgslinje) -> this.selectedSalgslinjeChanged();
+        lWSalgslinjeriUdlejning.getSelectionModel().selectedItemProperty().addListener(listenerSalgslinjer);
 
         this.add(lbAntal, 2, 3);
         this.add(txfAntal, 3, 3);
         txfAntal.setPrefWidth(50);
         this.add(btnAfregn, 2, 4);
         btnAfregn.setPrefWidth(75);
+        btnAfregn.setOnAction(event -> btnAfregnAction());
 
         this.add(lbIndleveredeProdukter, 4, 0);
         this.add(lwIndleveredeSalgslinjer, 4, 1, 1, 9);
@@ -71,6 +78,8 @@ public class AfregnUdlejningPane extends GridPane {
         this.add(btnUdbetal, 4, 11);
 
         this.add(hBoxErrorAndSucces, 4, 12);
+        lbError.setStyle("-fx-text-fill: red");
+        lbSucces.setStyle("-fx-text-fill: green");
 
     }
 
@@ -78,12 +87,41 @@ public class AfregnUdlejningPane extends GridPane {
         lWUafsluttedeUdlejninger.getItems().setAll(controller.getUadsluttedeUdlejninger());
         KomplekstSalg udlejning = lWUafsluttedeUdlejninger.getSelectionModel().getSelectedItem();
         if(udlejning != null){
-            //TODO
             lWSalgslinjeriUdlejning.getItems().setAll(controller.printMellemRegning(udlejning));
         }
     }
 
-    public void selectedUafsluttedeUdlejninger(){
+    public void selectedUafsluttedeUdlejningerChanged(){
         updateControls();
+    }
+
+    public void selectedSalgslinjeChanged(){
+    }
+
+    public void btnAfregnAction(){
+        KomplekstSalg udlejning = lWUafsluttedeUdlejninger.getSelectionModel().getSelectedItem();
+        String stringSalgslinje = lWSalgslinjeriUdlejning.getSelectionModel().getSelectedItem();
+        int antal;
+        if(udlejning != null){
+            if(stringSalgslinje != null){
+                Salgslinje salgslinje = controller.findSalgslinjeFraKurv(prisliste, udlejning, stringSalgslinje);
+                try {
+                    antal = Integer.parseInt(txfAntal.getText());
+                        if(salgslinje != null){
+                            Salgslinje modregning = controller.createModregning(udlejning, salgslinje, antal);;
+                            lwIndleveredeSalgslinjer.getItems().add(controller.printMellemRegningSalgslinje(modregning));
+                            txfTotal.setText("" + controller.beregnReturBeløbUdlejning(udlejning));
+                        } else {
+                        lbError.setText("Felj");
+                        }
+                } catch (NumberFormatException e) {
+
+                }
+            }else {
+                lbError.setText("Vælg en salgslinje!");
+            }
+        } else {
+            lbError.setText("Vælg Udlejning!");
+        }
     }
 }

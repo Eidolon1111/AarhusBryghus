@@ -14,6 +14,10 @@ public class Salgslinje {
         return antal;
     }
 
+    public void setAntal(int antal){
+        this.antal = antal;
+    }
+
     public Produkt getProdukt() {
         return pris.getProdukt();
     }
@@ -22,12 +26,12 @@ public class Salgslinje {
         double result;
         if(rabat != 0){
             if(rabat < 1 ){
-                result = (pris.getPris() * antal) - ((pris.getPris() * antal) * rabat);
+                result = (pris.getPrisDKK() * antal) - ((pris.getPrisDKK() * antal) * rabat);
             } else {
-                result = (pris.getPris() * antal) - rabat;
+                result = (pris.getPrisDKK() * antal) - rabat;
             }
         }else {
-            result = (pris.getPris() * antal);
+            result = (pris.getPrisDKK() * antal);
         }
         return result;
     }

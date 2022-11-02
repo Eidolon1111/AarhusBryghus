@@ -23,8 +23,8 @@ public class Prisliste {
             for (int i = 0; i < prislisten.size(); i++) {
                 Pris p = prislisten.get(i);
                 if (p.getProdukt().compareTo(pris.getProdukt()) == 0) {
-                    if (p.getPris() != pris.getPris()) {
-                        p.setPris(pris.getPris());
+                    if (p.getPrisDKK() != pris.getPrisDKK()) {
+                        p.setPris(pris.getPrisDKK());
                     }
                     if (p.getKlip() != pris.getKlip() && pris.getKlip() >= 0) {
                         p.setKlip(pris.getKlip());

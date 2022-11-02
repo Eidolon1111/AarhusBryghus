@@ -242,6 +242,22 @@ public class Controller implements ControllerInterface {
         return result;
     }
 
+    public Salgslinje createModregning(KomplekstSalg salg, Salgslinje salgslinje, int antal) {
+        return salg.createModregning(salgslinje, antal);
+    }
+
+    public void setAntalPåSalgslinje(Salgslinje salgslinje, int antal) {
+        salgslinje.setAntal(antal);
+    }
+
+    public String printMellemRegningSalgslinje(Salgslinje salgslinje) {
+        return salgslinje.printMellemRegning();
+    }
+
+    public double beregnReturBeløbUdlejning(KomplekstSalg udlejning) {
+        return udlejning.beregnReturBeløbUdlejning();
+    }
+
     public Prisliste getPrisliste(String navn) {
         Prisliste res = null;
         for (Prisliste pl : getPrislister()) {

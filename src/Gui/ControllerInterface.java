@@ -80,4 +80,12 @@ public interface ControllerInterface {
 
     public ArrayList<KomplekstSalg> getUadsluttedeUdlejninger();
 
+    public Salgslinje createModregning(KomplekstSalg salg, Salgslinje salgslinje, int antal);
+
+    public void setAntalPåSalgslinje(Salgslinje salgslinje, int antal);
+
+    public String printMellemRegningSalgslinje(Salgslinje salgslinje);
+
+    public double beregnReturBeløbUdlejning(KomplekstSalg udlejning);
+
 }
