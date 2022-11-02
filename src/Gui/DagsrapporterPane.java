@@ -19,7 +19,7 @@ public class DagsrapporterPane extends GridPane {
     private DatePicker datePicker;
     private ListView<Salg> lwDagensSalg;
     private ListView<String> lwSalgslinjer;
-    private TextField txfAntal, txfDagsomsætning, txfSamletPris, txfBetalingsform;
+    private TextField txfAntal, txfDagsomsætning;
 
     public DagsrapporterPane(ControllerInterface controller){
         this.controller = controller;
@@ -74,8 +74,6 @@ public class DagsrapporterPane extends GridPane {
         Salg salg = lwDagensSalg.getSelectionModel().getSelectedItem();
         if (salg != null) {
             lwSalgslinjer.getItems().setAll(controller.printMellemRegning(salg));
-            txfSamletPris.setText(controller.printSamletPrisDKKOgKlip(salg));
-            txfBetalingsform.setText("" + salg.getBetalingsform());
         }
     }
 }

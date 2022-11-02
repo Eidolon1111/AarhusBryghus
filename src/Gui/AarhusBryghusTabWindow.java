@@ -109,5 +109,13 @@ public class AarhusBryghusTabWindow extends Application {
         DagsrapporterPane dagsrapporterPane = new DagsrapporterPane(controller);
         tabDagsrapporter.setContent(dagsrapporterPane);
         tabDagsrapporter.setOnSelectionChanged(event -> dagsrapporterPane.updateControls());
+
+        //Kliprapport
+        Tab tabKliprapporter = new Tab("Kliprapporter");
+        tabPane.getTabs().add(tabKliprapporter);
+
+        KliprapporterPane kliprapporterPane = new KliprapporterPane(controller);
+        tabKliprapporter.setContent(kliprapporterPane);
+        tabKliprapporter.setOnSelectionChanged(event -> kliprapporterPane.updateControls());
     }
 }

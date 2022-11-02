@@ -96,7 +96,7 @@ public class Salg {
 
     @Override
     public String toString() {
-        return beregnSamletPrisDKK() + "DKK, " + betalingsform;
+        return beregnSamletPrisDKK() + " DKK, " + betalingsform;
     }
 
     public enum Betalingsform {

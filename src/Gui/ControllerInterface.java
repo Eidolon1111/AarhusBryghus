@@ -76,6 +76,8 @@ public interface ControllerInterface {
 
     public double beregnDagsomsætning(LocalDate dato);
 
+    public int solgteKlipForPeriode(LocalDate fraDato, LocalDate tilDato);
+
     public Prisliste getPrisliste (String navn);
 
 }

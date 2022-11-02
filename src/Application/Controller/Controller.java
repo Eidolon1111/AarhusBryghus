@@ -4,6 +4,7 @@ import Application.Model.*;
 import Application.StorageInterface;
 import Gui.ControllerInterface;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -145,7 +146,7 @@ public class Controller implements ControllerInterface {
     public ArrayList<Salg.Betalingsform> getMuligeBetalingsformer(Salg salg){
         ArrayList<Salg.Betalingsform> muligeBetalingsformer = new ArrayList<>(Arrays.asList(Salg.Betalingsform.values()));
         if(!salg.klippeKortBetalingMuligt()){
-            muligeBetalingsformer.remove(SimpeltSalg.Betalingsform.KLIPPEKORT);
+            muligeBetalingsformer.remove(Salg.Betalingsform.KLIPPEKORT);
         }
         return  muligeBetalingsformer;
     }
@@ -212,6 +213,22 @@ public class Controller implements ControllerInterface {
             result += salg.beregnSamletPrisDKK();
         }
         return result;
+    }
+
+    @Override
+    public int solgteKlipForPeriode(LocalDate fraDato, LocalDate tilDato) {
+
+        return 0;
+    }
+
+    public Prisliste getPrisliste(String navn) {
+        Prisliste res = null;
+        for (Prisliste pl : getPrislister()) {
+            if (pl.getNavn().equals(navn)) {
+                res = pl;
+            }
+        }
+        return res;
     }
 
 
