@@ -7,7 +7,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+
 
 public class OpretDagligtSalgPane extends GridPane {
 
@@ -42,9 +42,8 @@ public class OpretDagligtSalgPane extends GridPane {
     private ComboBox<SimpeltSalg.Betalingsform> comboBoxbetalingsformer = new ComboBox<>();
     private Button btnSalgRabat = new Button("Rabat Salg");
     private Button btnBetal = new Button("Betal");
-    private VBox vBoxBetalingsFormer = new VBox(lbBetalingsformer, comboBoxbetalingsformer);
-    private VBox vBoxBetalingRabat = new VBox(btnSalgRabat, btnBetal);
-    private HBox hBoxBetaling = new HBox(vBoxBetalingsFormer, vBoxBetalingRabat);
+    private HBox hBoxBetalingsFormer = new HBox(lbBetalingsformer, comboBoxbetalingsformer);
+    private HBox hBoxBetalingRabat = new HBox(btnSalgRabat, btnBetal);
 
     private Label lbError = new Label();
     private Label lbSucces = new Label();
@@ -66,12 +65,12 @@ public class OpretDagligtSalgPane extends GridPane {
         cBPrislister.getSelectionModel().selectedItemProperty().addListener(listenerCBPrislister);
 
         this.add(lbProduktgrupper, 0, 2);
-        this.add(lwProduktgrupper, 0, 3, 1, 10);
+        this.add(lwProduktgrupper, 0, 3, 1, 14);
         ChangeListener<ProduktGruppe> listenerProduktGruppe = (ov, oldProduktGruppe, newProduktGruppe) -> this.selectedProduktGruppeChanged();
         lwProduktgrupper.getSelectionModel().selectedItemProperty().addListener(listenerProduktGruppe);
 
         this.add(lbProdukt, 1, 0);
-        this.add(lwProdukter, 1, 1,1,12);
+        this.add(lwProdukter, 1, 1,1,14);
         ChangeListener<Produkt> listenerProdukt = (ov, oldProdukt, newProdukt) -> this.selectedProdukt();
         lwProdukter.getSelectionModel().selectedItemProperty().addListener(listenerProdukt);
 
@@ -93,15 +92,16 @@ public class OpretDagligtSalgPane extends GridPane {
         hBoxTotal.setSpacing(20);
         txfTotal.setEditable(false);
 
-        this.add(hBoxBetaling, 4, 12);
-        vBoxBetalingRabat.setSpacing(10);
-        vBoxBetalingsFormer.setSpacing(10);
-        hBoxBetaling.setSpacing(20);
+        this.add(hBoxBetalingsFormer, 4, 12);
+        this.add(hBoxBetalingRabat, 4, 13);
+
+        hBoxBetalingsFormer.setSpacing(20);
+        hBoxBetalingRabat.setSpacing(20);
 
         btnBetal.setOnAction(actionEvent -> btnBetalAction());
         btnSalgRabat.setOnAction(event -> btnSalgRabat());
 
-        this.add(hBoxErrorAndSucces, 4, 13);
+        this.add(hBoxErrorAndSucces, 4, 14);
         lbError.setStyle("-fx-text-fill: red");
         lbSucces.setStyle("-fx-text-fill: green");
 

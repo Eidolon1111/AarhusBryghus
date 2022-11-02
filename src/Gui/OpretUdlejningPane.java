@@ -5,7 +5,6 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 
 public class OpretUdlejningPane extends GridPane {
 
@@ -51,9 +50,8 @@ public class OpretUdlejningPane extends GridPane {
     private ComboBox<SimpeltSalg.Betalingsform> comboBoxbetalingsformer = new ComboBox<>();
     private Button btnSalgRabat = new Button("Rabat Salg");
     private Button btnBetal = new Button("Betal");
-    private VBox vBoxBetalingsFormer = new VBox(lbBetalingsformer, comboBoxbetalingsformer);
-    private VBox vBoxBetalingRabat = new VBox(btnSalgRabat, btnBetal);
-    private HBox hBoxBetaling = new HBox(vBoxBetalingsFormer, vBoxBetalingRabat);
+    private HBox hBoxBetalingsFormer = new HBox(lbBetalingsformer, comboBoxbetalingsformer);
+    private HBox hBoxBetalingRabat = new HBox(btnSalgRabat, btnBetal);
 
     private Label lbError = new Label();
     private Label lbSucces = new Label();
@@ -99,11 +97,12 @@ public class OpretUdlejningPane extends GridPane {
         this.add(hBoxTotal, 6, 10);
         txfTotal.setEditable(false);
         hBoxTotal.setSpacing(20);
-        this.add(hBoxBetaling, 6, 11);
-        vBoxBetalingsFormer.setSpacing(10);
-        vBoxBetalingRabat.setSpacing(10);
-        hBoxBetaling.setSpacing(20);
-        this.add(hBoxErrorAndSucces, 6, 12);
+
+        this.add(hBoxBetalingsFormer, 6, 11);
+        this.add(hBoxBetalingRabat, 6, 12);
+        hBoxBetalingsFormer.setSpacing(20);
+        hBoxBetalingRabat.setSpacing(20);
+        this.add(hBoxErrorAndSucces, 6, 13);
 
     }
     //TODO
