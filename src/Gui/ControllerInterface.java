@@ -69,4 +69,6 @@ public interface ControllerInterface {
 
     public ArrayList<Kunde> getKunder();
 
+    public void setAfholdelsesDag(KomplekstSalg komplekstSalg, LocalDateTime afholdelsesDag);
+
 }

@@ -192,6 +192,10 @@ public class Controller implements ControllerInterface {
         salgslinje.setRabat(rabat);
     }
 
+    public void setAfholdelsesDag(KomplekstSalg komplekstSalg, LocalDateTime afholdelsesDag){
+        komplekstSalg.setAfholdelsesDag(afholdelsesDag);
+    }
+
 
     public void init(){
         Prisliste fredagsbar = this.createPrisliste("Fredagsbar");

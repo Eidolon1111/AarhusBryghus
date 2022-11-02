@@ -126,8 +126,8 @@ public class OpretRundvisningPane extends GridPane {
         Prisliste prisliste = cbPrislister.getSelectionModel().getSelectedItem();
         if (kunde != null && tidspunkt != null && !txfAntalPers.getText().isBlank() && prisliste != null) {
             KomplekstSalg ks = (KomplekstSalg) controller.createKompleksSalg(kunde);
-            ks.createSalgslinje(prisliste.findPris("Rundvisning"), Integer.parseInt(txfAntalPers.getText()));
-            ks.setAfholdelsesDag(tidspunkt);
+            controller.createSalgslinje(ks, Integer.parseInt(txfAntalPers.getText()), prisliste.findPris("Rundvisning"));
+            controller.setAfholdelsesDag(ks, tidspunkt);
             this.updateControls();
             if(lblRundvisningError != null) {
                 lblRundvisningError.setVisible(false);
