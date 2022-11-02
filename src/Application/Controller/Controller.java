@@ -196,6 +196,15 @@ public class Controller implements ControllerInterface {
         komplekstSalg.setAfholdelsesDag(afholdelsesDag);
     }
 
+    public Prisliste getPrisliste (String navn) {
+        Prisliste res = null;
+        for (Prisliste pl : getPrislister()) {
+            if (pl.getNavn().equals(navn)){
+                res = pl;
+            }
+        } return res;
+    }
+
 
     public void init(){
         Prisliste fredagsbar = this.createPrisliste("Fredagsbar");
@@ -275,24 +284,20 @@ public class Controller implements ControllerInterface {
         this.createKunde("Poul", "23466892", "Poul@gmail.com");
 
         //Prislister
-        Prisliste dag = this.createPrisliste("Dag");
-        Prisliste aften = this.createPrisliste("Aften");
-        Prisliste student = this.createPrisliste("Student");
+        Prisliste rundvisning = this.createPrisliste("Rundvisning");
         Prisliste udlejning = this.createPrisliste("Udlejning");
 
-        //Rundvisning produkt
-        Produkt Rundvisning = this.createProdukt(pg11,
-                "Rundvisning",
-                "kan variere afhængig af dag/aften/studierabat",
-                "pr person dag");
+        //Rundvisnings produkter
+        Produkt rundvisningDag = this.createProdukt(pg11,
+                "Rundvisning dag", "", "Pris pr person");
+        Produkt rundvisningAften = this.createProdukt(pg11,
+                "Rundvisning aften", "", "Pris pr person");
+
+        //Priser til rundvisningsprodukter
+        rundvisning.createPrisTilPrisliste(rundvisningDag, 100, 0);
+        rundvisning.createPrisTilPrisliste(rundvisningAften, 150, 0);
 
         //TODO
         //Udlejnings Produkter
-
-
-        //Priser
-        dag.createPrisTilPrisliste(Rundvisning, 100, 0);
-        aften.createPrisTilPrisliste(Rundvisning, 150, 0);
-        student.createPrisTilPrisliste(Rundvisning, 50, 0);
     }
 }

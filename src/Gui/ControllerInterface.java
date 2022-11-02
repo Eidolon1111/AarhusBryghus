@@ -71,4 +71,6 @@ public interface ControllerInterface {
 
     public void setAfholdelsesDag(KomplekstSalg komplekstSalg, LocalDateTime afholdelsesDag);
 
+    public Prisliste getPrisliste (String navn);
+
 }
