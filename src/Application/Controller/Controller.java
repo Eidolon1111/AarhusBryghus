@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Controller implements ControllerInterface {
-    private static Controller controller;
     private StorageInterface storage;
 
     public Controller(StorageInterface storage) {

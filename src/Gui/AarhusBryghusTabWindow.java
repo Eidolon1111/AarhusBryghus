@@ -16,7 +16,7 @@ public class AarhusBryghusTabWindow extends Application {
 
     @Override
     public void init(){
-        Storage storage = new Storage();
+        Storage storage = Storage.getInstance();
         controller = new Controller(storage);
         controller.init();
     }

@@ -9,10 +9,21 @@ import Application.StorageInterface;
 import java.util.ArrayList;
 
 public class Storage implements StorageInterface {
+    private static Storage uniqueStorage;
     private ArrayList<Prisliste> prislister = new ArrayList<>();
     private ArrayList<ProduktGruppe> produktGrupper = new ArrayList<>();
     private ArrayList<Salg> salg = new ArrayList<>();
     private ArrayList<Kunde> kunder = new ArrayList<>();
+
+    private Storage(){
+    }
+
+    public static synchronized Storage getInstance(){
+        if(uniqueStorage == null){
+            uniqueStorage = new Storage();
+        }
+        return uniqueStorage;
+    }
 
     public ArrayList<Prisliste> getPrislister() {
         return new ArrayList<>(prislister);
