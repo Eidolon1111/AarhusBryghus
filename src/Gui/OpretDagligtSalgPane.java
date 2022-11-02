@@ -65,7 +65,7 @@ public class OpretDagligtSalgPane extends GridPane {
         cBPrislister.getSelectionModel().selectedItemProperty().addListener(listenerCBPrislister);
 
         this.add(lbProduktgrupper, 0, 2);
-        this.add(lwProduktgrupper, 0, 3, 1, 14);
+        this.add(lwProduktgrupper, 0, 3, 1, 12);
         ChangeListener<ProduktGruppe> listenerProduktGruppe = (ov, oldProduktGruppe, newProduktGruppe) -> this.selectedProduktGruppeChanged();
         lwProduktgrupper.getSelectionModel().selectedItemProperty().addListener(listenerProduktGruppe);
 
