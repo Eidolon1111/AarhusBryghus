@@ -70,6 +70,8 @@ public interface ControllerInterface {
 
     public Prisliste getPrisliste (String navn);
 
+    public ArrayList<String> printProdukterIProduktGruppeMedPris(ProduktGruppe produktGruppe, Prisliste prisliste);
+
     public ArrayList<Salg> dagsRapport(LocalDate dato);
 
     public double beregnDagsomsætning(LocalDate dato);
