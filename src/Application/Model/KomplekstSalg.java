@@ -34,6 +34,8 @@ public class KomplekstSalg extends Salg {
         this.dato2 = afregningsDag;
     }
 
+
+
     public LocalDateTime getAfholdelsesdag() {return dato2;}
 
 

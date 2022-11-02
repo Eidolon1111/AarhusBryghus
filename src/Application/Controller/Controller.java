@@ -125,7 +125,16 @@ public class Controller implements ControllerInterface {
     }
 
     public void betalSalg(Salg salg, Salg.Betalingsform betalingsform) {
-        salg.setBetalingsform(betalingsform);
+        if(salg instanceof KomplekstSalg){
+            salg.setBetalingsform(betalingsform);
+            if(((KomplekstSalg) salg).getAfholdelsesDag() == null){
+                ((KomplekstSalg) salg).setStatus(KomplekstSalg.Status.PANTBETALT);
+            } else {
+                ((KomplekstSalg) salg).setStatus(KomplekstSalg.Status.AFREGNET);
+            }
+        } else {
+            salg.setBetalingsform(betalingsform);
+        }
     }
 
     public ArrayList<ProduktGruppe> getProduktGrupperIPrisliste(Prisliste prisliste) {
