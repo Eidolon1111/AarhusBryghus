@@ -3,14 +3,14 @@ package Application.Model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class SimpeltSalg {
+public class Salg {
     private LocalDate registreringsDato;
     private ArrayList<Salgslinje> salgslinjer = new ArrayList<Salgslinje>();
     private Betalingsform betalingsform;
     private double rabat;
 
 
-    public SimpeltSalg() {
+    public Salg() {
         this.registreringsDato = LocalDate.now();
     }
 
@@ -88,6 +88,15 @@ public class SimpeltSalg {
 
     public double getRabat(){
         return rabat;
+    }
+
+    public LocalDate getRegistreringsDato() {
+        return registreringsDato;
+    }
+
+    @Override
+    public String toString() {
+        return beregnSamletPrisDKK() + "DKK, " + betalingsform;
     }
 
     public enum Betalingsform {

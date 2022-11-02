@@ -1,6 +1,6 @@
 package Gui;
 
-import Application.Model.SimpeltSalg;
+import Application.Model.Salg;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
@@ -8,7 +8,7 @@ import javafx.scene.control.ListView;
 
 public class AfregnRundvisningPane extends GridPane {
 
-    private ListView lwAlleSalg = new ListView<SimpeltSalg>();
+    private ListView lwAlleSalg = new ListView<Salg>();
 
     private ControllerInterface controller;
 

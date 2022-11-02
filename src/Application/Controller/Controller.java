@@ -4,6 +4,7 @@ import Application.Model.*;
 import Application.StorageInterface;
 import Gui.ControllerInterface;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,7 +33,7 @@ public class Controller implements ControllerInterface {
         return result;
     }
 
-    public ArrayList<SimpeltSalg> getSalg() {return storage.getSalg(); }
+    public ArrayList<Salg> getSalg() {return storage.getSalg(); }
 
     public Prisliste createPrisliste(String navn) {
         Prisliste pl = new Prisliste(navn);
@@ -61,23 +62,23 @@ public class Controller implements ControllerInterface {
     }
 
     @Override
-    public SimpeltSalg createSimpelSalg() {
-        SimpeltSalg simpeltSalg = new SimpeltSalg();
-        storage.addSalg(simpeltSalg);
-        return simpeltSalg;
+    public Salg createSimpelSalg() {
+        Salg salg = new Salg();
+        storage.addSalg(salg);
+        return salg;
     }
 
-    public SimpeltSalg createKompleksSalg(Kunde kunde) {
+    public Salg createKompleksSalg(Kunde kunde) {
         KomplekstSalg komplekstSalg = new KomplekstSalg(kunde);
         storage.addSalg(komplekstSalg);
         return komplekstSalg;
     }
 
-    public ArrayList<String> printMellemRegning(SimpeltSalg salg) {
+    public ArrayList<String> printMellemRegning(Salg salg) {
         return salg.printMellemRegning();
     }
 
-    public String printSamletPrisDKKOgKlip(SimpeltSalg salg) {
+    public String printSamletPrisDKKOgKlip(Salg salg) {
         String result;
         if(salg.getRabat() != 0 && salg.getRabat() < 1){
             result = "DKK: " + salg.beregnSamletPrisDKK() + " / Klip: " + salg.beregnSamletPrisKlip() + " -"
@@ -91,12 +92,12 @@ public class Controller implements ControllerInterface {
         return result;
     }
 
-    public Salgslinje createSalgslinje(SimpeltSalg salg, int antal, Pris pris) {
+    public Salgslinje createSalgslinje(Salg salg, int antal, Pris pris) {
         Salgslinje sl = salg.createSalgslinje(pris, antal);
         return sl;
     }
 
-    public Salgslinje findSalgslinjeFraKurv(Prisliste prisliste, SimpeltSalg salg, String target){
+    public Salgslinje findSalgslinjeFraKurv(Prisliste prisliste, Salg salg, String target){
         int index = 0;
         Salgslinje kandidat;
         Salgslinje result = null;
@@ -111,7 +112,7 @@ public class Controller implements ControllerInterface {
         return result;
     }
 
-    public void fjernSalgslinje(SimpeltSalg salg, Salgslinje salgslinje) {
+    public void fjernSalgslinje(Salg salg, Salgslinje salgslinje) {
         salg.fjernSalgsLinje(salgslinje);
     }
 
@@ -123,7 +124,7 @@ public class Controller implements ControllerInterface {
         return pg.getNavn();
     }
 
-    public void betalSalg(SimpeltSalg salg, SimpeltSalg.Betalingsform betalingsform) {
+    public void betalSalg(Salg salg, Salg.Betalingsform betalingsform) {
         salg.setBetalingsform(betalingsform);
     }
 
@@ -138,14 +139,14 @@ public class Controller implements ControllerInterface {
         return result;
     }
 
-    public boolean klippeKortBetalingMuligt(SimpeltSalg salg) {
+    public boolean klippeKortBetalingMuligt(Salg salg) {
         return salg.klippeKortBetalingMuligt();
     }
 
-    public ArrayList<SimpeltSalg.Betalingsform> getMuligeBetalingsformer(SimpeltSalg salg){
-        ArrayList<SimpeltSalg.Betalingsform> muligeBetalingsformer = new ArrayList<>(Arrays.asList(SimpeltSalg.Betalingsform.values()));
+    public ArrayList<Salg.Betalingsform> getMuligeBetalingsformer(Salg salg){
+        ArrayList<Salg.Betalingsform> muligeBetalingsformer = new ArrayList<>(Arrays.asList(Salg.Betalingsform.values()));
         if(!salg.klippeKortBetalingMuligt()){
-            muligeBetalingsformer.remove(SimpeltSalg.Betalingsform.KLIPPEKORT);
+            muligeBetalingsformer.remove(Salg.Betalingsform.KLIPPEKORT);
         }
         return  muligeBetalingsformer;
     }
@@ -184,7 +185,7 @@ public class Controller implements ControllerInterface {
         } return res;
     }
 
-    public void setRabatSalg(SimpeltSalg salg, double rabat) {
+    public void setRabatSalg(Salg salg, double rabat) {
         salg.setRabatSalg(rabat);
     }
 
@@ -194,6 +195,24 @@ public class Controller implements ControllerInterface {
 
     public void setAfholdelsesDag(KomplekstSalg komplekstSalg, LocalDateTime afholdelsesDag){
         komplekstSalg.setAfholdelsesDag(afholdelsesDag);
+    }
+
+    public ArrayList<Salg> dagsRapport(LocalDate dato) {
+        ArrayList<Salg> result = new ArrayList<>();
+        for (Salg salg : storage.getSalg()) {
+            if (salg.getRegistreringsDato().equals(dato)) {
+                result.add(salg);
+            }
+        }
+        return result;
+    }
+
+    public double beregnDagsomsætning(LocalDate dato) {
+        double result = 0.0;
+        for (Salg salg : storage.getSalg()) {
+            result += salg.beregnSamletPrisDKK();
+        }
+        return result;
     }
 
 

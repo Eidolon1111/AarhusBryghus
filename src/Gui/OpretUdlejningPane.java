@@ -48,7 +48,7 @@ public class OpretUdlejningPane extends GridPane {
     private HBox hBoxTotal = new HBox(lbTotal, txfTotal);
 
     private Label lbBetalingsformer = new Label("Vælg Betalingsform:");
-    private ComboBox<SimpeltSalg.Betalingsform> comboBoxbetalingsformer = new ComboBox<>();
+    private ComboBox<Salg.Betalingsform> comboBoxbetalingsformer = new ComboBox<>();
     private Button btnSalgRabat = new Button("Rabat Salg");
     private Button btnBetal = new Button("Betal");
     private VBox vBoxBetalingsFormer = new VBox(lbBetalingsformer, comboBoxbetalingsformer);

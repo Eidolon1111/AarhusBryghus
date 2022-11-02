@@ -1,7 +1,6 @@
 package Gui;
 
-import Application.Model.Salgslinje;
-import Application.Model.SimpeltSalg;
+import Application.Model.Salg;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -14,7 +13,7 @@ import javafx.stage.StageStyle;
 
 
 public class RabatWindowSalg extends Stage {
-    private SimpeltSalg simpeltSalg;
+    private Salg salg;
     private ControllerInterface controller;
 
     private Label lbIndtastRabat = new Label("Indtast Rabat:");
@@ -35,9 +34,9 @@ public class RabatWindowSalg extends Stage {
 
     private Label lbError = new Label();
 
-    public RabatWindowSalg(ControllerInterface controller, String title, SimpeltSalg salg){
+    public RabatWindowSalg(ControllerInterface controller, String title, Salg salg){
         this.controller = controller;
-        this.simpeltSalg = salg;
+        this.salg = salg;
         initStyle(StageStyle.UTILITY);
         initModality(Modality.APPLICATION_MODAL);
         setResizable(false);
@@ -79,7 +78,7 @@ public class RabatWindowSalg extends Stage {
             if(rbProcent.isSelected()){
                 rabat = (rabat) / 100.00;
             }
-            controller.setRabatSalg(simpeltSalg, rabat);
+            controller.setRabatSalg(salg, rabat);
             this.close();
         } catch (NumberFormatException e){
             lbError.setText("rabat skal være en tal!");

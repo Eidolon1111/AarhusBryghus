@@ -3,7 +3,7 @@ package Storage;
 import Application.Model.Kunde;
 import Application.Model.Prisliste;
 import Application.Model.ProduktGruppe;
-import Application.Model.SimpeltSalg;
+import Application.Model.Salg;
 import Application.StorageInterface;
 
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Storage implements StorageInterface {
     private ArrayList<Prisliste> prislister = new ArrayList<>();
     private ArrayList<ProduktGruppe> produktGrupper = new ArrayList<>();
-    private ArrayList<SimpeltSalg> salg = new ArrayList<>();
+    private ArrayList<Salg> salg = new ArrayList<>();
     private ArrayList<Kunde> kunder = new ArrayList<>();
 
     public ArrayList<Prisliste> getPrislister() {
@@ -34,11 +34,11 @@ public class Storage implements StorageInterface {
         }
     }
 
-    public ArrayList<SimpeltSalg> getSalg() {
+    public ArrayList<Salg> getSalg() {
         return new ArrayList<>(salg);
     }
 
-    public void addSalg(SimpeltSalg s) {
+    public void addSalg(Salg s) {
         if (!salg.contains(s)) {
             salg.add(s);
         }

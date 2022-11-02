@@ -12,7 +12,7 @@ import javafx.scene.layout.VBox;
 public class OpretDagligtSalgPane extends GridPane {
 
     private ControllerInterface controller;
-    private SimpeltSalg currentSimpeltSalg = null;
+    private Salg currentSalg = null;
 
     private Label lbPrisliser = new Label("Vælg Prisliste: ");
     private ComboBox<Prisliste> cBPrislister = new ComboBox<>();
@@ -39,7 +39,7 @@ public class OpretDagligtSalgPane extends GridPane {
     private HBox hBoxTotal = new HBox(lbTotal, txfTotal);
 
     private Label lbBetalingsformer = new Label("Vælg Betalingsform:");
-    private ComboBox<SimpeltSalg.Betalingsform> comboBoxbetalingsformer = new ComboBox<>();
+    private ComboBox<Salg.Betalingsform> comboBoxbetalingsformer = new ComboBox<>();
     private Button btnSalgRabat = new Button("Rabat Salg");
     private Button btnBetal = new Button("Betal");
     private VBox vBoxBetalingsFormer = new VBox(lbBetalingsformer, comboBoxbetalingsformer);
@@ -141,15 +141,15 @@ public class OpretDagligtSalgPane extends GridPane {
                 try {
                     antal = Integer.parseInt(txfAntal.getText());
                     if (antal > 0) {
-                        if (currentSimpeltSalg == null) {
-                            currentSimpeltSalg = controller.createSimpelSalg();
+                        if (currentSalg == null) {
+                            currentSalg = controller.createSimpelSalg();
                             lbError.setText("");
                         }
-                        controller.createSalgslinje(currentSimpeltSalg, antal, pris);
-                        lwSalgslinjer.getItems().setAll(controller.printMellemRegning(currentSimpeltSalg));
-                        txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(currentSimpeltSalg));
+                        controller.createSalgslinje(currentSalg, antal, pris);
+                        lwSalgslinjer.getItems().setAll(controller.printMellemRegning(currentSalg));
+                        txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(currentSalg));
                         lbError.setText("");
-                        comboBoxbetalingsformer.getItems().setAll(controller.getMuligeBetalingsformer(currentSimpeltSalg));
+                        comboBoxbetalingsformer.getItems().setAll(controller.getMuligeBetalingsformer(currentSalg));
                     } else {
                         lbError.setText("antal skal være over 0");
                     }
@@ -167,29 +167,29 @@ public class OpretDagligtSalgPane extends GridPane {
     public void btnFjernAction(){
         Prisliste prisliste = cBPrislister.getSelectionModel().getSelectedItem();
         String s = lwSalgslinjer.getSelectionModel().getSelectedItem();
-        Salgslinje result = controller.findSalgslinjeFraKurv(prisliste, currentSimpeltSalg, s);
+        Salgslinje result = controller.findSalgslinjeFraKurv(prisliste, currentSalg, s);
         if(result != null){
-            controller.fjernSalgslinje(currentSimpeltSalg, result);
-            lwSalgslinjer.getItems().setAll(controller.printMellemRegning(currentSimpeltSalg));
-            txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(currentSimpeltSalg));
+            controller.fjernSalgslinje(currentSalg, result);
+            lwSalgslinjer.getItems().setAll(controller.printMellemRegning(currentSalg));
+            txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(currentSalg));
             lbError.setText("Salgslinje fjernet");
-            comboBoxbetalingsformer.getItems().setAll(controller.getMuligeBetalingsformer(currentSimpeltSalg));
+            comboBoxbetalingsformer.getItems().setAll(controller.getMuligeBetalingsformer(currentSalg));
             txfAntal.clear();
         } else {
-            lwSalgslinjer.getItems().setAll(controller.printMellemRegning(currentSimpeltSalg));
+            lwSalgslinjer.getItems().setAll(controller.printMellemRegning(currentSalg));
             lbError.setText("fejl");
         }
     }
 
     public void btnBetalAction(){
-        if(currentSimpeltSalg != null){
-            SimpeltSalg.Betalingsform betalingsform = comboBoxbetalingsformer.getSelectionModel().getSelectedItem();
+        if(currentSalg != null){
+            Salg.Betalingsform betalingsform = comboBoxbetalingsformer.getSelectionModel().getSelectedItem();
             if(betalingsform != null) {
-                controller.betalSalg(currentSimpeltSalg, betalingsform);
+                controller.betalSalg(currentSalg, betalingsform);
                 lbError.setText("");
                 lbSucces.setText("Salg betalt " + betalingsform);
                 lwSalgslinjer.getItems().clear();
-                currentSimpeltSalg = null;
+                currentSalg = null;
                 txfTotal.clear();
             } else {
                 lbError.setText("Vælg betalingsform!");
@@ -200,19 +200,19 @@ public class OpretDagligtSalgPane extends GridPane {
     public void btnSalgslinjeRabat(){
         Prisliste prisliste = cBPrislister.getSelectionModel().getSelectedItem();
         String target = lwSalgslinjer.getSelectionModel().getSelectedItem();
-        Salgslinje salgslinje = controller.findSalgslinjeFraKurv(prisliste, currentSimpeltSalg, target);
+        Salgslinje salgslinje = controller.findSalgslinjeFraKurv(prisliste, currentSalg, target);
         RabatWindowSalgslinje dia = new RabatWindowSalgslinje(controller, "Rabat Salgslinje", salgslinje);
         dia.showAndWait();
-        lwSalgslinjer.getItems().setAll(controller.printMellemRegning(currentSimpeltSalg));
-        txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(currentSimpeltSalg));
+        lwSalgslinjer.getItems().setAll(controller.printMellemRegning(currentSalg));
+        txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(currentSalg));
     }
 
     public void btnSalgRabat(){
-        RabatWindowSalg dia = new RabatWindowSalg(controller,"Rabat Salgslinje", currentSimpeltSalg);
+        RabatWindowSalg dia = new RabatWindowSalg(controller,"Rabat Salgslinje", currentSalg);
         dia.showAndWait();
         updateControls();
-        lwSalgslinjer.getItems().setAll(controller.printMellemRegning(currentSimpeltSalg));
-        txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(currentSimpeltSalg));
+        lwSalgslinjer.getItems().setAll(controller.printMellemRegning(currentSalg));
+        txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(currentSalg));
     }
 
 }
