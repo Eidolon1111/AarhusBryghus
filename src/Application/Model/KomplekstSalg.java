@@ -2,7 +2,7 @@ package Application.Model;
 
 import java.time.LocalDateTime;
 
-public class KomplekstSalg extends SimpeltSalg {
+public class KomplekstSalg extends Salg {
     private Status status;
     private Kunde kunde;
     private LocalDateTime dato2; //Anvendes til afregning af udlejelse og booking
