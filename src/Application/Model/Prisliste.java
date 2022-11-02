@@ -46,26 +46,6 @@ public class Prisliste {
         }
     }
 
-//    public double findPrisPaaProduktDKK(Produkt produkt){
-//        double res = 0.0;
-//        for (Pris p : prislisten){
-//            if (p.getProdukt().getNavn().equals(produkt.getNavn())){
-//                res = p.getPris();
-//            }
-//        }
-//        return res;
-//    }
-
-//    public int findPrisPaaProduktKlip(Produkt produkt){
-//        int res = 0;
-//        for (Pris p : prislisten){
-//            if (p.getProdukt().getNavn().equals(produkt.getNavn())){
-//                res = p.getKlip();
-//            }
-//        }
-//        return res;
-//    }
-
     public Pris findPrisPaaProdukt(Produkt produkt){
         Pris result = null;
         for (Pris pris : prislisten){
@@ -74,6 +54,15 @@ public class Prisliste {
             }
         }
         return result;
+    }
+
+    public Pris findPris(String Produktnavn){
+        Pris res = null;
+        for (Pris p : prislisten) {
+            if (p.getProdukt().getNavn().equals(Produktnavn)){
+                res = p;
+            }
+        } return res;
     }
 
     

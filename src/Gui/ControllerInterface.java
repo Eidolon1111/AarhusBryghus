@@ -2,6 +2,7 @@ package Gui;
 
 import Application.Model.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public interface ControllerInterface {
@@ -22,19 +23,21 @@ public interface ControllerInterface {
 
     public Produkt createProdukt(ProduktGruppe produktGruppe, String navn, String beskrivelse, String enhed);
 
-    public Salg createSimpelSalg();
+    public SimpeltSalg createSimpelSalg();
 
-    public Salg createKompleksSalg(Kunde kunde);
+    public SimpeltSalg createKompleksSalg(Kunde kunde);
 
-    public ArrayList<String> printMellemRegning(Prisliste prisliste, Salg salg);
+    public ArrayList<String> printMellemRegning(SimpeltSalg salg);
 
-    public String printSamletPrisDKKOgKlip(Prisliste prisliste, Salg salg);
+    public String printSamletPrisDKKOgKlip(SimpeltSalg salg);
 
-    public Salgslinje createSalgslinje(Salg salg, int antal, Pris pris);
+    public Salgslinje createSalgslinje(SimpeltSalg salg, int antal, Pris pris);
 
-    public Salgslinje findSalgslinjeFraKurv(Prisliste prisliste, Salg salg, String target);
+    public Salgslinje findSalgslinjeFraKurv(Prisliste prisliste, SimpeltSalg salg, String target);
 
-    public void fjernSalgslinje(Salg salg, Salgslinje salgslinje);
+    public ArrayList<SimpeltSalg> getSalg();
+
+    public void fjernSalgslinje(SimpeltSalg salg, Salgslinje salgslinje);
 
     public ArrayList<ProduktGruppe> getProduktGrupperIPrisliste(Prisliste prisliste);
 
@@ -42,14 +45,30 @@ public interface ControllerInterface {
 
     public String getProduktGruppeNavn(ProduktGruppe pg);
 
-    public void betalSalg(Salg salg, Salg.Betalingsform betalingsform);
+    public void betalSalg(SimpeltSalg salg, SimpeltSalg.Betalingsform betalingsform);
 
-    public ArrayList<Salg.Betalingsform> getMuligeBetalingsformer(Salg salg);
+    public ArrayList<SimpeltSalg.Betalingsform> getMuligeBetalingsformer(SimpeltSalg salg);
 
     public Pris findPrisPaaProdukt(Prisliste prisliste, Produkt produkt);
 
-    public boolean klippeKortBetalingMuligt(Salg salg);
+    public boolean klippeKortBetalingMuligt(SimpeltSalg salg);
+
+    public void createRundvisning(Kunde kunde, LocalDateTime afholdesesDato);
+
+    public Pris findPrisIPrisliste(Prisliste prisliste, String Produktnavn);
+
+    public ArrayList<Prisliste> getPrislisterMedSpecifiktProdukt(String Produktnavn);
+
+    public void setRabatSalg(SimpeltSalg salg, double rabat);
+
+    public void setRabatSalgslinje(Salgslinje salgslinje, double rabat);
 
     public void init();
+
+    public void createKunde(String navn, String tlfNr, String email);
+
+    public ArrayList<Kunde> getKunder();
+
+    public void setAfholdelsesDag(KomplekstSalg komplekstSalg, LocalDateTime afholdelsesDag);
 
 }

@@ -3,6 +3,8 @@ package Application.Controller;
 import Application.Model.*;
 import Application.StorageInterface;
 import Gui.ControllerInterface;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -30,7 +32,7 @@ public class Controller implements ControllerInterface {
         return result;
     }
 
-    public ArrayList<Salg> getSalg() {return storage.getSalg(); }
+    public ArrayList<SimpeltSalg> getSalg() {return storage.getSalg(); }
 
     public Prisliste createPrisliste(String navn) {
         Prisliste pl = new Prisliste(navn);
@@ -58,39 +60,49 @@ public class Controller implements ControllerInterface {
         return p;
     }
 
-
-    public Salg createSimpelSalg() {
-        Salg s = new SimpelSalg();
-        storage.addSalg(s);
-        return s;
+    @Override
+    public SimpeltSalg createSimpelSalg() {
+        SimpeltSalg simpeltSalg = new SimpeltSalg();
+        storage.addSalg(simpeltSalg);
+        return simpeltSalg;
     }
 
-    public Salg createKompleksSalg(Kunde kunde) {
-        Salg s = new KompleksSalg(kunde);
-        storage.addSalg(s);
-        return s;
+    public SimpeltSalg createKompleksSalg(Kunde kunde) {
+        KomplekstSalg komplekstSalg = new KomplekstSalg(kunde);
+        storage.addSalg(komplekstSalg);
+        return komplekstSalg;
     }
 
-    public ArrayList<String> printMellemRegning(Prisliste prisliste, Salg salg) {
-        return salg.printMellemRegning(prisliste);
+    public ArrayList<String> printMellemRegning(SimpeltSalg salg) {
+        return salg.printMellemRegning();
     }
 
-    public String printSamletPrisDKKOgKlip(Prisliste prisliste, Salg salg) {
-        return "DKK: " + salg.beregnSamletPrisDKK(prisliste) + " / Klip: " + salg.beregnSamletPrisKlip(prisliste);
+    public String printSamletPrisDKKOgKlip(SimpeltSalg salg) {
+        String result;
+        if(salg.getRabat() != 0 && salg.getRabat() < 1){
+            result = "DKK: " + salg.beregnSamletPrisDKK() + " / Klip: " + salg.beregnSamletPrisKlip() + " -"
+                    + (salg.getRabat() * 100) + "%";
+        } else if(salg.getRabat() > 1){
+            result = result = "DKK: " + salg.beregnSamletPrisDKK() + " / Klip: " + salg.beregnSamletPrisKlip() + " -"
+                    + salg.getRabat() + " DKK";
+        } else {
+            result = "DKK: " + salg.beregnSamletPrisDKK() + " / Klip: " + salg.beregnSamletPrisKlip();
+        }
+        return result;
     }
 
-    public Salgslinje createSalgslinje(Salg salg, int antal, Pris pris) {
+    public Salgslinje createSalgslinje(SimpeltSalg salg, int antal, Pris pris) {
         Salgslinje sl = salg.createSalgslinje(pris, antal);
         return sl;
     }
 
-    public Salgslinje findSalgslinjeFraKurv(Prisliste prisliste, Salg salg, String target){
+    public Salgslinje findSalgslinjeFraKurv(Prisliste prisliste, SimpeltSalg salg, String target){
         int index = 0;
         Salgslinje kandidat;
         Salgslinje result = null;
         while (result == null && index <= salg.getSalgslinjer().size()) {
             kandidat = salg.getSalgslinjer().get(index);
-            if (kandidat.printMellemRegning(prisliste).equals(target)) {
+            if (kandidat.printMellemRegning().equals(target)) {
                 result = kandidat;
             } else {
                 index++;
@@ -99,7 +111,7 @@ public class Controller implements ControllerInterface {
         return result;
     }
 
-    public void fjernSalgslinje(Salg salg, Salgslinje salgslinje) {
+    public void fjernSalgslinje(SimpeltSalg salg, Salgslinje salgslinje) {
         salg.fjernSalgsLinje(salgslinje);
     }
 
@@ -111,7 +123,7 @@ public class Controller implements ControllerInterface {
         return pg.getNavn();
     }
 
-    public void betalSalg(Salg salg, Salg.Betalingsform betalingsform) {
+    public void betalSalg(SimpeltSalg salg, SimpeltSalg.Betalingsform betalingsform) {
         salg.setBetalingsform(betalingsform);
     }
 
@@ -126,14 +138,14 @@ public class Controller implements ControllerInterface {
         return result;
     }
 
-    public boolean klippeKortBetalingMuligt(Salg salg) {
+    public boolean klippeKortBetalingMuligt(SimpeltSalg salg) {
         return salg.klippeKortBetalingMuligt();
     }
 
-    public ArrayList<Salg.Betalingsform> getMuligeBetalingsformer(Salg salg){
-        ArrayList<Salg.Betalingsform> muligeBetalingsformer = new ArrayList<>(Arrays.asList(Salg.Betalingsform.values()));
+    public ArrayList<SimpeltSalg.Betalingsform> getMuligeBetalingsformer(SimpeltSalg salg){
+        ArrayList<SimpeltSalg.Betalingsform> muligeBetalingsformer = new ArrayList<>(Arrays.asList(SimpeltSalg.Betalingsform.values()));
         if(!salg.klippeKortBetalingMuligt()){
-            muligeBetalingsformer.remove(Salg.Betalingsform.KLIPPEKORT);
+            muligeBetalingsformer.remove(SimpeltSalg.Betalingsform.KLIPPEKORT);
         }
         return  muligeBetalingsformer;
     }
@@ -142,7 +154,47 @@ public class Controller implements ControllerInterface {
         return prisliste.findPrisPaaProdukt(produkt);
     }
 
+    public ArrayList<Kunde> getKunder() {
+        return storage.getKunder();
+    }
 
+    public void createKunde(String navn, String tlfNr, String email) {
+        Kunde kunde = new Kunde(navn, tlfNr, email);
+        storage.addKunde(kunde);
+    }
+
+    public void createRundvisning(Kunde kunde, LocalDateTime afholdesesDato) {
+        KomplekstSalg Rundvisning = new KomplekstSalg(kunde);
+        Rundvisning.setAfholdelsesDag(afholdesesDato);
+        storage.addSalg(Rundvisning);
+    }
+
+    public Pris findPrisIPrisliste(Prisliste prisliste, String Produktnavn) {
+        return prisliste.findPris(Produktnavn);
+    }
+
+    public ArrayList<Prisliste> getPrislisterMedSpecifiktProdukt(String Produktnavn){
+        ArrayList<Prisliste> res = new ArrayList<>();
+        for (Prisliste pl : storage.getPrislister()) {
+            for (Pris p : pl.getPrislisten()){
+                if (p.getProdukt().getNavn().equals(Produktnavn)){
+                    res.add(pl);
+                }
+            }
+        } return res;
+    }
+
+    public void setRabatSalg(SimpeltSalg salg, double rabat) {
+        salg.setRabatSalg(rabat);
+    }
+
+    public void setRabatSalgslinje(Salgslinje salgslinje, double rabat) {
+        salgslinje.setRabat(rabat);
+    }
+
+    public void setAfholdelsesDag(KomplekstSalg komplekstSalg, LocalDateTime afholdelsesDag){
+        komplekstSalg.setAfholdelsesDag(afholdelsesDag);
+    }
 
 
     public void init(){
@@ -199,9 +251,6 @@ public class Controller implements ControllerInterface {
         //Sampakninger
         this.createProdukt(pg10, "Gaveæske", "2 øl, 2 glas", "");
 
-        //Rundvisning
-        this.createProdukt(pg11, "Rundvisning", "kan variere afhængig af dag/aften/studierabat", "pr person dag");
-
 
         //Priser for fredagsbar for flasker
         this.createPris(fredagsbar,p1, 70,2);
@@ -216,5 +265,34 @@ public class Controller implements ControllerInterface {
         this.createPris(butik,p3, 36,0);
         this.createPris(butik,p4, 36,0);
         this.createPris(butik,p5, 36,0);
+
+
+        //Initialisering af objekter anvendt i rundvisning
+
+        //Kunder
+        this.createKunde("Hans", "60453980", "Hans@gmail.com");
+        this.createKunde("Jens", "61235789", "Jens@gmail.com");
+        this.createKunde("Poul", "23466892", "Poul@gmail.com");
+
+        //Prislister
+        Prisliste dag = this.createPrisliste("Dag");
+        Prisliste aften = this.createPrisliste("Aften");
+        Prisliste student = this.createPrisliste("Student");
+        Prisliste udlejning = this.createPrisliste("Udlejning");
+
+        //Rundvisning produkt
+        Produkt Rundvisning = this.createProdukt(pg11,
+                "Rundvisning",
+                "kan variere afhængig af dag/aften/studierabat",
+                "pr person dag");
+
+        //TODO
+        //Udlejnings Produkter
+
+
+        //Priser
+        dag.createPrisTilPrisliste(Rundvisning, 100, 0);
+        aften.createPrisTilPrisliste(Rundvisning, 150, 0);
+        student.createPrisTilPrisliste(Rundvisning, 50, 0);
     }
 }

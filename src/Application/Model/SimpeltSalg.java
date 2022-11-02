@@ -3,13 +3,14 @@ package Application.Model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public abstract class Salg {
+public class SimpeltSalg {
     private LocalDate registreringsDato;
     private ArrayList<Salgslinje> salgslinjer = new ArrayList<Salgslinje>();
     private Betalingsform betalingsform;
+    private double rabat;
 
 
-    public Salg() {
+    public SimpeltSalg() {
         this.registreringsDato = LocalDate.now();
     }
 
@@ -23,18 +24,26 @@ public abstract class Salg {
         salgslinjer.remove(salgslinje);
     }
 
-    public double beregnSamletPrisDKK(Prisliste prisliste) {
+
+    public double beregnSamletPrisDKK() {
         double result = 0;
         for (Salgslinje s : salgslinjer){
-            result += prisliste.findPrisPaaProdukt(s.getProdukt()).getPris() * s.getAntal();
+            result += s.beregnPrisDKK();
+        }
+        if (rabat != 0){
+            if(rabat < 1){
+                result = (result) - ((result) * rabat);
+            } else {
+                result = (result) - rabat;
+            }
         }
         return result;
     }
 
-    public int beregnSamletPrisKlip(Prisliste prisliste) {
+    public int beregnSamletPrisKlip() {
         int result = 0;
         for (Salgslinje s : salgslinjer){
-            result += prisliste.findPrisPaaProdukt(s.getProdukt()).getKlip() * s.getAntal();
+            result += s.beregnPrisKlip();
         }
         return result;
     }
@@ -43,10 +52,10 @@ public abstract class Salg {
         return new ArrayList<>(salgslinjer);
     }
 
-    public ArrayList<String> printMellemRegning(Prisliste prisliste){
+    public ArrayList<String> printMellemRegning(){
         ArrayList<String> result = new ArrayList<>();
         for (Salgslinje salgslinje : salgslinjer){
-            result.add(salgslinje.printMellemRegning(prisliste));
+            result.add(salgslinje.printMellemRegning());
         }
         return result;
     }
@@ -72,6 +81,14 @@ public abstract class Salg {
     public Betalingsform getBetalingsform() {
         return this.betalingsform;
    }
+
+    public void setRabatSalg(double rabat){
+        this.rabat = rabat;
+    }
+
+    public double getRabat(){
+        return rabat;
+    }
 
     public enum Betalingsform {
         DANKORT, KONTANT, KLIPPEKORT, MOBILEPAY, REGNING;
