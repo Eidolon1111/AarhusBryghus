@@ -36,7 +36,9 @@ public class KomplekstSalg extends Salg {
 
 
 
-    public LocalDateTime getAfholdelsesdag() {return dato2;}
+    public LocalDateTime getAfholdelsesdag() {
+        return dato2;
+    }
 
 
     public enum Status {

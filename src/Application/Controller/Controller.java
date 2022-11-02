@@ -127,7 +127,7 @@ public class Controller implements ControllerInterface {
     public void betalSalg(Salg salg, Salg.Betalingsform betalingsform) {
         if(salg instanceof KomplekstSalg){
             salg.setBetalingsform(betalingsform);
-            if(((KomplekstSalg) salg).getAfholdelsesDag() == null){
+            if(((KomplekstSalg) salg).getAfholdelsesdag() == null){
                 ((KomplekstSalg) salg).setStatus(KomplekstSalg.Status.PANTBETALT);
             } else {
                 ((KomplekstSalg) salg).setStatus(KomplekstSalg.Status.AFREGNET);
