@@ -67,7 +67,7 @@ public class Controller implements ControllerInterface {
         return simpeltSalg;
     }
 
-    public SimpeltSalg createKompleksSalg(Kunde kunde) {
+    public KomplekstSalg createKompleksSalg(Kunde kunde) {
         KomplekstSalg komplekstSalg = new KomplekstSalg(kunde);
         storage.addSalg(komplekstSalg);
         return komplekstSalg;
@@ -225,10 +225,23 @@ public class Controller implements ControllerInterface {
         this.createProdukt(pg3, "Whisky", "45%", "50 cl rør");
 
         //Fustage produkter
-        this.createProdukt(pg4, "Klosterbryg", "","20 liter");
+        Produkt fustageKlosterbrug = this.createProdukt(pg4, "Klosterbryg", "","20 liter");
+        Produkt fustageJazzClassic = this.createProdukt(pg4, "Jazz Classic", "", "25 liter");
+        Produkt fustageEkstraPilsner = this.createProdukt(pg4, "Ekstra Pilsner", "", "25 liter");
+        Produkt fustageCelebration = this.createProdukt(pg4, "Celebration", "", "20 liter");
+        Produkt fustageBlondie = this.createProdukt(pg4, "Blondie", "", "25 liter");
+        Produkt fustageFårsbryg = this.createProdukt(pg4, "Forårsbryg", "", "20 liter");
+        Produkt fustageIndiaPaleAle = this.createProdukt(pg4, "India Pale Ale", "", "20 liter");
+        Produkt fustageJuleBryg = this.createProdukt(pg4, "Julebryg", "", "20 liter");
+        Produkt fustageImperialStout = this.createProdukt(pg4, "Imperial Stout", "", "20 liter");
+        Produkt fustagePant = this.createProdukt(pg4, "Pant", "", "");
 
         //Kulsyre
-        this.createProdukt(pg5, "6 kg", "", "");
+        Produkt kulsyre10kg = this.createProdukt(pg5, "10 kg", "", "");
+        Produkt kulsyre6kg = this.createProdukt(pg5, "6 kg", "", "");
+        Produkt kulsyre4kg = this.createProdukt(pg5, "4 kg", "", "");
+        Produkt kulsyrePant = this.createProdukt(pg5, "Pant", "", "");
+
 
         //Malt
         this.createProdukt(pg6, "Maltsæk", "", "25 kg");
@@ -237,7 +250,11 @@ public class Controller implements ControllerInterface {
         this.createProdukt(pg7, "t-shirt", "", "");
 
         //Anlæg
-        this.createProdukt(pg8, "1-hane", "", "");
+        Produkt anlæg1hane = this.createProdukt(pg8, "1-hane", "", "");
+        Produkt anlæg2hane = this.createProdukt(pg8, "2-haner", "", "");
+        Produkt anlægBarflerehaner = this.createProdukt(pg8, "Bar med flere haner", "", "");
+        Produkt anlægLevering = this.createProdukt(pg8, "Levering", "", "");
+        Produkt anlægKrus = this.createProdukt(pg8, "Krus", "", "");
 
         //Glas
         this.createProdukt(pg9, "Glas", "uanset størrelse", "");
@@ -282,7 +299,30 @@ public class Controller implements ControllerInterface {
         rundvisning.createPrisTilPrisliste(rundvisningDag, 100, 0);
         rundvisning.createPrisTilPrisliste(rundvisningAften, 150, 0);
 
-        //TODO
-        //Udlejnings Produkter
+        //Priser til Udlejning
+        udlejning.createPrisTilPrisliste(anlæg1hane,250, 0);
+        udlejning.createPrisTilPrisliste(anlæg2hane,400, 0);
+        udlejning.createPrisTilPrisliste(anlægBarflerehaner,500, 0);
+        udlejning.createPrisTilPrisliste(anlægLevering,500, 0);
+        udlejning.createPrisTilPrisliste(anlægKrus,60, 0);
+        udlejning.createPrisTilPrisliste(anlæg1hane,250, 0);
+
+        udlejning.createPrisTilPrisliste(fustageKlosterbrug,775, 0);
+        udlejning.createPrisTilPrisliste(fustageJazzClassic,625, 0);
+        udlejning.createPrisTilPrisliste(fustageEkstraPilsner,575, 0);
+        udlejning.createPrisTilPrisliste(fustageCelebration, 775, 0);
+        udlejning.createPrisTilPrisliste(fustageBlondie,700, 0);
+        udlejning.createPrisTilPrisliste(fustageFårsbryg,775, 0);
+        udlejning.createPrisTilPrisliste(fustageIndiaPaleAle,775, 0);
+        udlejning.createPrisTilPrisliste(fustageJuleBryg,775, 0);
+        udlejning.createPrisTilPrisliste(fustageImperialStout,775, 0);
+        udlejning.createPrisTilPrisliste(fustagePant,200, 0);
+
+        udlejning.createPrisTilPrisliste(kulsyre10kg,600, 0);
+        udlejning.createPrisTilPrisliste(kulsyre6kg,400, 0);
+        udlejning.createPrisTilPrisliste(kulsyre4kg,300, 0);
+        udlejning.createPrisTilPrisliste(kulsyrePant,1000, 0);
+
+
     }
 }

@@ -25,7 +25,7 @@ public interface ControllerInterface {
 
     public SimpeltSalg createSimpelSalg();
 
-    public SimpeltSalg createKompleksSalg(Kunde kunde);
+    public KomplekstSalg createKompleksSalg(Kunde kunde);
 
     public ArrayList<String> printMellemRegning(SimpeltSalg salg);
 

@@ -58,6 +58,7 @@ public class RabatWindowSalg extends Stage {
         rbDkk.setToggleGroup(tgRabat);
         pane.add(hBoxRadioButtons,0,0);
         hBoxRadioButtons.setSpacing(20);
+        tgRabat.selectToggle(rbProcent);
 
         pane.add(hBoxLabelTxtfield, 0, 1);
         hBoxLabelTxtfield.setSpacing(20);
