@@ -42,7 +42,7 @@ public class AarhusBryghusTabWindow extends Application {
     }
 
     private void initTabPane(TabPane tabPane) {
-        tabPane.setPrefWidth(1010);
+        tabPane.setPrefWidth(1050);
         tabPane.setPrefHeight(500);
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
