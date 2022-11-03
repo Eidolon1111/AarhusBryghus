@@ -8,6 +8,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 
@@ -16,7 +18,7 @@ public class OpretProduktPane extends GridPane {
     private ControllerInterface controller;
     private ListView lwProduktgrupper = new ListView<>();
     private ListView lwProdukter = new ListView<>();
-    private TextField txfNavn, txfEnhed, txfBeskrivelse, txfOpretProduktgruppe;
+    private TextField txfNavn, txfAntalEnheder, txfEnhed, txfBeskrivelse, txfOpretProduktgruppe;
     private Label produktError, produktGruppeError1, produktGruppeError2;
 
 
@@ -50,6 +52,9 @@ public class OpretProduktPane extends GridPane {
         Label lblNavn = new Label("Navn: ");
         txfNavn = new TextField();
 
+        Label lblAntalEnheder = new Label("Antal enheder: ");
+        txfAntalEnheder = new TextField();
+
         Label lblEnhed = new Label("Enhed: ");
         txfEnhed = new TextField();
 
@@ -61,14 +66,17 @@ public class OpretProduktPane extends GridPane {
 
         Label lblProdukter = new Label("Produkter:");
 
+
         //Tilføjelse af elementer i række 2
         this.add(lblOpretNytProdukt, 2, 0);
         this.add(lblNavn, 2, 1);
-        this.add(txfNavn, 3, 1);
-        this.add(lblEnhed, 2, 2);
-        this.add(txfEnhed, 3, 2);
+        this.add(txfNavn, 3, 1,3,1);
+        this.add(lblAntalEnheder, 2, 2);
+        this.add(txfAntalEnheder, 3, 2);
+        this.add(lblEnhed, 4, 2);
+        this.add(txfEnhed, 5, 2);
         this.add(lblBeskrivelse, 2, 3);
-        this.add(txfBeskrivelse, 3, 3);
+        this.add(txfBeskrivelse, 3, 3,3,1);
         this.add(btnTilføj, 2, 4);
 
         this.add(lblProdukter, 2, 6);
@@ -127,18 +135,25 @@ public class OpretProduktPane extends GridPane {
     public void createProduktAction(){
         ProduktGruppe produktGruppe = (ProduktGruppe) lwProduktgrupper.getSelectionModel().getSelectedItem();
         if (!txfNavn.getText().equals("")){
-            //TODO antal enheder skal med i gui
-            controller.createSimpelProdukt(produktGruppe,txfNavn.getText(),txfBeskrivelse.getText(),0, txfBeskrivelse.getText());
-            txfEnhed.clear(); txfNavn.clear(); txfBeskrivelse.clear();
-            lwProdukter.getItems().setAll(controller.getProdukterFraProduktgruppe((ProduktGruppe) lwProduktgrupper.getSelectionModel().getSelectedItem()));
-            if(produktError != null) {
-                produktError.setVisible(false);
+            if (txfAntalEnheder.getText().isEmpty()) {
+                controller.createSimpelProdukt(produktGruppe, txfNavn.getText(), txfBeskrivelse.getText(), 0, "");
+
+            } else {
+                controller.createSimpelProdukt(produktGruppe, txfNavn.getText(), txfBeskrivelse.getText(), Integer.parseInt(txfAntalEnheder.getText()), txfBeskrivelse.getText());
+                txfEnhed.clear();
+                txfNavn.clear();
+                txfBeskrivelse.clear();
+                lwProdukter.getItems().setAll(controller.getProdukterFraProduktgruppe((ProduktGruppe) lwProduktgrupper.getSelectionModel().getSelectedItem()));
+                if (produktError != null) {
+                    produktError.setVisible(false);
+                }
             }
         } else {
             produktError = new Label("Produktnavn skal udfyldes!");
             produktError.setTextFill(Color.color(1, 0, 0));
             this.add(produktError, 7, 1);
         }
+        updateControls();
     }
 
     public boolean dublet(){
