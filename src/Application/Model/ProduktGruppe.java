@@ -11,14 +11,14 @@ public class ProduktGruppe {
         produkts = new ArrayList<>();
     }
 
-    public Produkt createSimpelProdukt(String navn, String enhed, String beskrivelse){
-        Produkt produkt = new SimpelProdukt(navn, enhed, beskrivelse, this);
+    public Produkt createSimpelProdukt(String navn, int antalEnheder, String enhed, String beskrivelse){
+        Produkt produkt = new SimpelProdukt(navn, antalEnheder, enhed, beskrivelse, this);
         produkts.add(produkt);
         return produkt;
     }
 
-    public Produkt createProduktSamling(String navn, String beskrivelse) {
-        Produkt produkt = new ProduktSamling(navn, beskrivelse, this);
+    public ProduktSamling createProduktSamling(String navn, String beskrivelse) {
+        ProduktSamling produkt = new ProduktSamling(navn, beskrivelse, this);
         produkts.add(produkt);
         return produkt;
     }

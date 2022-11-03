@@ -55,13 +55,13 @@ public class Controller implements ControllerInterface {
         return pg;
     }
 
-    public Produkt createSimpelProdukt(ProduktGruppe produktGruppe, String navn, String beskrivelse, String enhed) {
-        Produkt p = produktGruppe.createSimpelProdukt(navn, enhed, beskrivelse);
+    public Produkt createSimpelProdukt(ProduktGruppe produktGruppe, String navn, String beskrivelse, int antalEnheder, String enhed) {
+        Produkt p = produktGruppe.createSimpelProdukt(navn, antalEnheder, enhed, beskrivelse);
         return p;
     }
 
-    public Produkt createProduktSamling(ProduktGruppe produktGruppe, String navn, String beskrivelse) {
-        Produkt p = produktGruppe.createProduktSamling(navn, beskrivelse);
+    public ProduktSamling createProduktSamling(ProduktGruppe produktGruppe, String navn, String beskrivelse) {
+        ProduktSamling p = produktGruppe.createProduktSamling(navn, beskrivelse);
         return p;
     }
 
@@ -233,7 +233,34 @@ public class Controller implements ControllerInterface {
     }
 
     public int solgteKlipForPeriode(LocalDate fraDato, LocalDate tilDato) {
-        return 0;
+        int result = 0;
+        for (Salg salg : storage.getSalg()) {
+            if (salg.getRegistreringsDato().isAfter(fraDato.minusDays(1)) && salg.getRegistreringsDato().isBefore(tilDato)) {
+                for (Salgslinje salgslinje : salg.getSalgslinjer()) {
+                    Produkt produkt = salgslinje.getPris().getProdukt();
+                    if (produkt.getProduktGruppe().getNavn().equals("Klippekort")) {
+                        result += ((SimpelProdukt) produkt).getAntalEnheder();
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    public int brugteKlipForPeriode(LocalDate fraDato, LocalDate tilDato) {
+        int result = 0;
+        for (Salg salg : storage.getSalg()) {
+            if (salg.getBetalingsform() != null) {
+                if (salg.getRegistreringsDato().isAfter(fraDato.minusDays(1)) && salg.getRegistreringsDato().isBefore(tilDato)) {
+                    if (salg.getBetalingsform().equals(Salg.Betalingsform.KLIPPEKORT)) {
+                        for (Salgslinje salgslinje : salg.getSalgslinjer()) {
+                            result += salgslinje.beregnPrisKlip();
+                        }
+                    }
+                }
+            }
+        }
+        return result;
     }
 
     public ArrayList<KomplekstSalg> getUadsluttedeUdlejninger() {
@@ -302,69 +329,73 @@ public class Controller implements ControllerInterface {
         ProduktGruppe pg9 = this.createProduktGruppe("Glas");
         ProduktGruppe pg10 = this.createProduktGruppe("Sampakninger");
         ProduktGruppe pg11 = this.createProduktGruppe("Rundvisning");
+        ProduktGruppe klippekort = this.createProduktGruppe("Klippekort");
 
         //Flaske produkter
-        Produkt p1 = this.createSimpelProdukt(pg1,"Klosterbryg","","");
-        Produkt p2 = this.createSimpelProdukt(pg1,"Sweet Georgia Brown","","");
-        Produkt p3 = this.createSimpelProdukt(pg1,"Extra Pilsner","","");
-        Produkt p4 = this.createSimpelProdukt(pg1,"Celebration","","");
-        Produkt p5 = this.createSimpelProdukt(pg1,"Blondie","","");
+        Produkt p1 = this.createSimpelProdukt(pg1,"Klosterbryg","",0,"");
+        Produkt p2 = this.createSimpelProdukt(pg1,"Sweet Georgia Brown","",0,"");
+        Produkt p3 = this.createSimpelProdukt(pg1,"Extra Pilsner","",0,"");
+        Produkt p4 = this.createSimpelProdukt(pg1,"Celebration","",0,"");
+        Produkt p5 = this.createSimpelProdukt(pg1,"Blondie","",0,"");
 
         //Fadøl produkter
-        this.createSimpelProdukt(pg2, "Klosterbryg", "", "40 cl");
-        this.createSimpelProdukt(pg2, "Jazz Classic", "", "40 cl");
-        this.createSimpelProdukt(pg2, "Extra Pilsner", "", "40 cl");
-        this.createSimpelProdukt(pg2, "Celebration", "", "40 cl");
-        this.createSimpelProdukt(pg2, "Blondie", "", "40 cl");
+        this.createSimpelProdukt(pg2, "Klosterbryg", "", 40,"cl");
+        this.createSimpelProdukt(pg2, "Jazz Classic", "", 40, "cl");
+        this.createSimpelProdukt(pg2, "Extra Pilsner", "", 40, "cl");
+        this.createSimpelProdukt(pg2, "Celebration", "", 40, "cl");
+        this.createSimpelProdukt(pg2, "Blondie", "", 40, "cl");
 
         //Spritus produkter
-        this.createSimpelProdukt(pg3, "Whisky", "45%", "50 cl rør");
+        this.createSimpelProdukt(pg3, "Whisky", "45%", 50 ,"cl rør");
 
         //Fustage produkter
-        Produkt fustageKlosterbryg = this.createSimpelProdukt(pg4, "Klosterbryg", "","20 liter");
-        Produkt fustageJazzClassic = this.createSimpelProdukt(pg4, "Jazz Classic", "", "25 liter");
-        Produkt fustageEkstraPilsner = this.createSimpelProdukt(pg4, "Ekstra Pilsner", "", "25 liter");
-        Produkt fustageCelebration = this.createSimpelProdukt(pg4, "Celebration", "", "20 liter");
-        Produkt fustageBlondie = this.createSimpelProdukt(pg4, "Blondie", "", "25 liter");
-        Produkt fustageFårsbryg = this.createSimpelProdukt(pg4, "Forårsbryg", "", "20 liter");
-        Produkt fustageIndiaPaleAle = this.createSimpelProdukt(pg4, "India Pale Ale", "", "20 liter");
-        Produkt fustageJuleBryg = this.createSimpelProdukt(pg4, "Julebryg", "", "20 liter");
-        Produkt fustageImperialStout = this.createSimpelProdukt(pg4, "Imperial Stout", "", "20 liter");
-        Produkt fustagePant = this.createSimpelProdukt(pg4, "Fustage Pant", "", "");
+        Produkt fustageKlosterbryg = this.createSimpelProdukt(pg4, "Klosterbryg", "",20, "liter");
+        Produkt fustageJazzClassic = this.createSimpelProdukt(pg4, "Jazz Classic", "", 25, "liter");
+        Produkt fustageEkstraPilsner = this.createSimpelProdukt(pg4, "Ekstra Pilsner", "", 25, "liter");
+        Produkt fustageCelebration = this.createSimpelProdukt(pg4, "Celebration", "", 20, "liter");
+        Produkt fustageBlondie = this.createSimpelProdukt(pg4, "Blondie", "", 25, "liter");
+        Produkt fustageFårsbryg = this.createSimpelProdukt(pg4, "Forårsbryg", "", 20, "liter");
+        Produkt fustageIndiaPaleAle = this.createSimpelProdukt(pg4, "India Pale Ale", "", 20, "liter");
+        Produkt fustageJuleBryg = this.createSimpelProdukt(pg4, "Julebryg", "", 20, "liter");
+        Produkt fustageImperialStout = this.createSimpelProdukt(pg4, "Imperial Stout", "", 20, "liter");
+        Produkt fustagePant = this.createSimpelProdukt(pg4, "Fustage Pant", "", 0,"");
 
         //Kulsyre
-        Produkt kulsyre10kg = this.createSimpelProdukt(pg5, "10 kg", "", "");
-        Produkt kulsyre6kg = this.createSimpelProdukt(pg5, "6 kg", "", "");
-        Produkt kulsyre4kg = this.createSimpelProdukt(pg5, "4 kg", "", "");
-        Produkt kulsyrePant = this.createSimpelProdukt(pg5, "Kulsyre Pant", "", "");
+        Produkt kulsyre10kg = this.createSimpelProdukt(pg5, "Kulsyre", "", 10,"kg");
+        Produkt kulsyre6kg = this.createSimpelProdukt(pg5, "Kulsyre", "", 6, "kg");
+        Produkt kulsyre4kg = this.createSimpelProdukt(pg5, "Kulsyre", "", 4,"kg");
+        Produkt kulsyrePant = this.createSimpelProdukt(pg5, "Kulsyre Pant", "", 0,"");
 
 
         //Malt
-        this.createSimpelProdukt(pg6, "Maltsæk", "", "25 kg");
+        this.createSimpelProdukt(pg6, "Maltsæk", "", 25, "kg");
 
         //Beklædning
-        this.createSimpelProdukt(pg7, "t-shirt", "", "");
+        this.createSimpelProdukt(pg7, "t-shirt", "", 0,"");
 
         //Anlæg
-        Produkt anlæg1hane = this.createSimpelProdukt(pg8, "1-hane", "", "");
-        Produkt anlæg2hane = this.createSimpelProdukt(pg8, "2-haner", "", "");
-        Produkt anlægBarflerehaner = this.createSimpelProdukt(pg8, "Bar med flere haner", "", "");
-        Produkt anlægLevering = this.createSimpelProdukt(pg8, "Levering", "", "");
-        Produkt anlægKrus = this.createSimpelProdukt(pg8, "Krus", "", "");
+        Produkt anlæg1hane = this.createSimpelProdukt(pg8, "1-hane", "", 0,"");
+        Produkt anlæg2hane = this.createSimpelProdukt(pg8, "2-haner", "", 0,"");
+        Produkt anlægBarflerehaner = this.createSimpelProdukt(pg8, "Bar med flere haner", "", 0,"");
+        Produkt anlægLevering = this.createSimpelProdukt(pg8, "Levering", "", 0,"");
+        Produkt anlægKrus = this.createSimpelProdukt(pg8, "Krus", "", 0,"");
 
         //Glas
-        this.createSimpelProdukt(pg9, "Glas", "uanset størrelse", "");
+        this.createSimpelProdukt(pg9, "Glas", "uanset størrelse", 0,"");
 
         //Sampakninger
-        this.createSimpelProdukt(pg10, "Gaveæske", "2 øl, 2 glas", "");
+        //this.createSimpelProdukt(pg10, "Gaveæske", "2 øl, 2 glas", "");
 
+        //Klippekort
+        Produkt klippekort4Klip = this.createSimpelProdukt(klippekort, "Klippekort, 4 klip", "",4, "klip");
 
-        //Priser for fredagsbar for flasker
+        //Priser for fredagsbar for flasker + klippekort
         this.createPris(fredagsbar,p1, 70,2);
         this.createPris(fredagsbar,p2, 70,2);
         this.createPris(fredagsbar,p3, 70,2);
         this.createPris(fredagsbar,p4, 70,2);
         this.createPris(fredagsbar,p5, 70,2);
+        this.createPris(fredagsbar, klippekort4Klip, 130, 0);
 
         //Priser for butik for flasker
         this.createPris(butik,p1, 36,0);
@@ -387,9 +418,9 @@ public class Controller implements ControllerInterface {
 
         //Rundvisnings produkter
         Produkt rundvisningDag = this.createSimpelProdukt(pg11,
-                "Rundvisning dag", "", "Pris pr person");
+                "Rundvisning dag", "",0, "Pris pr person");
         Produkt rundvisningAften = this.createSimpelProdukt(pg11,
-                "Rundvisning aften", "", "Pris pr person");
+                "Rundvisning aften", "",0, "Pris pr person");
 
         //Priser til rundvisningsprodukter
         Pris rundvisningDagPris = rundvisning.createPrisTilPrisliste(rundvisningDag, 100, 0);
@@ -432,5 +463,10 @@ public class Controller implements ControllerInterface {
         this.createSalgslinje(testUdlejning, 1, prisKulsyrePant);
         this.betalSalg(testUdlejning, Salg.Betalingsform.DANKORT);
 
+        //Salg af klippekort
+        Salg salgKlippekort = this.createSimpelSalg();
+        salgKlippekort.createSalgslinje(this.createPris(fredagsbar, klippekort4Klip, 130,0),1);
+        salgKlippekort.createSalgslinje(this.createPris(fredagsbar, klippekort4Klip, 130,0),1);
+        salgKlippekort.setBetalingsform(Salg.Betalingsform.DANKORT);
     }
 }
