@@ -55,8 +55,13 @@ public class Controller implements ControllerInterface {
         return pg;
     }
 
-    public Produkt createProdukt(ProduktGruppe produktGruppe, String navn, String beskrivelse, String enhed) {
-        Produkt p = produktGruppe.createProdukt(navn, enhed, beskrivelse);
+    public Produkt createSimpelProdukt(ProduktGruppe produktGruppe, String navn, String beskrivelse, String enhed) {
+        Produkt p = produktGruppe.createSimpelProdukt(navn, enhed, beskrivelse);
+        return p;
+    }
+
+    public Produkt createProduktSamling(ProduktGruppe produktGruppe, String navn, String beskrivelse) {
+        Produkt p = produktGruppe.createProduktSamling(navn, beskrivelse);
         return p;
     }
 
@@ -299,59 +304,59 @@ public class Controller implements ControllerInterface {
         ProduktGruppe pg11 = this.createProduktGruppe("Rundvisning");
 
         //Flaske produkter
-        Produkt p1 = this.createProdukt(pg1,"Klosterbryg","","");
-        Produkt p2 = this.createProdukt(pg1,"Sweet Georgia Brown","","");
-        Produkt p3 = this.createProdukt(pg1,"Extra Pilsner","","");
-        Produkt p4 = this.createProdukt(pg1,"Celebration","","");
-        Produkt p5 = this.createProdukt(pg1,"Blondie","","");
+        Produkt p1 = this.createSimpelProdukt(pg1,"Klosterbryg","","");
+        Produkt p2 = this.createSimpelProdukt(pg1,"Sweet Georgia Brown","","");
+        Produkt p3 = this.createSimpelProdukt(pg1,"Extra Pilsner","","");
+        Produkt p4 = this.createSimpelProdukt(pg1,"Celebration","","");
+        Produkt p5 = this.createSimpelProdukt(pg1,"Blondie","","");
 
         //Fadøl produkter
-        this.createProdukt(pg2, "Klosterbryg", "", "40 cl");
-        this.createProdukt(pg2, "Jazz Classic", "", "40 cl");
-        this.createProdukt(pg2, "Extra Pilsner", "", "40 cl");
-        this.createProdukt(pg2, "Celebration", "", "40 cl");
-        this.createProdukt(pg2, "Blondie", "", "40 cl");
+        this.createSimpelProdukt(pg2, "Klosterbryg", "", "40 cl");
+        this.createSimpelProdukt(pg2, "Jazz Classic", "", "40 cl");
+        this.createSimpelProdukt(pg2, "Extra Pilsner", "", "40 cl");
+        this.createSimpelProdukt(pg2, "Celebration", "", "40 cl");
+        this.createSimpelProdukt(pg2, "Blondie", "", "40 cl");
 
         //Spritus produkter
-        this.createProdukt(pg3, "Whisky", "45%", "50 cl rør");
+        this.createSimpelProdukt(pg3, "Whisky", "45%", "50 cl rør");
 
         //Fustage produkter
-        Produkt fustageKlosterbryg = this.createProdukt(pg4, "Klosterbryg", "","20 liter");
-        Produkt fustageJazzClassic = this.createProdukt(pg4, "Jazz Classic", "", "25 liter");
-        Produkt fustageEkstraPilsner = this.createProdukt(pg4, "Ekstra Pilsner", "", "25 liter");
-        Produkt fustageCelebration = this.createProdukt(pg4, "Celebration", "", "20 liter");
-        Produkt fustageBlondie = this.createProdukt(pg4, "Blondie", "", "25 liter");
-        Produkt fustageFårsbryg = this.createProdukt(pg4, "Forårsbryg", "", "20 liter");
-        Produkt fustageIndiaPaleAle = this.createProdukt(pg4, "India Pale Ale", "", "20 liter");
-        Produkt fustageJuleBryg = this.createProdukt(pg4, "Julebryg", "", "20 liter");
-        Produkt fustageImperialStout = this.createProdukt(pg4, "Imperial Stout", "", "20 liter");
-        Produkt fustagePant = this.createProdukt(pg4, "Fustage Pant", "", "");
+        Produkt fustageKlosterbryg = this.createSimpelProdukt(pg4, "Klosterbryg", "","20 liter");
+        Produkt fustageJazzClassic = this.createSimpelProdukt(pg4, "Jazz Classic", "", "25 liter");
+        Produkt fustageEkstraPilsner = this.createSimpelProdukt(pg4, "Ekstra Pilsner", "", "25 liter");
+        Produkt fustageCelebration = this.createSimpelProdukt(pg4, "Celebration", "", "20 liter");
+        Produkt fustageBlondie = this.createSimpelProdukt(pg4, "Blondie", "", "25 liter");
+        Produkt fustageFårsbryg = this.createSimpelProdukt(pg4, "Forårsbryg", "", "20 liter");
+        Produkt fustageIndiaPaleAle = this.createSimpelProdukt(pg4, "India Pale Ale", "", "20 liter");
+        Produkt fustageJuleBryg = this.createSimpelProdukt(pg4, "Julebryg", "", "20 liter");
+        Produkt fustageImperialStout = this.createSimpelProdukt(pg4, "Imperial Stout", "", "20 liter");
+        Produkt fustagePant = this.createSimpelProdukt(pg4, "Fustage Pant", "", "");
 
         //Kulsyre
-        Produkt kulsyre10kg = this.createProdukt(pg5, "10 kg", "", "");
-        Produkt kulsyre6kg = this.createProdukt(pg5, "6 kg", "", "");
-        Produkt kulsyre4kg = this.createProdukt(pg5, "4 kg", "", "");
-        Produkt kulsyrePant = this.createProdukt(pg5, "Kulsyre Pant", "", "");
+        Produkt kulsyre10kg = this.createSimpelProdukt(pg5, "10 kg", "", "");
+        Produkt kulsyre6kg = this.createSimpelProdukt(pg5, "6 kg", "", "");
+        Produkt kulsyre4kg = this.createSimpelProdukt(pg5, "4 kg", "", "");
+        Produkt kulsyrePant = this.createSimpelProdukt(pg5, "Kulsyre Pant", "", "");
 
 
         //Malt
-        this.createProdukt(pg6, "Maltsæk", "", "25 kg");
+        this.createSimpelProdukt(pg6, "Maltsæk", "", "25 kg");
 
         //Beklædning
-        this.createProdukt(pg7, "t-shirt", "", "");
+        this.createSimpelProdukt(pg7, "t-shirt", "", "");
 
         //Anlæg
-        Produkt anlæg1hane = this.createProdukt(pg8, "1-hane", "", "");
-        Produkt anlæg2hane = this.createProdukt(pg8, "2-haner", "", "");
-        Produkt anlægBarflerehaner = this.createProdukt(pg8, "Bar med flere haner", "", "");
-        Produkt anlægLevering = this.createProdukt(pg8, "Levering", "", "");
-        Produkt anlægKrus = this.createProdukt(pg8, "Krus", "", "");
+        Produkt anlæg1hane = this.createSimpelProdukt(pg8, "1-hane", "", "");
+        Produkt anlæg2hane = this.createSimpelProdukt(pg8, "2-haner", "", "");
+        Produkt anlægBarflerehaner = this.createSimpelProdukt(pg8, "Bar med flere haner", "", "");
+        Produkt anlægLevering = this.createSimpelProdukt(pg8, "Levering", "", "");
+        Produkt anlægKrus = this.createSimpelProdukt(pg8, "Krus", "", "");
 
         //Glas
-        this.createProdukt(pg9, "Glas", "uanset størrelse", "");
+        this.createSimpelProdukt(pg9, "Glas", "uanset størrelse", "");
 
         //Sampakninger
-        this.createProdukt(pg10, "Gaveæske", "2 øl, 2 glas", "");
+        this.createSimpelProdukt(pg10, "Gaveæske", "2 øl, 2 glas", "");
 
 
         //Priser for fredagsbar for flasker
@@ -381,9 +386,9 @@ public class Controller implements ControllerInterface {
         Prisliste udlejning = this.createPrisliste("Udlejning");
 
         //Rundvisnings produkter
-        Produkt rundvisningDag = this.createProdukt(pg11,
+        Produkt rundvisningDag = this.createSimpelProdukt(pg11,
                 "Rundvisning dag", "", "Pris pr person");
-        Produkt rundvisningAften = this.createProdukt(pg11,
+        Produkt rundvisningAften = this.createSimpelProdukt(pg11,
                 "Rundvisning aften", "", "Pris pr person");
 
         //Priser til rundvisningsprodukter

@@ -1,6 +1,5 @@
 package Gui;
 
-import Application.Controller.Controller;
 import Application.Model.ProduktGruppe;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
@@ -128,7 +127,7 @@ public class OpretProduktPane extends GridPane {
     public void createProduktAction(){
         ProduktGruppe produktGruppe = (ProduktGruppe) lwProduktgrupper.getSelectionModel().getSelectedItem();
         if (!txfNavn.getText().equals("")){
-            controller.createProdukt(produktGruppe,txfNavn.getText(),txfBeskrivelse.getText(), txfBeskrivelse.getText());
+            controller.createSimpelProdukt(produktGruppe,txfNavn.getText(),txfBeskrivelse.getText(), txfBeskrivelse.getText());
             txfEnhed.clear(); txfNavn.clear(); txfBeskrivelse.clear();
             lwProdukter.getItems().setAll(controller.getProdukterFraProduktgruppe((ProduktGruppe) lwProduktgrupper.getSelectionModel().getSelectedItem()));
             if(produktError != null) {
