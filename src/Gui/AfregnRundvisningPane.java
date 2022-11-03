@@ -19,7 +19,6 @@ public class AfregnRundvisningPane extends GridPane {
     private Label lblRundvisninger, lblValgteRundvisning;
     private TextField txfSalgslinje;
     private Label lblRest;
-    private TextField txfRest;
 
     private Label lbAntal = new Label("Indtast antal: ");
     private TextField txfAntal = new TextField();
@@ -73,12 +72,9 @@ public class AfregnRundvisningPane extends GridPane {
         //Initialisering af elementer til række 2
         lblValgteRundvisning = new Label("Valgte rundvisning: ");
         txfSalgslinje = new TextField();
-        txfSalgslinje.setMinWidth(170);
+        txfSalgslinje.setMinWidth(160);
         txfSalgslinje.setEditable(false);
-        lblRest = new Label("Antal ikke afregnede");
-        txfRest = new TextField();
-        txfRest.setMinWidth(170);
-        txfRest.setEditable(false);
+        lblRest = new Label("Antal ikke afregnede: " + rest);
 
 
 
@@ -86,14 +82,14 @@ public class AfregnRundvisningPane extends GridPane {
         this.add(lblValgteRundvisning, 1, 0);
         this.add(txfSalgslinje, 1, 1);
         this.add(lblRest, 1, 2);
-        this.add(txfRest, 1, 3);
+
 
         /////////////////////////////////////////////////////////////
 
-        this.add(lbAntal, 2, 5);
-        this.add(txfAntal, 3, 5);
+        this.add(lbAntal, 1, 4);
+        this.add(txfAntal, 1, 5);
         txfAntal.setPrefWidth(40);
-        this.add(btnTilføj, 2, 6);
+        this.add(btnTilføj, 1, 6);
         btnTilføj.setOnAction(actionEvent -> btnTilføjAction());
 
         this.add(hBoxRabatogFjern, 4, 10);
@@ -134,12 +130,14 @@ public class AfregnRundvisningPane extends GridPane {
 
     public void selectedRundvisningChanged() {
         Rundvisning rundvisning = lwRundvisninger.getSelectionModel().getSelectedItem();
-        this.førsteSalgLinje = rundvisning.getSalgslinjer().get(0);
+        if (rundvisning != null) {
+            this.førsteSalgLinje = rundvisning.getSalgslinjer().get(0);
+        }
         rundvisning = lwRundvisninger.getSelectionModel().getSelectedItem();
         if (rundvisning != null) {
             this.førsteSalgLinje = rundvisning.getSalgslinjer().get(0);
             this.rest = rundvisning.getSalgslinjer().get(0).getAntal();
-            txfRest.setText(String.valueOf(rest));
+            lblRest.setText("Antal ikke afregnede: " + rest);
         }
         this.updateControls();
     }
@@ -161,7 +159,7 @@ public class AfregnRundvisningPane extends GridPane {
                         lbError.setText("");
                         comboBoxbetalingsformer.getItems().setAll(controller.getMuligeBetalingsformer(rundvisning));
                         rest = rest - antal;
-                        txfRest.setText(String.valueOf(rest));
+                        lblRest.setText("Antal ikke afregnede: " + rest);
                         txfAntal.clear();
                     } else {
                         lbError.setText("Antal skal være over 0");
@@ -182,7 +180,7 @@ public class AfregnRundvisningPane extends GridPane {
         if(salgslinje != null){
             controller.fjernSalgslinje(rundvisning, salgslinje);
             rest = rest + salgslinje.getAntal();
-            txfRest.setText(String.valueOf(rest));
+            lblRest.setText("Antal ikke afregnede: " + rest);
             lwSalgslinjer.getItems().setAll(controller.getSalgslinjerPaaSalg(rundvisning));
             txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(rundvisning));
             lbError.setText("Salgslinje fjernet");
@@ -203,7 +201,7 @@ public class AfregnRundvisningPane extends GridPane {
                 lbError.setText("");
                 lbSucces.setText("Salg betalt " + betalingsform);
                 lwSalgslinjer.getItems().clear();
-                txfTotal.clear(); txfAntal.clear(); txfRest.clear(); txfSalgslinje.clear();
+                txfTotal.clear(); txfAntal.clear(); txfSalgslinje.clear(); lblRest.setText("Antal ikke afregnede: ");
                 lwRundvisninger.setDisable(false);
                 this.updateControls();
             } else {
