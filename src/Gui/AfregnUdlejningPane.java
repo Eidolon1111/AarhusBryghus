@@ -17,19 +17,18 @@ import java.util.ArrayList;
 public class AfregnUdlejningPane extends GridPane {
 
     private ControllerInterface controller;
+
     private Prisliste prisliste;
 
-    private Label lbUdlejninger = new Label("Vælg Udlejning");
+    private Label lbUdlejninger = new Label("Vælg Udlejning: ");
     private ListView<Udlejning> lWUafsluttedeUdlejninger = new ListView<>();
 
     private Label lbSalgslinjeriUdlejning = new Label("Podukter til indlevering: ");
     private ListView<Salgslinje> lWSalgslinjeriUdlejning = new ListView<>();
 
     private ArrayList<Salgslinje> tempSalgslinjer;
-    //TODO implementer:
-    private ArrayList<Salgslinje> tempModregninger;
 
-    private Label lbAntal = new Label("Antal");
+    private Label lbAntal = new Label("Indtast antal:");
     private TextField txfAntal = new TextField();
     private Button btnModregn = new Button("Modregn");
 
@@ -91,6 +90,7 @@ public class AfregnUdlejningPane extends GridPane {
 
         this.add(hBoxTotal, 4, 11);
         hBoxTotal.setSpacing(20);
+        txfTotal.setEditable(false);
 
         this.add(hBoxUdbetalFortyd, 4, 12);
         hBoxUdbetalFortyd.setSpacing(20);
@@ -199,7 +199,17 @@ public class AfregnUdlejningPane extends GridPane {
     }
     //TODO
     public void btnFortrydAction(){
-
+        Udlejning udlejning = lWUafsluttedeUdlejninger.getSelectionModel().getSelectedItem();
+        for (Salgslinje salgslinje : lwIndleveredeSalgslinjer.getItems()){
+            controller.fjernSalgslinje(udlejning, salgslinje);
+        }
+        tempSalgslinjer.clear();
+        lwIndleveredeSalgslinjer.getItems().setAll(controller.getModregningerPaaUdlejning(udlejning));
+        lWSalgslinjeriUdlejning.getItems().clear();
+        txfTotal.clear();
+        txfAntal.clear();
+        lWUafsluttedeUdlejninger.setDisable(false);
+        updateControls();
     }
 
     //TODO
