@@ -82,15 +82,26 @@ public class Controller implements ControllerInterface {
 
     public String printSamletPrisDKKOgKlip(Salg salg) {
         String result;
-        if(salg.getRabat() != 0 && salg.getRabat() < 1){
-            result = "DKK: " + salg.beregnSamletPrisDKK() + " / Klip: " + salg.beregnSamletPrisKlip() + " -"
-                    + (salg.getRabat() * 100) + "%";
-        } else if(salg.getRabat() > 1){
-            result = result = "DKK: " + salg.beregnSamletPrisDKK() + " / Klip: " + salg.beregnSamletPrisKlip() + " -"
-                    + salg.getRabat() + " DKK";
+        if(salg.klippeKortBetalingMuligt()){
+            if(salg.getRabat() != 0 && salg.getRabat() < 1){
+                result = "DKK: " + salg.beregnSamletPrisDKK() + " / Klip: " + salg.beregnSamletPrisKlip() + " -"
+                        + (salg.getRabat() * 100) + "%";
+            } else if(salg.getRabat() > 1){
+                result = result = "DKK: " + salg.beregnSamletPrisDKK() + " / Klip: " + salg.beregnSamletPrisKlip() + " -"
+                        + salg.getRabat() + " DKK";
+            } else {
+                result = "DKK: " + salg.beregnSamletPrisDKK() + " / Klip: " + salg.beregnSamletPrisKlip();
+            }
         } else {
-            result = "DKK: " + salg.beregnSamletPrisDKK() + " / Klip: " + salg.beregnSamletPrisKlip();
+            if(salg.getRabat() != 0 && salg.getRabat() < 1){
+                result = "DKK: " + salg.beregnSamletPrisDKK() + " -" + (salg.getRabat() * 100) + "%";
+            } else if(salg.getRabat() > 1){
+                result = result = "DKK: " + salg.beregnSamletPrisDKK() + " -" + salg.getRabat() + " DKK";
+            } else {
+                result = "DKK: " + salg.beregnSamletPrisDKK();
+            }
         }
+
         return result;
     }
 

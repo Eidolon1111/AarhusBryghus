@@ -36,8 +36,6 @@ public interface ControllerInterface {
 
     public Salgslinje createSalgslinje(Salg salg, int antal, Pris pris);
 
-    //public Salgslinje findSalgslinjeFraKurv(Prisliste prisliste, Salg salg, String target);
-
     public ArrayList<Salg> getSalg();
 
     public void fjernSalgslinje(Salg salg, Salgslinje salgslinje);
@@ -91,8 +89,6 @@ public interface ControllerInterface {
     public Salgslinje createModregning(Udlejning udlejning, Salgslinje salgslinje, int antal);
 
     public void setAntalPåSalgslinje(Salgslinje salgslinje, int antal);
-
-    //public String printMellemRegningSalgslinje(Salgslinje salgslinje);
 
     public double beregnReturBeløbUdlejning(Udlejning udlejning);
 

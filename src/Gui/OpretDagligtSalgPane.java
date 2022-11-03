@@ -87,6 +87,7 @@ public class OpretDagligtSalgPane extends GridPane {
 
         this.add(lbKurv, 4, 0);
         this.add(lwSalgslinjer, 4, 1,1,9);
+        lwSalgslinjer.setPrefWidth(300);
 
         this.add(hBoxTotal, 4, 11);
         hBoxTotal.setSpacing(20);
@@ -165,7 +166,6 @@ public class OpretDagligtSalgPane extends GridPane {
     }
 
     public void btnFjernAction(){
-        Prisliste prisliste = cBPrislister.getSelectionModel().getSelectedItem();
         Salgslinje salgslinje = lwSalgslinjer.getSelectionModel().getSelectedItem();
         if(salgslinje != null){
             controller.fjernSalgslinje(currentSalg, salgslinje);
