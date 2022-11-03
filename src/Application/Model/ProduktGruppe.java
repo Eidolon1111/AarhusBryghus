@@ -17,8 +17,8 @@ public class ProduktGruppe {
         return produkt;
     }
 
-    public Produkt createProduktSamling(String navn, String beskrivelse) {
-        Produkt produkt = new ProduktSamling(navn, beskrivelse, this);
+    public ProduktSamling createProduktSamling(String navn, String beskrivelse) {
+        ProduktSamling produkt = new ProduktSamling(navn, beskrivelse, this);
         produkts.add(produkt);
         return produkt;
     }

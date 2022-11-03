@@ -21,4 +21,9 @@ public class ProduktSamling extends Produkt{
     public ArrayList<Produkt> getProdukter() {
         return new ArrayList<>(produkter);
     }
+
+    @Override
+    public String toString() {
+        return super.getNavn() + ", " + super.getBeskrivelse();
+    }
 }

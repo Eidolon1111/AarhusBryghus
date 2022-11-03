@@ -60,8 +60,8 @@ public class Controller implements ControllerInterface {
         return p;
     }
 
-    public Produkt createProduktSamling(ProduktGruppe produktGruppe, String navn, String beskrivelse) {
-        Produkt p = produktGruppe.createProduktSamling(navn, beskrivelse);
+    public ProduktSamling createProduktSamling(ProduktGruppe produktGruppe, String navn, String beskrivelse) {
+        ProduktSamling p = produktGruppe.createProduktSamling(navn, beskrivelse);
         return p;
     }
 
@@ -233,7 +233,34 @@ public class Controller implements ControllerInterface {
     }
 
     public int solgteKlipForPeriode(LocalDate fraDato, LocalDate tilDato) {
-        return 0;
+        int result = 0;
+        for (Salg salg : storage.getSalg()) {
+            if (salg.getRegistreringsDato().isAfter(fraDato.minusDays(1)) && salg.getRegistreringsDato().isBefore(tilDato)) {
+                for (Salgslinje salgslinje : salg.getSalgslinjer()) {
+                    Produkt produkt = salgslinje.getPris().getProdukt();
+                    if (produkt.getProduktGruppe().getNavn().equals("Klippekort")) {
+                        result += ((ProduktSamling) produkt).getProdukter().size();
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    public int brugteKlipForPeriode(LocalDate fraDato, LocalDate tilDato) {
+        int result = 0;
+        for (Salg salg : storage.getSalg()) {
+            if (salg.getBetalingsform() != null) {
+                if (salg.getRegistreringsDato().isAfter(fraDato.minusDays(1)) && salg.getRegistreringsDato().isBefore(tilDato)) {
+                    if (salg.getBetalingsform().equals(Salg.Betalingsform.KLIPPEKORT)) {
+                        for (Salgslinje salgslinje : salg.getSalgslinjer()) {
+                            result += salgslinje.beregnPrisKlip();
+                        }
+                    }
+                }
+            }
+        }
+        return result;
     }
 
     public ArrayList<KomplekstSalg> getUadsluttedeUdlejninger() {
@@ -302,6 +329,8 @@ public class Controller implements ControllerInterface {
         ProduktGruppe pg9 = this.createProduktGruppe("Glas");
         ProduktGruppe pg10 = this.createProduktGruppe("Sampakninger");
         ProduktGruppe pg11 = this.createProduktGruppe("Rundvisning");
+        ProduktGruppe klippekort = this.createProduktGruppe("Klippekort");
+        ProduktGruppe klips = this.createProduktGruppe("klip");
 
         //Flaske produkter
         Produkt p1 = this.createSimpelProdukt(pg1,"Klosterbryg","","");
@@ -358,13 +387,21 @@ public class Controller implements ControllerInterface {
         //Sampakninger
         this.createSimpelProdukt(pg10, "Gaveæske", "2 øl, 2 glas", "");
 
+        //Klippekort
+        ProduktSamling klippekort4Klip = this.createProduktSamling(klippekort, "Klippekort", "4 klip");
+        Produkt klip = this.createSimpelProdukt(klips, "Klip", "", "");
+        klippekort4Klip.addProdukt(klip);
+        klippekort4Klip.addProdukt(klip);
+        klippekort4Klip.addProdukt(klip);
+        klippekort4Klip.addProdukt(klip);
 
-        //Priser for fredagsbar for flasker
+        //Priser for fredagsbar for flasker + klippekort
         this.createPris(fredagsbar,p1, 70,2);
         this.createPris(fredagsbar,p2, 70,2);
         this.createPris(fredagsbar,p3, 70,2);
         this.createPris(fredagsbar,p4, 70,2);
         this.createPris(fredagsbar,p5, 70,2);
+        this.createPris(fredagsbar, klippekort4Klip, 130, 0);
 
         //Priser for butik for flasker
         this.createPris(butik,p1, 36,0);
@@ -432,5 +469,10 @@ public class Controller implements ControllerInterface {
         this.createSalgslinje(testUdlejning, 1, prisKulsyrePant);
         this.betalSalg(testUdlejning, Salg.Betalingsform.DANKORT);
 
+        //Salg af klippekort
+        Salg salgKlippekort = this.createSimpelSalg();
+        salgKlippekort.createSalgslinje(this.createPris(fredagsbar, klippekort4Klip, 130,0),1);
+        salgKlippekort.createSalgslinje(this.createPris(fredagsbar, klippekort4Klip, 130,0),1);
+        salgKlippekort.setBetalingsform(Salg.Betalingsform.DANKORT);
     }
 }

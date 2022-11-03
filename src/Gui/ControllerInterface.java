@@ -78,6 +78,8 @@ public interface ControllerInterface {
 
     public int solgteKlipForPeriode(LocalDate fraDato, LocalDate tilDato);
 
+    public int brugteKlipForPeriode(LocalDate fraDato, LocalDate tilDato);
+
     public ArrayList<KomplekstSalg> getRundvisninger();
 
     public ArrayList<KomplekstSalg> getUadsluttedeUdlejninger();
