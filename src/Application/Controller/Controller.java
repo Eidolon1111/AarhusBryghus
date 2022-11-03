@@ -65,22 +65,20 @@ public class Controller implements ControllerInterface {
         return p;
     }
 
-    @Override
     public Salg createSimpelSalg() {
         Salg salg = new Salg();
         storage.addSalg(salg);
         return salg;
     }
 
-    public KomplekstSalg createKompleksSalg(Kunde kunde) {
-        KomplekstSalg komplekstSalg = new KomplekstSalg(kunde);
-        storage.addSalg(komplekstSalg);
-        return komplekstSalg;
+    public ArrayList<Salgslinje> getSalgslinjerPaaSalg(Salg salg) {
+        return salg.getSalgslinjer();
     }
 
-    public ArrayList<String> printMellemRegning(Salg salg) {
-        return salg.printMellemRegning();
+    public ArrayList<Salgslinje> getModregningerPaaUdlejning(Udlejning udlejning) {
+        return udlejning.getModregninger();
     }
+
 
     public String printSamletPrisDKKOgKlip(Salg salg) {
         String result;
@@ -101,20 +99,21 @@ public class Controller implements ControllerInterface {
         return sl;
     }
 
-    public Salgslinje findSalgslinjeFraKurv(Prisliste prisliste, Salg salg, String target){
-        int index = 0;
-        Salgslinje kandidat;
-        Salgslinje result = null;
-        while (result == null && index <= salg.getSalgslinjer().size()) {
-            kandidat = salg.getSalgslinjer().get(index);
-            if (kandidat.printMellemRegning().equals(target)) {
-                result = kandidat;
-            } else {
-                index++;
-            }
-        }
-        return result;
-    }
+    //TODO
+//    public Salgslinje findSalgslinjeFraKurv(Prisliste prisliste, Salg salg, String target){
+//        int index = 0;
+//        Salgslinje kandidat;
+//        Salgslinje result = null;
+//        while (result == null && index <= salg.getSalgslinjer().size()) {
+//            kandidat = salg.getSalgslinjer().get(index);
+//            if (kandidat.printMellemRegning().equals(target)) {
+//                result = kandidat;
+//            } else {
+//                index++;
+//            }
+//        }
+//        return result;
+//    }
 
     public void fjernSalgslinje(Salg salg, Salgslinje salgslinje) {
         salg.fjernSalgsLinje(salgslinje);
@@ -129,15 +128,11 @@ public class Controller implements ControllerInterface {
     }
 
     public void betalSalg(Salg salg, Salg.Betalingsform betalingsform) {
-        if(salg instanceof KomplekstSalg){
-            salg.setBetalingsform(betalingsform);
-            if(((KomplekstSalg) salg).getAfholdelsesdag() == null){
-                ((KomplekstSalg) salg).setStatus(KomplekstSalg.Status.PANTBETALT);
-            } else {
-                ((KomplekstSalg) salg).setStatus(KomplekstSalg.Status.AFREGNET);
-            }
+        salg.setBetalingsform(betalingsform);
+        if(salg instanceof Udlejning){
+            salg.setStatus(Salg.Status.PANTBETALT);
         } else {
-            salg.setBetalingsform(betalingsform);
+            salg.setStatus(Salg.Status.AFREGNET);
         }
     }
 
@@ -152,6 +147,7 @@ public class Controller implements ControllerInterface {
         return result;
     }
 
+    //TODO tjek om denne bliver brugt
     public boolean klippeKortBetalingMuligt(Salg salg) {
         return salg.klippeKortBetalingMuligt();
     }
@@ -178,27 +174,20 @@ public class Controller implements ControllerInterface {
         return kunde;
     }
 
-    public void createRundvisning(Kunde kunde, LocalDateTime afholdesesDato,Pris pris, int antal) {
-        KomplekstSalg Rundvisning = new KomplekstSalg(kunde);
-        Rundvisning.setAfholdelsesDag(afholdesesDato);
-        Rundvisning.createSalgslinje(pris, antal);
-        storage.addSalg(Rundvisning);
+    public Rundvisning createRundvisning(Kunde kunde, LocalDateTime afholdesesDato, Pris pris, int antal) {
+        Rundvisning rundvisning = new Rundvisning(kunde);
+        rundvisning.setAfholdelsesDag(afholdesesDato);
+        rundvisning.createSalgslinje(pris, antal);
+        storage.addSalg(rundvisning);
+        return rundvisning;
     }
 
-    public Pris findPrisIPrisliste(Prisliste prisliste, String Produktnavn) {
-        return prisliste.findPris(Produktnavn);
+    public Udlejning createUdlejning(Kunde kunde) {
+        Udlejning udlejning = new Udlejning(kunde);
+        storage.addSalg(udlejning);
+        return udlejning;
     }
 
-    public ArrayList<Prisliste> getPrislisterMedSpecifiktProdukt(String Produktnavn){
-        ArrayList<Prisliste> res = new ArrayList<>();
-        for (Prisliste pl : storage.getPrislister()) {
-            for (Pris p : pl.getPrislisten()){
-                if (p.getProdukt().getNavn().equals(Produktnavn)){
-                    res.add(pl);
-                }
-            }
-        } return res;
-    }
 
     public void setRabatSalg(Salg salg, double rabat) {
         salg.setRabatSalg(rabat);
@@ -208,8 +197,12 @@ public class Controller implements ControllerInterface {
         salgslinje.setRabat(rabat);
     }
 
-    public void setAfholdelsesDag(KomplekstSalg komplekstSalg, LocalDateTime afholdelsesDag){
-        komplekstSalg.setAfholdelsesDag(afholdelsesDag);
+    public void setAfholdelsesDag(Rundvisning rundvisning, LocalDateTime afholdelsesDag){
+        rundvisning.setAfholdelsesDag(afholdelsesDag);
+    }
+
+    public void setAfregningsDato(Udlejning udlejning, LocalDate afregningdato){
+        udlejning.setAfregningsDato(afregningdato);
     }
 
     public ArrayList<Salg> dagsRapport(LocalDate dato) {
@@ -263,34 +256,36 @@ public class Controller implements ControllerInterface {
         return result;
     }
 
-    public ArrayList<KomplekstSalg> getUadsluttedeUdlejninger() {
-        ArrayList<KomplekstSalg> result = new ArrayList<>();
+    public ArrayList<Udlejning> getUadsluttedeUdlejninger() {
+        ArrayList<Udlejning> result = new ArrayList<>();
         for (Salg s : storage.getSalg()){
-            if(s instanceof KomplekstSalg && ((KomplekstSalg) s).getStatus() == KomplekstSalg.Status.PANTBETALT){
-                result.add((KomplekstSalg) s);
+            if(s instanceof Udlejning) {
+                if (s.getStatus() == Salg.Status.PANTBETALT){
+                    result.add((Udlejning) s);
+                }
             }
         }
         return result;
     }
 
-    public Salgslinje createModregning(KomplekstSalg salg, Salgslinje salgslinje, int antal) {
-        return salg.createModregning(salgslinje, antal);
+    public Salgslinje createModregning(Udlejning udlejning, Salgslinje salgslinje, int antal) {
+        return udlejning.createModregning(salgslinje, antal);
     }
 
     public void setAntalPåSalgslinje(Salgslinje salgslinje, int antal) {
         salgslinje.setAntal(antal);
     }
 
-    public String printMellemRegningSalgslinje(Salgslinje salgslinje) {
-        return salgslinje.printMellemRegning();
-    }
+//    public String printMellemRegningSalgslinje(Salgslinje salgslinje) {
+//        return salgslinje.printMellemRegning();
+//    }
 
-    public double beregnReturBeløbUdlejning(KomplekstSalg udlejning) {
+    public double beregnReturBeløbUdlejning(Udlejning udlejning) {
         return udlejning.beregnReturBeløbUdlejning();
     }
 
-    public void udbetalModregning(KomplekstSalg udlejning) {
-        udlejning.setStatus(KomplekstSalg.Status.AFREGNET);
+    public void udbetalModregning(Udlejning udlejning) {
+        udlejning.setStatus(Salg.Status.AFREGNET);
     }
 
     public Prisliste getPrisliste(String navn) {
@@ -302,17 +297,16 @@ public class Controller implements ControllerInterface {
         } return res;
     }
 
-    public ArrayList<KomplekstSalg> getRundvisninger() {
-        ArrayList<KomplekstSalg> rundvisninger = new ArrayList<>();
+    public ArrayList<Rundvisning> getRegistreredeRundvisninger() {
+        ArrayList<Rundvisning> rundvisninger = new ArrayList<>();
         for (Salg ss : storage.getSalg()){
-            if(ss instanceof KomplekstSalg){
-                if(((KomplekstSalg) ss).getAfholdelsesdag() != null && ((KomplekstSalg) ss).getStatus() == KomplekstSalg.Status.REGISTRERET) {
-                    rundvisninger.add((KomplekstSalg) ss);
+            if(ss instanceof Rundvisning){
+                if(ss.getStatus() == Salg.Status.REGISTRERET){
+                    rundvisninger.add((Rundvisning) ss);
                 }
             }
         } return rundvisninger;
     }
-
 
     public void init(){
         Prisliste fredagsbar = this.createPrisliste("Fredagsbar");
@@ -455,7 +449,7 @@ public class Controller implements ControllerInterface {
         Pris prisKulsyre4kg = udlejning.createPrisTilPrisliste(kulsyre4kg,300, 0);
         Pris prisKulsyrePant = udlejning.createPrisTilPrisliste(kulsyrePant,1000, 0);
 
-        KomplekstSalg testUdlejning = this.createKompleksSalg(k1);
+        Udlejning testUdlejning = this.createUdlejning(k1);
         this.createSalgslinje(testUdlejning, 1, pris1Hane);
         this.createSalgslinje(testUdlejning, 3, prisFustageKlosterbryg);
         this.createSalgslinje(testUdlejning, 3, prisFustagePant);

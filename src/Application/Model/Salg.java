@@ -7,6 +7,7 @@ public class Salg {
     private LocalDate registreringsDato;
     private ArrayList<Salgslinje> salgslinjer = new ArrayList<Salgslinje>();
     private Betalingsform betalingsform;
+    private Status status;
     private double rabat;
 
 
@@ -52,14 +53,6 @@ public class Salg {
         return new ArrayList<>(salgslinjer);
     }
 
-    public ArrayList<String> printMellemRegning(){
-        ArrayList<String> result = new ArrayList<>();
-        for (Salgslinje salgslinje : salgslinjer){
-            result.add(salgslinje.printMellemRegning());
-        }
-        return result;
-    }
-
     public void setBetalingsform(Betalingsform betalingsform){
         this.betalingsform = betalingsform;
     }
@@ -94,6 +87,14 @@ public class Salg {
         return registreringsDato;
     }
 
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public Status getStatus(){
+        return status;
+    }
+
     @Override
     public String toString() {
         return beregnSamletPrisDKK() + " DKK, " + betalingsform;
@@ -103,4 +104,7 @@ public class Salg {
         DANKORT, KONTANT, KLIPPEKORT, MOBILEPAY, REGNING;
     }
 
+    public enum Status {
+        REGISTRERET, PANTBETALT, AFREGNET;
+    }
 }

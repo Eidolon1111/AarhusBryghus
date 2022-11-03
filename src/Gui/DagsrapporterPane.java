@@ -1,6 +1,7 @@
 package Gui;
 
 import Application.Model.Salg;
+import Application.Model.Salgslinje;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.scene.control.DatePicker;
@@ -16,7 +17,7 @@ public class DagsrapporterPane extends GridPane {
     private ControllerInterface controller;
     private DatePicker datePicker;
     private ListView<Salg> lwDagensSalg;
-    private ListView<String> lwSalgslinjer;
+    private ListView<Salgslinje> lwSalgslinjer;
     private TextField txfAntal, txfDagsomsætning;
     private DatePicker datePickerFra, datePickerTil;
     private TextField txfSolgteKlip, txfBrugteKlip;
@@ -112,7 +113,7 @@ public class DagsrapporterPane extends GridPane {
     public void salgItemSelected() {
         Salg salg = lwDagensSalg.getSelectionModel().getSelectedItem();
         if (salg != null) {
-            lwSalgslinjer.getItems().setAll(controller.printMellemRegning(salg));
+            lwSalgslinjer.getItems().setAll(controller.getSalgslinjerPaaSalg(salg));
         }
     }
 }

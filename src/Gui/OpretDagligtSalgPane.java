@@ -28,7 +28,7 @@ public class OpretDagligtSalgPane extends GridPane {
     private Button btnTilføj = new Button("Tilføj");
 
     private Label lbKurv = new Label("Kurv: ");
-    private ListView<String> lwSalgslinjer = new ListView<>();
+    private ListView<Salgslinje> lwSalgslinjer = new ListView<>();
 
     private Button btnFjern = new Button("Fjern salgslinje");
     private Button btnSalgslinjeRabat = new Button("Rabat salgslinje");
@@ -146,7 +146,7 @@ public class OpretDagligtSalgPane extends GridPane {
                             lbError.setText("");
                         }
                         controller.createSalgslinje(currentSalg, antal, pris);
-                        lwSalgslinjer.getItems().setAll(controller.printMellemRegning(currentSalg));
+                        lwSalgslinjer.getItems().setAll(controller.getSalgslinjerPaaSalg(currentSalg));
                         txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(currentSalg));
                         lbError.setText("");
                         comboBoxbetalingsformer.getItems().setAll(controller.getMuligeBetalingsformer(currentSalg));
@@ -166,17 +166,16 @@ public class OpretDagligtSalgPane extends GridPane {
 
     public void btnFjernAction(){
         Prisliste prisliste = cBPrislister.getSelectionModel().getSelectedItem();
-        String s = lwSalgslinjer.getSelectionModel().getSelectedItem();
-        Salgslinje result = controller.findSalgslinjeFraKurv(prisliste, currentSalg, s);
-        if(result != null){
-            controller.fjernSalgslinje(currentSalg, result);
-            lwSalgslinjer.getItems().setAll(controller.printMellemRegning(currentSalg));
+        Salgslinje salgslinje = lwSalgslinjer.getSelectionModel().getSelectedItem();
+        if(salgslinje != null){
+            controller.fjernSalgslinje(currentSalg, salgslinje);
+            lwSalgslinjer.getItems().setAll(controller.getSalgslinjerPaaSalg(currentSalg));
             txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(currentSalg));
             lbError.setText("Salgslinje fjernet");
             comboBoxbetalingsformer.getItems().setAll(controller.getMuligeBetalingsformer(currentSalg));
             txfAntal.clear();
         } else {
-            lwSalgslinjer.getItems().setAll(controller.printMellemRegning(currentSalg));
+            lwSalgslinjer.getItems().setAll(controller.getSalgslinjerPaaSalg(currentSalg));
             lbError.setText("fejl");
         }
     }
@@ -198,12 +197,10 @@ public class OpretDagligtSalgPane extends GridPane {
     }
 
     public void btnSalgslinjeRabat(){
-        Prisliste prisliste = cBPrislister.getSelectionModel().getSelectedItem();
-        String target = lwSalgslinjer.getSelectionModel().getSelectedItem();
-        Salgslinje salgslinje = controller.findSalgslinjeFraKurv(prisliste, currentSalg, target);
+        Salgslinje salgslinje = lwSalgslinjer.getSelectionModel().getSelectedItem();
         RabatWindowSalgslinje dia = new RabatWindowSalgslinje(controller, "Rabat Salgslinje", salgslinje);
         dia.showAndWait();
-        lwSalgslinjer.getItems().setAll(controller.printMellemRegning(currentSalg));
+        lwSalgslinjer.getItems().setAll(controller.getSalgslinjerPaaSalg(currentSalg));
         txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(currentSalg));
     }
 
@@ -211,7 +208,7 @@ public class OpretDagligtSalgPane extends GridPane {
         RabatWindowSalg dia = new RabatWindowSalg(controller,"Rabat Salgslinje", currentSalg);
         dia.showAndWait();
         updateControls();
-        lwSalgslinjer.getItems().setAll(controller.printMellemRegning(currentSalg));
+        lwSalgslinjer.getItems().setAll(controller.getSalgslinjerPaaSalg(currentSalg));
         txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(currentSalg));
     }
 

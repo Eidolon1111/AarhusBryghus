@@ -6,8 +6,6 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class OpretRundvisningPane extends GridPane {
@@ -127,9 +125,7 @@ public class OpretRundvisningPane extends GridPane {
 
             Pris pris = cbPrislister.getSelectionModel().getSelectedItem();
             if (kunde != null && tidspunkt != null && !txfAntalPers.getText().isBlank() && pris != null) {
-                KomplekstSalg ks = (KomplekstSalg) controller.createKompleksSalg(kunde);
-                controller.createSalgslinje(ks, Integer.parseInt(txfAntalPers.getText()), pris);
-                controller.setAfholdelsesDag(ks, tidspunkt);
+                controller.createRundvisning(kunde,tidspunkt,pris, Integer.parseInt(txfAntalPers.getText()));
                 this.updateControls();
                 if(lblRundvisningError != null) {
                     lblRundvisningError.setVisible(false);

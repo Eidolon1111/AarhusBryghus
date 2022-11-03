@@ -28,15 +28,15 @@ public interface ControllerInterface {
 
     public Salg createSimpelSalg();
 
-    public KomplekstSalg createKompleksSalg(Kunde kunde);
+    public ArrayList<Salgslinje> getSalgslinjerPaaSalg(Salg salg);
 
-    public ArrayList<String> printMellemRegning(Salg salg);
+    public ArrayList<Salgslinje> getModregningerPaaUdlejning(Udlejning udlejning);
 
     public String printSamletPrisDKKOgKlip(Salg salg);
 
     public Salgslinje createSalgslinje(Salg salg, int antal, Pris pris);
 
-    public Salgslinje findSalgslinjeFraKurv(Prisliste prisliste, Salg salg, String target);
+    //public Salgslinje findSalgslinjeFraKurv(Prisliste prisliste, Salg salg, String target);
 
     public ArrayList<Salg> getSalg();
 
@@ -56,7 +56,9 @@ public interface ControllerInterface {
 
     public boolean klippeKortBetalingMuligt(Salg salg);
 
-    public void createRundvisning(Kunde kunde, LocalDateTime afholdesesDato,Pris pris, int antal);
+    public Rundvisning createRundvisning(Kunde kunde, LocalDateTime afholdesesDato,Pris pris, int antal);
+
+    public Udlejning createUdlejning(Kunde kunde);
 
     public void setRabatSalg(Salg salg, double rabat);
 
@@ -68,7 +70,9 @@ public interface ControllerInterface {
 
     public ArrayList<Kunde> getKunder();
 
-    public void setAfholdelsesDag(KomplekstSalg komplekstSalg, LocalDateTime afholdelsesDag);
+    public void setAfholdelsesDag(Rundvisning rundvisning, LocalDateTime afholdelsesDag);
+
+    public void setAfregningsDato(Udlejning udlejning, LocalDate afregningsDato);
 
     public Prisliste getPrisliste (String navn);
 
@@ -78,20 +82,20 @@ public interface ControllerInterface {
 
     public int solgteKlipForPeriode(LocalDate fraDato, LocalDate tilDato);
 
+    public ArrayList<Rundvisning> getRegistreredeRundvisninger();
+
     public int brugteKlipForPeriode(LocalDate fraDato, LocalDate tilDato);
 
-    public ArrayList<KomplekstSalg> getRundvisninger();
+    public ArrayList<Udlejning> getUadsluttedeUdlejninger();
 
-    public ArrayList<KomplekstSalg> getUadsluttedeUdlejninger();
-
-    public Salgslinje createModregning(KomplekstSalg salg, Salgslinje salgslinje, int antal);
+    public Salgslinje createModregning(Udlejning udlejning, Salgslinje salgslinje, int antal);
 
     public void setAntalPåSalgslinje(Salgslinje salgslinje, int antal);
 
-    public String printMellemRegningSalgslinje(Salgslinje salgslinje);
+    //public String printMellemRegningSalgslinje(Salgslinje salgslinje);
 
-    public double beregnReturBeløbUdlejning(KomplekstSalg udlejning);
+    public double beregnReturBeløbUdlejning(Udlejning udlejning);
 
-    public void udbetalModregning(KomplekstSalg udlejning);
+    public void udbetalModregning(Udlejning udlejning);
 
 }
