@@ -35,6 +35,7 @@ public class DagsrapporterPane extends GridPane {
 
         datePicker = new DatePicker();
         this.add(datePicker, 0, 1, 2, 1);
+        datePicker.setValue(LocalDate.now());
         datePicker.setOnAction(event -> updateControls());
 
         Label lblDagensSalg = new Label("Dagens Salg:");
