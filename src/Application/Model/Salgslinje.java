@@ -41,6 +41,31 @@ public class Salgslinje {
     }
 
     public String printMellemRegning() {
+        return "Jeg Bliver Brug HER!!";
+    }
+
+    public boolean klippeKortBetalingMuligt(){
+        boolean result = false;
+        if(pris.getKlip() != 0){
+            result = true;
+        }
+        return result;
+    }
+
+    public void setRabat(double rabat){
+        this.rabat = rabat;
+    }
+
+    public double getRabat(){
+        return rabat;
+    }
+
+    public Pris getPris(){
+        return pris;
+    }
+
+    @Override
+    public String toString() {
         String result;
         if (klippeKortBetalingMuligt()) {
             if (rabat != 0 && rabat < 1) {
@@ -66,30 +91,5 @@ public class Salgslinje {
             }
         }
         return result;
-    }
-
-    public boolean klippeKortBetalingMuligt(){
-        boolean result = false;
-        if(pris.getKlip() != 0){
-            result = true;
-        }
-        return result;
-    }
-
-    public void setRabat(double rabat){
-        this.rabat = rabat;
-    }
-
-    public double getRabat(){
-        return rabat;
-    }
-
-    public Pris getPris(){
-        return pris;
-    }
-
-    @Override
-    public String toString() {
-        return pris.getProdukt() + " " + antal + " ";
     }
 }

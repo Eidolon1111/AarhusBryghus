@@ -15,7 +15,7 @@ public class AfregnRundvisningPane extends GridPane {
     private int rest;
     private KomplekstSalg rundvisning;
 
-    private ListView lwRundvisninger = new ListView<Salg>();
+    private ListView<Rundvisning> lwRundvisninger = new ListView<>();
     private Label lblRundvisninger, lblValgteRundvisning;
     private TextField txfSalgslinje;
     private Label lblRest;
@@ -26,7 +26,7 @@ public class AfregnRundvisningPane extends GridPane {
     private Button btnTilføj = new Button("Tilføj");
 
     private Label lbKurv = new Label("Kurv: ");
-    private ListView<String> lwSalgslinjer = new ListView<>();
+    private ListView<Salgslinje> lwSalgslinjer = new ListView<>();
 
     private Button btnFjern = new Button("Fjern salgslinje");
     private Button btnSalgslinjeRabat = new Button("Rabat salgslinje");
@@ -59,7 +59,7 @@ public class AfregnRundvisningPane extends GridPane {
         this.setPrefHeight(800);
 
         //Initialisering af elementer til række 1
-        lwRundvisninger.getItems().setAll(controller.getRundvisninger());
+        lwRundvisninger.getItems().setAll(controller.getRegistreredeRundvisninger());
         lblRundvisninger = new Label("Rundvisninger: ");
 
         //Tilføjelse af elementer til række 1
@@ -67,8 +67,7 @@ public class AfregnRundvisningPane extends GridPane {
         this.add(lwRundvisninger, 0, 1,1,14);
 
         //Setter Listview Kunder samt tilføjer listener
-        lwRundvisninger.getItems().setAll(controller.getKunder());
-        ChangeListener<KomplekstSalg> listener = (ov, o, v) -> this.selectedRundvisningChanged();
+        ChangeListener<Rundvisning> listener = (ov, o, v) -> this.selectedRundvisningChanged();
         lwRundvisninger.getSelectionModel().selectedItemProperty().addListener(listener);
 
         //Initialisering af elementer til række 2
@@ -124,6 +123,9 @@ public class AfregnRundvisningPane extends GridPane {
     }
 
     public void updateControls(){
+        lwRundvisninger.getItems().setAll(controller.getRegistreredeRundvisninger());
+
+        Rundvisning rundvisning = lwRundvisninger.getSelectionModel().getSelectedItem();
         lwRundvisninger.getItems().setAll(controller.getRundvisninger());
         if (rundvisning != null) {
             txfSalgslinje.setText(controller.printMellemRegningSalgslinje(førsteSalgLinje));
@@ -131,6 +133,8 @@ public class AfregnRundvisningPane extends GridPane {
     }
 
     public void selectedRundvisningChanged() {
+        Rundvisning rundvisning = lwRundvisninger.getSelectionModel().getSelectedItem();
+        this.førsteSalgLinje = rundvisning.getSalgslinjer().get(0);
         rundvisning = (KomplekstSalg) lwRundvisninger.getSelectionModel().getSelectedItem();
         if (rundvisning != null) {
             this.førsteSalgLinje = rundvisning.getSalgslinjer().get(0);
@@ -186,12 +190,13 @@ public class AfregnRundvisningPane extends GridPane {
             comboBoxbetalingsformer.getItems().setAll(controller.getMuligeBetalingsformer(rundvisning));
             txfAntal.clear();
         } else {
-            lwSalgslinjer.getItems().setAll(controller.printMellemRegning(rundvisning));
+            lwSalgslinjer.getItems().setAll(controller.getSalgslinjerPaaSalg(rundvisning));
             lbError.setText("fejl");
         }
     }
 
     public void btnBetalAction(){
+        Rundvisning rundvisning = lwRundvisninger.getSelectionModel().getSelectedItem();
         if(rundvisning != null){
             Salg.Betalingsform betalingsform = comboBoxbetalingsformer.getSelectionModel().getSelectedItem();
             if(betalingsform != null) {
@@ -209,11 +214,11 @@ public class AfregnRundvisningPane extends GridPane {
     }
 
     public void btnSalgslinjeRabat(){
-        String target = lwSalgslinjer.getSelectionModel().getSelectedItem();
-        Salgslinje salgslinje = controller.findSalgslinjeFraKurv(controller.getPrisliste("Rundvisning"), rundvisning, target);
+        Rundvisning rundvisning = lwRundvisninger.getSelectionModel().getSelectedItem();
+        Salgslinje salgslinje = lwSalgslinjer.getSelectionModel().getSelectedItem();
         RabatWindowSalgslinje dia = new RabatWindowSalgslinje(controller, "Rabat Salgslinje", salgslinje);
         dia.showAndWait();
-        lwSalgslinjer.getItems().setAll(controller.printMellemRegning(rundvisning));
+        lwSalgslinjer.getItems().setAll(controller.getSalgslinjerPaaSalg(rundvisning));
         txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(rundvisning));
     }
 
