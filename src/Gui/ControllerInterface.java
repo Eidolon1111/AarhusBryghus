@@ -22,7 +22,7 @@ public interface ControllerInterface {
         
     public ProduktGruppe createProduktGruppe(String navn);
 
-    public Produkt createSimpelProdukt(ProduktGruppe produktGruppe, String navn, String beskrivelse, String enhed);
+    public Produkt createSimpelProdukt(ProduktGruppe produktGruppe, String navn, String beskrivelse, int antalEnheder, String enhed);
 
     public Produkt createProduktSamling(ProduktGruppe produktGruppe, String navn, String beskrivelse);
 
