@@ -15,7 +15,7 @@ public class OpretRundvisningPane extends GridPane {
     private TextField txfNavn, txfTlfNr, txfEmail, txfAntalPers,txfTime, txfMinut;
     private ListView lwKunder = new ListView<Kunde>();
     private Label lblKunder, lblEllerOpretNy, lblNavn, lblTlfNr, lblEmail, lblVælgDato, lblAntalPers, lblTime, lblMinut, lblPrisliste, lblRundvisningOprettet;
-    private Label lblKundeError, lblRundvisningError; //Fejlbeskeder label
+    private Label lblKundeError, lblRundvisningError, lblTimeError, lblMinutError; //Fejlbeskeder label
     private DatePicker datePicker = new DatePicker();
     private ComboBox<Pris> cbPrislister = new ComboBox<>();
 
@@ -58,9 +58,9 @@ public class OpretRundvisningPane extends GridPane {
         lblVælgDato = new Label("Vælg dato");
         lblAntalPers = new Label("Antal personer ");
         txfAntalPers = new TextField();
-        lblTime = new Label("Time ");
+        lblTime = new Label("Time");
         txfTime = new TextField();
-        lblMinut = new Label("Minut ");
+        lblMinut = new Label("Minut");
         txfMinut = new TextField();
         lblPrisliste = new Label("Vælg produkt");
 
@@ -70,12 +70,12 @@ public class OpretRundvisningPane extends GridPane {
         //Tilføjelse af elementer i række 2
         this.add(lblVælgDato, 3, 0,2,1);
         this.add(datePicker, 3, 1);
-        this.add(lblAntalPers, 3, 2);
-        this.add(txfAntalPers, 3, 3);
-        this.add(lblTime, 3, 4);
-        this.add(txfTime, 3, 5);
-        this.add(lblMinut,3,6);
-        this.add(txfMinut, 3, 7);
+        this.add(lblAntalPers, 3, 6);
+        this.add(txfAntalPers, 3, 7);
+        this.add(lblTime, 3, 2);
+        this.add(txfTime, 3, 3);
+        this.add(lblMinut,3,4);
+        this.add(txfMinut, 3, 5);
         this.add(lblPrisliste, 3, 8);
         this.add(cbPrislister, 3, 9);
         this.add(btnOpretRundvisning, 3, 10);
@@ -118,30 +118,49 @@ public class OpretRundvisningPane extends GridPane {
     public void opretRundvisningAction() {
         Kunde kunde = (Kunde) lwKunder.getSelectionModel().getSelectedItem();
         LocalDateTime tidspunkt = null;
-        if (datePicker != null) {
+        int time = Integer.parseInt(txfTime.getText());
+        int minut = Integer.parseInt(txfMinut.getText());
+        if (datePicker != null && time>=0 && time<24 && minut>=0 && minut<60) {
             tidspunkt = LocalDateTime.from(
                     datePicker.getValue().atTime(Integer.parseInt(txfTime.getText()),
                             Integer.parseInt(txfMinut.getText())));
-        } else { tidspunkt = LocalDateTime.now(); }
-        Pris pris = cbPrislister.getSelectionModel().getSelectedItem();
-        if (kunde != null && tidspunkt != null && !txfAntalPers.getText().isBlank() && pris != null) {
-            KomplekstSalg ks = (KomplekstSalg) controller.createKompleksSalg(kunde);
-            controller.createSalgslinje(ks, Integer.parseInt(txfAntalPers.getText()), pris);
-            controller.setAfholdelsesDag(ks, tidspunkt);
-            this.updateControls();
-            if(lblRundvisningError != null) {
-                lblRundvisningError.setVisible(false);
+
+            Pris pris = cbPrislister.getSelectionModel().getSelectedItem();
+            if (kunde != null && tidspunkt != null && !txfAntalPers.getText().isBlank() && pris != null) {
+                KomplekstSalg ks = (KomplekstSalg) controller.createKompleksSalg(kunde);
+                controller.createSalgslinje(ks, Integer.parseInt(txfAntalPers.getText()), pris);
+                controller.setAfholdelsesDag(ks, tidspunkt);
+                this.updateControls();
+                if(lblRundvisningError != null) {
+                    lblRundvisningError.setVisible(false);
+                }
+                lblRundvisningOprettet = new Label("Rundvisning oprettet");
+                lblRundvisningOprettet.setTextFill(Color.color(0, 1, 0));
+                this.add(lblRundvisningOprettet, 4, 10);
+
+                if ( (lblMinutError != null)){ lblMinutError.setVisible(false); } if (lblTimeError != null){ lblTimeError.setVisible(false); }
+            } else {
+                if (lblRundvisningOprettet != null){
+                    lblRundvisningOprettet.setVisible(false);
+                }
+                lblRundvisningError = new Label("Alle felter skal udfyldes!");
+                lblRundvisningError.setTextFill(Color.color(1, 0, 0));
+                this.add(lblRundvisningError, 4, 10);
             }
-            lblRundvisningOprettet = new Label("Rundvisning oprettet");
-            lblRundvisningOprettet.setTextFill(Color.color(0, 1, 0));
-            this.add(lblRundvisningOprettet, 4, 10);
-        } else {
-            if (lblRundvisningOprettet != null){
-                lblRundvisningOprettet.setVisible(false);
+        } else if (time<0 || time > 23){
+            if ( (lblMinutError != null)){
+                lblMinutError.setVisible(false);
             }
-            lblRundvisningError = new Label("Alle felter skal udfyldes!");
-            lblRundvisningError.setTextFill(Color.color(1, 0, 0));
-            this.add(lblRundvisningError, 4, 10);
+            lblTimeError = new Label("Time ugyldig!");
+            lblTimeError.setTextFill(Color.color(1, 0, 0));
+            this.add(lblTimeError, 4, 3);
+        } else if (minut< 0 || minut >59){
+            if (lblTimeError != null){
+                lblTimeError.setVisible(false);
+            }
+            lblMinutError = new Label("Minut ugyldig!");
+            lblMinutError.setTextFill(Color.color(1, 0, 0));
+            this.add(lblMinutError, 4, 5);
         }
     }
 }
