@@ -16,7 +16,7 @@ public class AarhusBryghusTabWindow extends Application {
 
     @Override
     public void init(){
-        Storage storage = new Storage();
+        Storage storage = Storage.getInstance();
         controller = new Controller(storage);
         controller.init();
     }
@@ -42,7 +42,7 @@ public class AarhusBryghusTabWindow extends Application {
     }
 
     private void initTabPane(TabPane tabPane) {
-        tabPane.setPrefWidth(1010);
+        tabPane.setPrefWidth(1050);
         tabPane.setPrefHeight(500);
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 

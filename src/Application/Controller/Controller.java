@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Controller implements ControllerInterface {
-    private static Controller controller;
     private StorageInterface storage;
 
     public Controller(StorageInterface storage) {
@@ -125,7 +124,16 @@ public class Controller implements ControllerInterface {
     }
 
     public void betalSalg(Salg salg, Salg.Betalingsform betalingsform) {
-        salg.setBetalingsform(betalingsform);
+        if(salg instanceof KomplekstSalg){
+            salg.setBetalingsform(betalingsform);
+            if(((KomplekstSalg) salg).getAfholdelsesdag() == null){
+                ((KomplekstSalg) salg).setStatus(KomplekstSalg.Status.PANTBETALT);
+            } else {
+                ((KomplekstSalg) salg).setStatus(KomplekstSalg.Status.AFREGNET);
+            }
+        } else {
+            salg.setBetalingsform(betalingsform);
+        }
     }
 
     public ArrayList<ProduktGruppe> getProduktGrupperIPrisliste(Prisliste prisliste) {
@@ -159,14 +167,16 @@ public class Controller implements ControllerInterface {
         return storage.getKunder();
     }
 
-    public void createKunde(String navn, String tlfNr, String email) {
+    public Kunde createKunde(String navn, String tlfNr, String email) {
         Kunde kunde = new Kunde(navn, tlfNr, email);
         storage.addKunde(kunde);
+        return kunde;
     }
 
-    public void createRundvisning(Kunde kunde, LocalDateTime afholdesesDato) {
+    public void createRundvisning(Kunde kunde, LocalDateTime afholdesesDato,Pris pris, int antal) {
         KomplekstSalg Rundvisning = new KomplekstSalg(kunde);
         Rundvisning.setAfholdelsesDag(afholdesesDato);
+        Rundvisning.createSalgslinje(pris, antal);
         storage.addSalg(Rundvisning);
     }
 
@@ -221,6 +231,36 @@ public class Controller implements ControllerInterface {
         return 0;
     }
 
+    public ArrayList<KomplekstSalg> getUadsluttedeUdlejninger() {
+        ArrayList<KomplekstSalg> result = new ArrayList<>();
+        for (Salg s : storage.getSalg()){
+            if(s instanceof KomplekstSalg && ((KomplekstSalg) s).getStatus() == KomplekstSalg.Status.PANTBETALT){
+                result.add((KomplekstSalg) s);
+            }
+        }
+        return result;
+    }
+
+    public Salgslinje createModregning(KomplekstSalg salg, Salgslinje salgslinje, int antal) {
+        return salg.createModregning(salgslinje, antal);
+    }
+
+    public void setAntalPåSalgslinje(Salgslinje salgslinje, int antal) {
+        salgslinje.setAntal(antal);
+    }
+
+    public String printMellemRegningSalgslinje(Salgslinje salgslinje) {
+        return salgslinje.printMellemRegning();
+    }
+
+    public double beregnReturBeløbUdlejning(KomplekstSalg udlejning) {
+        return udlejning.beregnReturBeløbUdlejning();
+    }
+
+    public void udbetalModregning(KomplekstSalg udlejning) {
+        udlejning.setStatus(KomplekstSalg.Status.AFREGNET);
+    }
+
     public Prisliste getPrisliste(String navn) {
         Prisliste res = null;
         for (Prisliste pl : getPrislister()) {
@@ -228,6 +268,17 @@ public class Controller implements ControllerInterface {
                 res = pl;
             }
         } return res;
+    }
+
+    public ArrayList<KomplekstSalg> getRundvisninger() {
+        ArrayList<KomplekstSalg> rundvisninger = new ArrayList<>();
+        for (Salg ss : storage.getSalg()){
+            if(ss instanceof KomplekstSalg){
+                if(((KomplekstSalg) ss).getAfholdelsesdag() != null && ((KomplekstSalg) ss).getStatus() == KomplekstSalg.Status.REGISTRERET) {
+                    rundvisninger.add((KomplekstSalg) ss);
+                }
+            }
+        } return rundvisninger;
     }
 
 
@@ -265,7 +316,7 @@ public class Controller implements ControllerInterface {
         this.createProdukt(pg3, "Whisky", "45%", "50 cl rør");
 
         //Fustage produkter
-        Produkt fustageKlosterbrug = this.createProdukt(pg4, "Klosterbryg", "","20 liter");
+        Produkt fustageKlosterbryg = this.createProdukt(pg4, "Klosterbryg", "","20 liter");
         Produkt fustageJazzClassic = this.createProdukt(pg4, "Jazz Classic", "", "25 liter");
         Produkt fustageEkstraPilsner = this.createProdukt(pg4, "Ekstra Pilsner", "", "25 liter");
         Produkt fustageCelebration = this.createProdukt(pg4, "Celebration", "", "20 liter");
@@ -274,13 +325,13 @@ public class Controller implements ControllerInterface {
         Produkt fustageIndiaPaleAle = this.createProdukt(pg4, "India Pale Ale", "", "20 liter");
         Produkt fustageJuleBryg = this.createProdukt(pg4, "Julebryg", "", "20 liter");
         Produkt fustageImperialStout = this.createProdukt(pg4, "Imperial Stout", "", "20 liter");
-        Produkt fustagePant = this.createProdukt(pg4, "Pant", "", "");
+        Produkt fustagePant = this.createProdukt(pg4, "Fustage Pant", "", "");
 
         //Kulsyre
         Produkt kulsyre10kg = this.createProdukt(pg5, "10 kg", "", "");
         Produkt kulsyre6kg = this.createProdukt(pg5, "6 kg", "", "");
         Produkt kulsyre4kg = this.createProdukt(pg5, "4 kg", "", "");
-        Produkt kulsyrePant = this.createProdukt(pg5, "Pant", "", "");
+        Produkt kulsyrePant = this.createProdukt(pg5, "Kulsyre Pant", "", "");
 
 
         //Malt
@@ -321,9 +372,9 @@ public class Controller implements ControllerInterface {
         //Initialisering af objekter anvendt i rundvisning
 
         //Kunder
-        this.createKunde("Hans", "60453980", "Hans@gmail.com");
-        this.createKunde("Jens", "61235789", "Jens@gmail.com");
-        this.createKunde("Poul", "23466892", "Poul@gmail.com");
+        Kunde k1 = this.createKunde("Hans", "60453980", "Hans@gmail.com");
+        Kunde k2 = this.createKunde("Jens", "61235789", "Jens@gmail.com");
+        Kunde k3 = this.createKunde("Poul", "23466892", "Poul@gmail.com");
 
         //Prislister
         Prisliste rundvisning = this.createPrisliste("Rundvisning");
@@ -336,18 +387,23 @@ public class Controller implements ControllerInterface {
                 "Rundvisning aften", "", "Pris pr person");
 
         //Priser til rundvisningsprodukter
-        rundvisning.createPrisTilPrisliste(rundvisningDag, 100, 0);
-        rundvisning.createPrisTilPrisliste(rundvisningAften, 150, 0);
+        Pris rundvisningDagPris = rundvisning.createPrisTilPrisliste(rundvisningDag, 100, 0);
+        Pris rundvisningAftenPris = rundvisning.createPrisTilPrisliste(rundvisningAften, 150, 0);
+
+        //Oprettelse af rundvisninger
+        this.createRundvisning(k1,LocalDateTime.of(2023, 1, 20, 10, 0),rundvisningDagPris,20);
+        this.createRundvisning(k2,LocalDateTime.of(2022, 12, 20, 20, 0),rundvisningAftenPris,30);
+        this.createRundvisning(k3,LocalDateTime.of(2022, 11, 30, 10, 0),rundvisningDagPris,40);
 
         //Priser til Udlejning
-        udlejning.createPrisTilPrisliste(anlæg1hane,250, 0);
+        Pris pris1Hane = udlejning.createPrisTilPrisliste(anlæg1hane,250, 0);
         udlejning.createPrisTilPrisliste(anlæg2hane,400, 0);
         udlejning.createPrisTilPrisliste(anlægBarflerehaner,500, 0);
         udlejning.createPrisTilPrisliste(anlægLevering,500, 0);
         udlejning.createPrisTilPrisliste(anlægKrus,60, 0);
         udlejning.createPrisTilPrisliste(anlæg1hane,250, 0);
 
-        udlejning.createPrisTilPrisliste(fustageKlosterbrug,775, 0);
+        Pris prisFustageKlosterbryg = udlejning.createPrisTilPrisliste(fustageKlosterbryg,775, 0);
         udlejning.createPrisTilPrisliste(fustageJazzClassic,625, 0);
         udlejning.createPrisTilPrisliste(fustageEkstraPilsner,575, 0);
         udlejning.createPrisTilPrisliste(fustageCelebration, 775, 0);
@@ -356,13 +412,20 @@ public class Controller implements ControllerInterface {
         udlejning.createPrisTilPrisliste(fustageIndiaPaleAle,775, 0);
         udlejning.createPrisTilPrisliste(fustageJuleBryg,775, 0);
         udlejning.createPrisTilPrisliste(fustageImperialStout,775, 0);
-        udlejning.createPrisTilPrisliste(fustagePant,200, 0);
+        Pris prisFustagePant = udlejning.createPrisTilPrisliste(fustagePant,200, 0);
 
         udlejning.createPrisTilPrisliste(kulsyre10kg,600, 0);
         udlejning.createPrisTilPrisliste(kulsyre6kg,400, 0);
-        udlejning.createPrisTilPrisliste(kulsyre4kg,300, 0);
-        udlejning.createPrisTilPrisliste(kulsyrePant,1000, 0);
+        Pris prisKulsyre4kg = udlejning.createPrisTilPrisliste(kulsyre4kg,300, 0);
+        Pris prisKulsyrePant = udlejning.createPrisTilPrisliste(kulsyrePant,1000, 0);
 
+        KomplekstSalg testUdlejning = this.createKompleksSalg(k1);
+        this.createSalgslinje(testUdlejning, 1, pris1Hane);
+        this.createSalgslinje(testUdlejning, 3, prisFustageKlosterbryg);
+        this.createSalgslinje(testUdlejning, 3, prisFustagePant);
+        this.createSalgslinje(testUdlejning, 1, prisKulsyre4kg);
+        this.createSalgslinje(testUdlejning, 1, prisKulsyrePant);
+        this.betalSalg(testUdlejning, Salg.Betalingsform.DANKORT);
 
     }
 }

@@ -14,6 +14,10 @@ public class Salgslinje {
         return antal;
     }
 
+    public void setAntal(int antal){
+        this.antal = antal;
+    }
+
     public Produkt getProdukt() {
         return pris.getProdukt();
     }
@@ -22,12 +26,12 @@ public class Salgslinje {
         double result;
         if(rabat != 0){
             if(rabat < 1 ){
-                result = (pris.getPris() * antal) - ((pris.getPris() * antal) * rabat);
+                result = (pris.getPrisDKK() * antal) - ((pris.getPrisDKK() * antal) * rabat);
             } else {
-                result = (pris.getPris() * antal) - rabat;
+                result = (pris.getPrisDKK() * antal) - rabat;
             }
         }else {
-            result = (pris.getPris() * antal);
+            result = (pris.getPrisDKK() * antal);
         }
         return result;
     }
@@ -36,17 +40,30 @@ public class Salgslinje {
         return pris.getKlip() * antal;
     }
 
-    public String printMellemRegning(){
+    public String printMellemRegning() {
         String result;
-        if(rabat != 0 && rabat < 1){
-            result = pris.getProdukt().printNavn() + "\t" + "antal: " + antal + "\t" + "DKK: " +
-                    beregnPrisDKK() + " / Klip: " + beregnPrisKlip() + " -" + (rabat * 100) + "%";
-        } else if (rabat != 0 && rabat > 1){
-            result = pris.getProdukt().printNavn() + "\t" + "antal: " + antal + "\t" + "DKK: " +
-                    beregnPrisDKK() + " / Klip: " + beregnPrisKlip() + " -" + rabat + " DKK";
+        if (klippeKortBetalingMuligt()) {
+            if (rabat != 0 && rabat < 1) {
+                result = pris.getProdukt().printNavn() + "\t" + "antal: " + antal + "\t" + "DKK: " +
+                        beregnPrisDKK() + " / Klip: " + beregnPrisKlip() + " -" + (rabat * 100) + "%";
+            } else if (rabat != 0 && rabat > 1) {
+                result = pris.getProdukt().printNavn() + "\t" + "antal: " + antal + "\t" + "DKK: " +
+                        beregnPrisDKK() + " / Klip: " + beregnPrisKlip() + " -" + rabat + " DKK";
+            } else {
+                result = pris.getProdukt().printNavn() + "\t" + "antal: " + antal + "\t" + "DKK: " +
+                        beregnPrisDKK() + " / Klip: " + beregnPrisKlip();
+            }
         } else {
-            result = pris.getProdukt().printNavn() + "\t" + "antal: " + antal + "\t" + "DKK: " +
-                    beregnPrisDKK() + " / Klip: " + beregnPrisKlip();
+            if (rabat != 0 && rabat < 1) {
+                result = pris.getProdukt().printNavn() + "\t" + "antal: " + antal + "\t" + "DKK: " +
+                        beregnPrisDKK() + " -" + (rabat * 100) + "%";
+            } else if (rabat != 0 && rabat > 1) {
+                result = pris.getProdukt().printNavn() + "\t" + "antal: " + antal + "\t" + "DKK: " +
+                        beregnPrisDKK() + " -" + rabat + " DKK";
+            } else {
+                result = pris.getProdukt().printNavn() + "\t" + "antal: " + antal + "\t" + "DKK: " +
+                        beregnPrisDKK();
+            }
         }
         return result;
     }
@@ -65,6 +82,10 @@ public class Salgslinje {
 
     public double getRabat(){
         return rabat;
+    }
+
+    public Pris getPris(){
+        return pris;
     }
 
     @Override
