@@ -160,16 +160,16 @@ public class AfregnRundvisningPane extends GridPane {
                         txfRest.setText(String.valueOf(rest));
                         txfAntal.clear();
                     } else {
-                        lbError.setText("antal skal være over 0");
+                        lbError.setText("Antal skal være over 0");
                     }
                 } catch (NumberFormatException e){
                     lbError.setText("Antal skal være et helt tal!");
                 }
             } else {
-                lbError.setText("indtast et antal!");
+                lbError.setText("Indtast et antal!");
             }
         } else {
-            lbError.setText("Vælg et produkt!");
+            lbError.setText("Vælg en rundvisning!");
         }
     }
 
