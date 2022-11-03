@@ -1,6 +1,7 @@
 package Gui;
 
 import Application.Model.Salg;
+import Application.Model.Salgslinje;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.scene.control.DatePicker;

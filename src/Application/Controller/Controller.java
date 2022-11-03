@@ -174,7 +174,7 @@ public class Controller implements ControllerInterface {
         return kunde;
     }
 
-    public Rundvisning createRundvisning(Kunde kunde, LocalDateTime afholdesesDato,Pris pris, int antal) {
+    public Rundvisning createRundvisning(Kunde kunde, LocalDateTime afholdesesDato, Pris pris, int antal) {
         Rundvisning rundvisning = new Rundvisning(kunde);
         rundvisning.setAfholdelsesDag(afholdesesDato);
         rundvisning.createSalgslinje(pris, antal);

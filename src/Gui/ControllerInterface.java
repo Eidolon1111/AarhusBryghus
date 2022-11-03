@@ -86,8 +86,6 @@ public interface ControllerInterface {
 
     public int brugteKlipForPeriode(LocalDate fraDato, LocalDate tilDato);
 
-    public ArrayList<KomplekstSalg> getRundvisninger();
-
     public ArrayList<Udlejning> getUadsluttedeUdlejninger();
 
     public Salgslinje createModregning(Udlejning udlejning, Salgslinje salgslinje, int antal);

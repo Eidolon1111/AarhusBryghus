@@ -158,6 +158,7 @@ public class AfregnUdlejningPane extends GridPane {
             txfAntal.clear();
             lWUafsluttedeUdlejninger.setDisable(false);
             updateControls();
+            lbError.setText("");
             lbSucces.setText("Modregning Udbetalt!");
         } else {
             lbError.setText("Vælg udlejning");

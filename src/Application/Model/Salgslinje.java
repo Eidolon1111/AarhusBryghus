@@ -40,10 +40,6 @@ public class Salgslinje {
         return pris.getKlip() * antal;
     }
 
-    public String printMellemRegning() {
-        return "Jeg Bliver Brug HER!!";
-    }
-
     public boolean klippeKortBetalingMuligt(){
         boolean result = false;
         if(pris.getKlip() != 0){
@@ -69,24 +65,24 @@ public class Salgslinje {
         String result;
         if (klippeKortBetalingMuligt()) {
             if (rabat != 0 && rabat < 1) {
-                result = pris.getProdukt().printNavn() + "\t" + "antal: " + antal + "\t" + "DKK: " +
+                result = pris.getProdukt().printNavn() + ", " + "antal: " + antal + " " + "DKK: " +
                         beregnPrisDKK() + " / Klip: " + beregnPrisKlip() + " -" + (rabat * 100) + "%";
             } else if (rabat != 0 && rabat > 1) {
-                result = pris.getProdukt().printNavn() + "\t" + "antal: " + antal + "\t" + "DKK: " +
+                result = pris.getProdukt().printNavn() + ", " + "antal: " + antal + " " + "DKK: " +
                         beregnPrisDKK() + " / Klip: " + beregnPrisKlip() + " -" + rabat + " DKK";
             } else {
-                result = pris.getProdukt().printNavn() + "\t" + "antal: " + antal + "\t" + "DKK: " +
+                result = pris.getProdukt().printNavn() + ", " + "antal: " + antal + " " + "DKK: " +
                         beregnPrisDKK() + " / Klip: " + beregnPrisKlip();
             }
         } else {
             if (rabat != 0 && rabat < 1) {
-                result = pris.getProdukt().printNavn() + "\t" + "antal: " + antal + "\t" + "DKK: " +
+                result = pris.getProdukt().printNavn() + ", " + "antal: " + antal + " " + "DKK: " +
                         beregnPrisDKK() + " -" + (rabat * 100) + "%";
             } else if (rabat != 0 && rabat > 1) {
-                result = pris.getProdukt().printNavn() + "\t" + "antal: " + antal + "\t" + "DKK: " +
+                result = pris.getProdukt().printNavn() + ", " + "antal: " + antal + " " + "DKK: " +
                         beregnPrisDKK() + " -" + rabat + " DKK";
             } else {
-                result = pris.getProdukt().printNavn() + "\t" + "antal: " + antal + "\t" + "DKK: " +
+                result = pris.getProdukt().printNavn() + ", " + "antal: " + antal + " " + "DKK: " +
                         beregnPrisDKK();
             }
         }
