@@ -5,8 +5,12 @@ import Application.Model.*;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+
+import java.util.Calendar;
 
 
 public class OpretDagligtSalgPane extends GridPane {
@@ -71,6 +75,7 @@ public class OpretDagligtSalgPane extends GridPane {
 
         this.add(lbProdukt, 1, 0);
         this.add(lwProdukter, 1, 1,1,14);
+        lwProduktgrupper.getItems();
         ChangeListener<Produkt> listenerProdukt = (ov, oldProdukt, newProdukt) -> this.selectedProdukt();
         lwProdukter.getSelectionModel().selectedItemProperty().addListener(listenerProdukt);
 

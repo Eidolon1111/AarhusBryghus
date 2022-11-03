@@ -13,7 +13,7 @@ import javafx.scene.layout.GridPane;
 
 
 public class OpretPrisPane extends GridPane {
-
+    
     private ControllerInterface controller;
     private ListView<Prisliste> lwPrislister = new ListView<>();
     private ListView<Produkt> lwProdukter = new ListView<>();
