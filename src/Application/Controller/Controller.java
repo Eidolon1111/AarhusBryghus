@@ -57,7 +57,7 @@ public class Controller implements ControllerInterface {
     }
 
     public Produkt createProdukt(ProduktGruppe produktGruppe, String navn, String beskrivelse, String enhed) {
-        Produkt p = produktGruppe.createProdukt(navn, enhed, beskrivelse);
+        Produkt p = produktGruppe.createSimpelProdukt(navn, enhed, beskrivelse);
         return p;
     }
 

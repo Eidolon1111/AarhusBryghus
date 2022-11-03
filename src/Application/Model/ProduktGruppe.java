@@ -11,8 +11,8 @@ public class ProduktGruppe {
         produkts = new ArrayList<>();
     }
 
-    public Produkt createProdukt(String navn, String enhed, String beskrivelse){
-        Produkt produkt = new Produkt(navn, enhed, beskrivelse, this);
+    public Produkt createSimpelProdukt(String navn, String enhed, String beskrivelse){
+        Produkt produkt = new SimpelProdukt(navn, enhed, beskrivelse, this);
         produkts.add(produkt);
         return produkt;
     }
