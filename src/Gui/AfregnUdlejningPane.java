@@ -108,7 +108,11 @@ public class AfregnUdlejningPane extends GridPane {
         lWUafsluttedeUdlejninger.getItems().setAll(controller.getUadsluttedeUdlejninger());
         Udlejning udlejning = lWUafsluttedeUdlejninger.getSelectionModel().getSelectedItem();
         if(udlejning != null){
-            tempSalgslinjer = new ArrayList<>(controller.getSalgslinjerPaaSalg(udlejning));
+            tempSalgslinjer = new ArrayList<>();
+            for (Salgslinje salgslinje : udlejning.getSalgslinjer()){
+                Salgslinje tempSalgslinje = controller.createTempSalgslinje(salgslinje.getAntal(), salgslinje.getPris());
+                tempSalgslinjer.add(tempSalgslinje);
+            }
             lWSalgslinjeriUdlejning.getItems().setAll(tempSalgslinjer);
         }
     }
@@ -135,13 +139,15 @@ public class AfregnUdlejningPane extends GridPane {
                         controller.createModregning(udlejning, salgslinje, antal);
                         tempSalgslinjer.remove(salgslinje);
                         lWSalgslinjeriUdlejning.getItems().setAll(tempSalgslinjer);
+                        lwIndleveredeSalgslinjer.getItems().setAll(controller.getModregningerPaaUdlejning(udlejning));
+                        txfTotal.setText("" + controller.beregnReturBeløbUdlejning(udlejning) + " DKK");
                     } else {
                         controller.createModregning(udlejning, salgslinje, antal);
                         int nyAntal = salgslinje.getAntal() - antal;
                         salgslinje.setAntal(nyAntal);
                         lWSalgslinjeriUdlejning.getItems().setAll(tempSalgslinjer);
                         lwIndleveredeSalgslinjer.getItems().setAll(controller.getModregningerPaaUdlejning(udlejning));
-                        txfTotal.setText("" + controller.beregnReturBeløbUdlejning(udlejning));
+                        txfTotal.setText("" + controller.beregnReturBeløbUdlejning(udlejning) + " DKK");
                     }
                 } else {
                     lbError.setText("vælg Salgslinje!");
@@ -157,11 +163,15 @@ public class AfregnUdlejningPane extends GridPane {
 
     public void btnFjernModregningAction(){
         Udlejning udlejning = lWUafsluttedeUdlejninger.getSelectionModel().getSelectedItem();
-        Salgslinje salgslinje = lwIndleveredeSalgslinjer.getSelectionModel().getSelectedItem();
-        if(salgslinje != null){
-            controller.fjernSalgslinje(udlejning, salgslinje);
+        Salgslinje modregning = lwIndleveredeSalgslinjer.getSelectionModel().getSelectedItem();
+        if(modregning != null){
+            double nyPris = (modregning.getPris().getPrisDKK()) * (-1);
+            modregning.getPris().setPris(nyPris);
+            tempSalgslinjer.add(modregning);
+            lWSalgslinjeriUdlejning.getItems().setAll(tempSalgslinjer);
+            controller.fjernSalgslinje(udlejning, modregning);
             lwIndleveredeSalgslinjer.getItems().setAll(controller.getModregningerPaaUdlejning(udlejning));
-            txfTotal.setText("" + controller.beregnReturBeløbUdlejning(udlejning));
+            txfTotal.setText("" + controller.beregnReturBeløbUdlejning(udlejning) + " DKK");
             lbError.setText("Salgslinje fjernet");
             txfAntal.clear();
         } else {

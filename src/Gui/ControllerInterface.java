@@ -94,4 +94,6 @@ public interface ControllerInterface {
 
     public void udbetalModregning(Udlejning udlejning);
 
+    public Salgslinje createTempSalgslinje(int antal, Pris pris);
+
 }
