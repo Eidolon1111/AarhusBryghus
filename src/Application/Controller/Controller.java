@@ -305,6 +305,12 @@ public class Controller implements ControllerInterface {
         return tempSalgslinjer;
     }
 
+    public void sletSalg(Salg salg) {
+        if (salg != null){
+            storage.sletSalg(salg);
+        }
+    }
+
     public Prisliste getPrisliste(String navn) {
         Prisliste res = null;
         for (Prisliste pl : getPrislister()) {

@@ -130,8 +130,9 @@ public class AfregnUdlejningPane extends GridPane {
             try {
                 antal = Integer.parseInt(txfAntal.getText());
                 if(salgslinje != null){
-                    if (antal > salgslinje.getAntal()){
-                        lbError.setText("Antal for stort");
+                    if (antal > salgslinje.getAntal() || antal < 0){
+                        lbSucces.setText("");
+                        lbError.setText("Antal må max være antallet i salgslinjen minimum 0");
                     } else if (antal == salgslinje.getAntal()){
                         controller.createModregning(udlejning, salgslinje, antal);
                         tempSalgslinjer.remove(salgslinje);
@@ -147,13 +148,15 @@ public class AfregnUdlejningPane extends GridPane {
                         txfTotal.setText("" + controller.beregnReturBeløbUdlejning(udlejning) + " DKK");
                     }
                 } else {
+                    lbSucces.setText("");
                     lbError.setText("vælg Salgslinje!");
                 }
             } catch (NumberFormatException e) {
-
+                lbError.setText("Antal skal være et heltal");
             }
 
         } else {
+            lbSucces.setText("");
             lbError.setText("Vælg Udlejning!");
         }
     }
@@ -169,10 +172,12 @@ public class AfregnUdlejningPane extends GridPane {
             controller.fjernSalgslinje(udlejning, modregning);
             lwIndleveredeSalgslinjer.getItems().setAll(controller.getModregningerPaaUdlejning(udlejning));
             txfTotal.setText("" + controller.beregnReturBeløbUdlejning(udlejning) + " DKK");
+            lbSucces.setText("");
             lbError.setText("Salgslinje fjernet");
             txfAntal.clear();
         } else {
             lwIndleveredeSalgslinjer.getItems().setAll(controller.getModregningerPaaUdlejning(udlejning));
+            lbSucces.setText("");
             lbError.setText("fejl");
         }
     }
@@ -191,10 +196,11 @@ public class AfregnUdlejningPane extends GridPane {
             lbError.setText("");
             lbSucces.setText("Modregning Udbetalt!");
         } else {
+            lbSucces.setText("");
             lbError.setText("Vælg udlejning");
         }
     }
-    //TODO
+
     public void btnFortrydAction(){
         Udlejning udlejning = lWUafsluttedeUdlejninger.getSelectionModel().getSelectedItem();
         for (Salgslinje salgslinje : lwIndleveredeSalgslinjer.getItems()){
@@ -205,6 +211,8 @@ public class AfregnUdlejningPane extends GridPane {
         lWSalgslinjeriUdlejning.getItems().clear();
         txfTotal.clear();
         txfAntal.clear();
+        lbError.setText("");
+        lbSucces.setText("");
         lWUafsluttedeUdlejninger.setDisable(false);
         updateControls();
     }

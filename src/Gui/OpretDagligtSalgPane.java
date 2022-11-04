@@ -5,12 +5,9 @@ import Application.Model.*;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 
-import java.util.Calendar;
 
 
 public class OpretDagligtSalgPane extends GridPane {
@@ -46,8 +43,9 @@ public class OpretDagligtSalgPane extends GridPane {
     private ComboBox<Salg.Betalingsform> comboBoxbetalingsformer = new ComboBox<>();
     private Button btnSalgRabat = new Button("Rabat Salg");
     private Button btnBetal = new Button("Betal");
+    private Button btnFortryd = new Button("Fortryd");
     private HBox hBoxBetalingsFormer = new HBox(lbBetalingsformer, comboBoxbetalingsformer);
-    private HBox hBoxBetalingRabat = new HBox(btnSalgRabat, btnBetal);
+    private HBox hBoxBetalingRabat = new HBox(btnSalgRabat, btnBetal, btnFortryd);
 
     private Label lbError = new Label();
     private Label lbSucces = new Label();
@@ -104,6 +102,7 @@ public class OpretDagligtSalgPane extends GridPane {
 
         btnBetal.setOnAction(actionEvent -> btnBetalAction());
         btnSalgRabat.setOnAction(event -> btnSalgRabat());
+        btnFortryd.setOnAction(event -> btnFortrydAction());
 
         this.add(hBoxErrorAndSucces, 4, 14);
         lbError.setStyle("-fx-text-fill: red");
@@ -143,12 +142,14 @@ public class OpretDagligtSalgPane extends GridPane {
                         if (currentSalg == null) {
                             currentSalg = controller.createSimpelSalg();
                             lbError.setText("");
+                            cBPrislister.setDisable(true);
                         }
                         controller.createSalgslinje(currentSalg, antal, pris);
                         lwSalgslinjer.getItems().setAll(controller.getSalgslinjerPaaSalg(currentSalg));
                         txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(currentSalg));
                         lbError.setText("");
                         comboBoxbetalingsformer.getItems().setAll(controller.getMuligeBetalingsformer(currentSalg));
+                        cBPrislister.setDisable(true);
                     } else {
                         lbError.setText("antal skal være over 0");
                     }
@@ -187,7 +188,9 @@ public class OpretDagligtSalgPane extends GridPane {
                 lbSucces.setText("Salg betalt " + betalingsform);
                 lwSalgslinjer.getItems().clear();
                 currentSalg = null;
+                txfAntal.clear();
                 txfTotal.clear();
+                cBPrislister.setDisable(false);
             } else {
                 lbError.setText("Vælg betalingsform!");
             }
@@ -208,6 +211,17 @@ public class OpretDagligtSalgPane extends GridPane {
         updateControls();
         lwSalgslinjer.getItems().setAll(controller.getSalgslinjerPaaSalg(currentSalg));
         txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(currentSalg));
+    }
+
+    public void btnFortrydAction(){
+        controller.sletSalg(currentSalg);
+        currentSalg = null;
+        lwSalgslinjer.getItems().clear();
+        txfTotal.clear();
+        txfAntal.clear();
+        lbError.setText("");
+        lbSucces.setText("Salg slettet");
+        cBPrislister.setDisable(false);
     }
 
 }

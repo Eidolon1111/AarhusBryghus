@@ -98,4 +98,6 @@ public interface ControllerInterface {
 
     public Pris getPrisPaaSalgslinje(Salgslinje salgslinje);
 
+    public void sletSalg(Salg salg);
+
 }

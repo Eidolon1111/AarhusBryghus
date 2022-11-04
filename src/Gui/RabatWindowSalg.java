@@ -49,7 +49,7 @@ public class RabatWindowSalg extends Stage {
     }
 
     public void initContent(GridPane pane){
-        pane.setPrefWidth(200);
+        pane.setPrefWidth(300);
         pane.setPrefHeight(100);
         pane.setPadding(new Insets(10));
         pane.setVgap(20);
@@ -63,13 +63,14 @@ public class RabatWindowSalg extends Stage {
         hBoxLabelTxtfield.setSpacing(20);
         txfRabat.setPrefWidth(50);
 
-        pane.add(hBoxGemCancel, 0, 3);
+
+        pane.add(hBoxGemCancel, 0, 2);
         hBoxGemCancel.setSpacing(20);
 
         btnGem.setOnAction(event -> btnGemAction());
         btnCancel.setOnAction(event -> btnCancel());
 
-        pane.add(lbRabatError,0,4);
+        pane.add(lbRabatError,0,3);
         lbRabatError.setStyle("-fx-text-fill: red");
     }
 
@@ -77,16 +78,22 @@ public class RabatWindowSalg extends Stage {
         try {
             double rabat = Double.parseDouble(txfRabat.getText());
             if(rbProcent.isSelected()){
-                if(rabat <= 100){
+                if(rabat <= 100 && rabat > 0){
                     rabat = (rabat) / 100.00;
+                    controller.setRabatSalg(salg, rabat);
                     this.close();
                 } else {
-                    lbRabatError.setText("rabatten må ikke overstige 100%");
+                    lbRabatError.setText("rabatten skal være mellem 1% og 100%");
                 }
             }
             if(rbDkk.isSelected()){
-                controller.setRabatSalg(salg, rabat);
-                this.close();
+                if(rabat <= salg.beregnSamletPrisDKK() && rabat > 0){
+                    controller.setRabatSalg(salg, rabat);
+                    this.close();
+                } else {
+                    lbRabatError.setText("Rabatten skal være mellem 0 og prisen");
+                }
+
             }
         } catch (NumberFormatException e){
             lbRabatError.setText("rabat skal være et tal!");
