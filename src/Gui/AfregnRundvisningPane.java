@@ -65,7 +65,7 @@ public class AfregnRundvisningPane extends GridPane {
         this.add(lblRundvisninger, 0, 0);
         this.add(lwRundvisninger, 0, 1,1,14);
 
-        //Setter Listview Kunder samt tilføjer listener
+        //Setter Listview Runvisninger samt tilføjer listener
         ChangeListener<Rundvisning> listener = (ov, o, v) -> this.selectedRundvisningChanged();
         lwRundvisninger.getSelectionModel().selectedItemProperty().addListener(listener);
 
@@ -120,12 +120,6 @@ public class AfregnRundvisningPane extends GridPane {
 
     public void updateControls(){
         lwRundvisninger.getItems().setAll(controller.getRegistreredeRundvisninger());
-
-        Rundvisning rundvisning = lwRundvisninger.getSelectionModel().getSelectedItem();
-        lwRundvisninger.getItems().setAll(controller.getRegistreredeRundvisninger());
-        if (rundvisning != null) {
-            txfSalgslinje.setText(førsteSalgLinje.toString());
-        }
     }
 
     public void selectedRundvisningChanged() {
@@ -138,8 +132,9 @@ public class AfregnRundvisningPane extends GridPane {
             this.førsteSalgLinje = rundvisning.getSalgslinjer().get(0);
             this.rest = rundvisning.getSalgslinjer().get(0).getAntal();
             lblRest.setText("Antal ikke afregnede: " + rest);
+        } if (rundvisning != null) {
+            txfSalgslinje.setText(førsteSalgLinje.toString());
         }
-        this.updateControls();
     }
 
     public void btnTilføjAction() {
