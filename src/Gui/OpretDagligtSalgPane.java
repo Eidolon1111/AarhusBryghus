@@ -76,8 +76,6 @@ public class OpretDagligtSalgPane extends GridPane {
         this.add(lbProdukt, 1, 0);
         this.add(lwProdukter, 1, 1,1,14);
         lwProduktgrupper.getItems();
-        ChangeListener<Produkt> listenerProdukt = (ov, oldProdukt, newProdukt) -> this.selectedProdukt();
-        lwProdukter.getSelectionModel().selectedItemProperty().addListener(listenerProdukt);
 
         this.add(lbAntal, 2, 5);
         this.add(txfAntal, 3, 5);
@@ -118,21 +116,16 @@ public class OpretDagligtSalgPane extends GridPane {
     }
 
     public void selectedProduktGruppeChanged(){
-        updateControls();
-    }
-
-    public void selectedProdukt(){
-        updateControls();
+        ProduktGruppe produktGruppe = lwProduktgrupper.getSelectionModel().getSelectedItem();
+        if(produktGruppe != null){
+            lwProdukter.getItems().setAll(controller.getProdukterFraProduktgruppe(produktGruppe));
+        }
     }
 
     public void updateControls(){
         Prisliste prisliste = cBPrislister.getSelectionModel().getSelectedItem();
         if(prisliste != null){
             lwProduktgrupper.getItems().setAll(controller.getProduktGrupperIPrisliste(prisliste));
-            ProduktGruppe produktGruppe = lwProduktgrupper.getSelectionModel().getSelectedItem();
-            if(produktGruppe != null){
-                lwProdukter.getItems().setAll(controller.getProdukterFraProduktgruppe(produktGruppe));
-            }
         }
     }
 
