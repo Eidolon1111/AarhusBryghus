@@ -96,4 +96,6 @@ public interface ControllerInterface {
 
     public Salgslinje createTempSalgslinje(int antal, Pris pris);
 
+    public Pris getPrisPaaSalgslinje(Salgslinje salgslinje);
+
 }

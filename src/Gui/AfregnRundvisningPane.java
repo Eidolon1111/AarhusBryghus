@@ -216,7 +216,7 @@ public class AfregnRundvisningPane extends GridPane {
 
     public void btnSalgRabat(){
         if (rundvisning != null) {
-            RabatWindowSalg dia = new RabatWindowSalg(controller, "Rabat Salgslinje", rundvisning);
+            RabatWindowSalg dia = new RabatWindowSalg(controller, "Rabat Salg", rundvisning);
             dia.showAndWait();
             lwSalgslinjer.getItems().setAll(controller.getSalgslinjerPaaSalg(rundvisning));
             txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(rundvisning));

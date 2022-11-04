@@ -320,6 +320,10 @@ public class Controller implements ControllerInterface {
         } return rundvisninger;
     }
 
+    public Pris getPrisPaaSalgslinje(Salgslinje salgslinje) {
+        return salgslinje.getPris();
+    }
+
     public void init(){
         Prisliste fredagsbar = this.createPrisliste("Fredagsbar");
         Prisliste butik = this.createPrisliste("Butik");
@@ -427,10 +431,16 @@ public class Controller implements ControllerInterface {
                 "Rundvisning dag", "",0, "Pris pr person");
         Produkt rundvisningAften = this.createSimpelProdukt(pg11,
                 "Rundvisning aften", "",0, "Pris pr person");
+        Produkt rundvisningDagMedSmagning = this.createSimpelProdukt(pg11,
+                "Rundvisning dag med smagning", "",0, "Pris pr person");
+        Produkt rundvisningAftenMedSmagning = this.createSimpelProdukt(pg11,
+                "Rundvisning aften med smagning", "",0, "Pris pr person");
 
         //Priser til rundvisningsprodukter
         Pris rundvisningDagPris = rundvisning.createPrisTilPrisliste(rundvisningDag, 100, 0);
         Pris rundvisningAftenPris = rundvisning.createPrisTilPrisliste(rundvisningAften, 150, 0);
+        Pris rundvisningDagMedSmagningPris = rundvisning.createPrisTilPrisliste(rundvisningDagMedSmagning, 200, 0);
+        Pris rundvisningAftenMedSmagningPris = rundvisning.createPrisTilPrisliste(rundvisningAftenMedSmagning, 250, 0);
 
         //Oprettelse af rundvisninger
         this.createRundvisning(k1,LocalDateTime.of(2023, 1, 20, 10, 0),rundvisningDagPris,20);
