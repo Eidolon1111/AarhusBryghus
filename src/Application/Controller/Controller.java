@@ -65,6 +65,7 @@ public class Controller implements ControllerInterface {
         return p;
     }
 
+    //TODO
     public Salg createSimpelSalg() {
         Salg salg = new Salg();
         storage.addSalg(salg);
@@ -267,7 +268,7 @@ public class Controller implements ControllerInterface {
         return result;
     }
 
-    public ArrayList<Udlejning> getUadsluttedeUdlejninger() {
+    public ArrayList<Udlejning> getUafsluttedeUdlejninger() {
         ArrayList<Udlejning> result = new ArrayList<>();
         for (Salg s : storage.getSalg()){
             if(s instanceof Udlejning) {
@@ -295,9 +296,13 @@ public class Controller implements ControllerInterface {
         udlejning.setStatus(Salg.Status.AFREGNET);
     }
 
-    public Salgslinje createTempSalgslinje(int antal, Pris pris) {
-        Salgslinje tempSalgslinje = new Salgslinje(antal, pris);
-        return tempSalgslinje;
+    public ArrayList<Salgslinje> createTempSalgslinjer(Udlejning udlejning) {
+        ArrayList<Salgslinje> tempSalgslinjer = new ArrayList<>();
+        for (Salgslinje salgslinje : udlejning.getSalgslinjer()){
+            Salgslinje tempSalgslinje = new Salgslinje(salgslinje.getAntal(), salgslinje.getPris());
+            tempSalgslinjer.add(tempSalgslinje);
+        }
+        return tempSalgslinjer;
     }
 
     public Prisliste getPrisliste(String navn) {
@@ -466,6 +471,7 @@ public class Controller implements ControllerInterface {
         udlejning.createPrisTilPrisliste(fustageImperialStout,775, 0);
         Pris prisFustagePant = udlejning.createPrisTilPrisliste(fustagePant,200, 0);
 
+        //TODO find fejlen på kulsyre 4kg
         udlejning.createPrisTilPrisliste(kulsyre10kg,600, 0);
         udlejning.createPrisTilPrisliste(kulsyre6kg,400, 0);
         Pris prisKulsyre4kg = udlejning.createPrisTilPrisliste(kulsyre4kg,300, 0);

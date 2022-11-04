@@ -203,7 +203,7 @@ public class OpretDagligtSalgPane extends GridPane {
     }
 
     public void btnSalgRabat(){
-        RabatWindowSalg dia = new RabatWindowSalg(controller,"Rabat Salgslinje", currentSalg);
+        RabatWindowSalg dia = new RabatWindowSalg(controller,"Rabat Salg", currentSalg);
         dia.showAndWait();
         updateControls();
         lwSalgslinjer.getItems().setAll(controller.getSalgslinjerPaaSalg(currentSalg));

@@ -60,7 +60,7 @@ public class AfregnUdlejningPane extends GridPane {
 
         this.add(lbUdlejninger, 0, 0);
         this.add(lWUafsluttedeUdlejninger, 0, 1, 1, 12);
-        lWUafsluttedeUdlejninger.getItems().setAll(controller.getUadsluttedeUdlejninger());
+        lWUafsluttedeUdlejninger.getItems().setAll(controller.getUafsluttedeUdlejninger());
         ChangeListener<Udlejning> listenerUafsluttedeUdlejninger =
                 (ov, oldUdlejning, newUdlejning) -> this.selectedUafsluttedeUdlejningerChanged();
         lWUafsluttedeUdlejninger.getSelectionModel().selectedItemProperty().addListener(listenerUafsluttedeUdlejninger);
@@ -105,17 +105,13 @@ public class AfregnUdlejningPane extends GridPane {
     }
 
     public void updateControls(){
-        lWUafsluttedeUdlejninger.getItems().setAll(controller.getUadsluttedeUdlejninger());
+        lWUafsluttedeUdlejninger.getItems().setAll(controller.getUafsluttedeUdlejninger());
     }
 
     public void selectedUafsluttedeUdlejningerChanged(){
         Udlejning udlejning = lWUafsluttedeUdlejninger.getSelectionModel().getSelectedItem();
         if(udlejning != null){
-            tempSalgslinjer = new ArrayList<>();
-            for (Salgslinje salgslinje : udlejning.getSalgslinjer()){
-                Salgslinje tempSalgslinje = controller.createTempSalgslinje(salgslinje.getAntal(), salgslinje.getPris());
-                tempSalgslinjer.add(tempSalgslinje);
-            }
+            tempSalgslinjer = controller.createTempSalgslinjer(udlejning);
             lWSalgslinjeriUdlejning.getItems().setAll(tempSalgslinjer);
         }
     }

@@ -84,7 +84,7 @@ public interface ControllerInterface {
 
     public int brugteKlipForPeriode(LocalDate fraDato, LocalDate tilDato);
 
-    public ArrayList<Udlejning> getUadsluttedeUdlejninger();
+    public ArrayList<Udlejning> getUafsluttedeUdlejninger();
 
     public Salgslinje createModregning(Udlejning udlejning, Salgslinje salgslinje, int antal);
 
@@ -94,7 +94,7 @@ public interface ControllerInterface {
 
     public void udbetalModregning(Udlejning udlejning);
 
-    public Salgslinje createTempSalgslinje(int antal, Pris pris);
+    public ArrayList<Salgslinje> createTempSalgslinjer(Udlejning udlejning);
 
     public Pris getPrisPaaSalgslinje(Salgslinje salgslinje);
 
