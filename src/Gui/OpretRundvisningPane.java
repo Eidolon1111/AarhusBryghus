@@ -95,7 +95,10 @@ public class OpretRundvisningPane extends GridPane {
         datePicker.getEditor().clear();
     }
 
-    public void selectedKundeChanged() { this.updateControls(); }
+    public void selectedKundeChanged() {
+        txfTlfNr.clear(); txfNavn.clear(); txfEmail.clear(); txfAntalPers.clear(); txfTime.clear(); txfMinut.clear();
+        datePicker.getEditor().clear();
+    }
 
     public void selectedPrisChanged() { }
 
