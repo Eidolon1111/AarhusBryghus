@@ -132,7 +132,7 @@ public class OpretUdlejningPane extends GridPane {
     }
 
     public void selectedProdukt(){
-        updateControls();
+       lwProdukter.getSelectionModel().getSelectedItem();
     }
 
     public void updateControls(){
