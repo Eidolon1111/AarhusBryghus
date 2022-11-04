@@ -32,7 +32,7 @@ public class RabatWindowSalg extends Stage {
 
     private HBox hBoxGemCancel = new HBox(btnGem, btnCancel);
 
-    private Label lbError = new Label();
+    private Label lbRabatError = new Label();
 
     public RabatWindowSalg(ControllerInterface controller, String title, Salg salg){
         this.controller = controller;
@@ -69,20 +69,27 @@ public class RabatWindowSalg extends Stage {
         btnGem.setOnAction(event -> btnGemAction());
         btnCancel.setOnAction(event -> btnCancel());
 
-        pane.add(lbError,0,4);
-        lbError.setStyle("-fx-text-fill: red");
+        pane.add(lbRabatError,0,4);
+        lbRabatError.setStyle("-fx-text-fill: red");
     }
-    //TODO tjek for ugyldigt data!
+
     public void btnGemAction(){
         try {
             double rabat = Double.parseDouble(txfRabat.getText());
             if(rbProcent.isSelected()){
-                rabat = (rabat) / 100.00;
+                if(rabat <= 100){
+                    rabat = (rabat) / 100.00;
+                    this.close();
+                } else {
+                    lbRabatError.setText("rabatten må ikke overstige 100%");
+                }
             }
-            controller.setRabatSalg(salg, rabat);
-            this.close();
+            if(rbDkk.isSelected()){
+                controller.setRabatSalg(salg, rabat);
+                this.close();
+            }
         } catch (NumberFormatException e){
-            lbError.setText("rabat skal være en tal!");
+            lbRabatError.setText("rabat skal være et tal!");
         }
     }
 
