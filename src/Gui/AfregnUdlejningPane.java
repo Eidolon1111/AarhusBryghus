@@ -106,6 +106,9 @@ public class AfregnUdlejningPane extends GridPane {
 
     public void updateControls(){
         lWUafsluttedeUdlejninger.getItems().setAll(controller.getUadsluttedeUdlejninger());
+    }
+
+    public void selectedUafsluttedeUdlejningerChanged(){
         Udlejning udlejning = lWUafsluttedeUdlejninger.getSelectionModel().getSelectedItem();
         if(udlejning != null){
             tempSalgslinjer = new ArrayList<>();
@@ -117,11 +120,9 @@ public class AfregnUdlejningPane extends GridPane {
         }
     }
 
-    public void selectedUafsluttedeUdlejningerChanged(){
-        updateControls();
-    }
-
     public void selectedSalgslinjeChanged(){
+        Salgslinje salgslinje = lWSalgslinjeriUdlejning.getSelectionModel().getSelectedItem();
+
     }
 
     public void btnModregnAction(){
