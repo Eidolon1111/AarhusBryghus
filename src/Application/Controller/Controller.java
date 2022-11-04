@@ -82,15 +82,26 @@ public class Controller implements ControllerInterface {
 
     public String printSamletPrisDKKOgKlip(Salg salg) {
         String result;
-        if(salg.getRabat() != 0 && salg.getRabat() < 1){
-            result = "DKK: " + salg.beregnSamletPrisDKK() + " / Klip: " + salg.beregnSamletPrisKlip() + " -"
-                    + (salg.getRabat() * 100) + "%";
-        } else if(salg.getRabat() > 1){
-            result = result = "DKK: " + salg.beregnSamletPrisDKK() + " / Klip: " + salg.beregnSamletPrisKlip() + " -"
-                    + salg.getRabat() + " DKK";
+        if(salg.klippeKortBetalingMuligt()){
+            if(salg.getRabat() != 0 && salg.getRabat() < 1){
+                result = "DKK: " + salg.beregnSamletPrisDKK() + " / Klip: " + salg.beregnSamletPrisKlip() + " -"
+                        + (salg.getRabat() * 100) + "%";
+            } else if(salg.getRabat() > 1){
+                result = result = "DKK: " + salg.beregnSamletPrisDKK() + " / Klip: " + salg.beregnSamletPrisKlip() + " -"
+                        + salg.getRabat() + " DKK";
+            } else {
+                result = "DKK: " + salg.beregnSamletPrisDKK() + " / Klip: " + salg.beregnSamletPrisKlip();
+            }
         } else {
-            result = "DKK: " + salg.beregnSamletPrisDKK() + " / Klip: " + salg.beregnSamletPrisKlip();
+            if(salg.getRabat() != 0 && salg.getRabat() < 1){
+                result = "DKK: " + salg.beregnSamletPrisDKK() + " -" + (salg.getRabat() * 100) + "%";
+            } else if(salg.getRabat() > 1){
+                result = result = "DKK: " + salg.beregnSamletPrisDKK() + " -" + salg.getRabat() + " DKK";
+            } else {
+                result = "DKK: " + salg.beregnSamletPrisDKK();
+            }
         }
+
         return result;
     }
 
@@ -276,16 +287,17 @@ public class Controller implements ControllerInterface {
         salgslinje.setAntal(antal);
     }
 
-//    public String printMellemRegningSalgslinje(Salgslinje salgslinje) {
-//        return salgslinje.printMellemRegning();
-//    }
-
     public double beregnReturBeløbUdlejning(Udlejning udlejning) {
         return udlejning.beregnReturBeløbUdlejning();
     }
 
     public void udbetalModregning(Udlejning udlejning) {
         udlejning.setStatus(Salg.Status.AFREGNET);
+    }
+
+    public Salgslinje createTempSalgslinje(int antal, Pris pris) {
+        Salgslinje tempSalgslinje = new Salgslinje(antal, pris);
+        return tempSalgslinje;
     }
 
     public Prisliste getPrisliste(String navn) {
@@ -456,6 +468,14 @@ public class Controller implements ControllerInterface {
         this.createSalgslinje(testUdlejning, 1, prisKulsyre4kg);
         this.createSalgslinje(testUdlejning, 1, prisKulsyrePant);
         this.betalSalg(testUdlejning, Salg.Betalingsform.DANKORT);
+
+        Udlejning testUdlejning1 = this.createUdlejning(k1);
+        this.createSalgslinje(testUdlejning1, 2, pris1Hane);
+        this.createSalgslinje(testUdlejning1, 4, prisFustageKlosterbryg);
+        this.createSalgslinje(testUdlejning1, 4, prisFustagePant);
+        this.createSalgslinje(testUdlejning1, 2, prisKulsyre4kg);
+        this.createSalgslinje(testUdlejning1, 2, prisKulsyrePant);
+        this.betalSalg(testUdlejning1, Salg.Betalingsform.KONTANT);
 
         //Salg af klippekort
         Salg salgKlippekort = this.createSimpelSalg();

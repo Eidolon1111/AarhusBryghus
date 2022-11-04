@@ -45,6 +45,7 @@ public class AarhusBryghusTabWindow extends Application {
         tabPane.setPrefWidth(1050);
         tabPane.setPrefHeight(500);
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+        //tabPane.setStyle("-fx-background-color: #8fbc8f");
 
         //OpretDagligtSalg
         Tab tabOpretDagligtSalg = new Tab("Opret DagligtSalg");
