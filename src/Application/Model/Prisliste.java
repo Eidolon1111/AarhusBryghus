@@ -11,7 +11,7 @@ public class Prisliste {
     }
 
     public Pris createPrisTilPrisliste(Produkt produkt, double pris, int klip) {
-        Pris prisListeProdukt = new Pris(pris, klip, produkt);
+        Pris prisListeProdukt = new Pris(pris, klip, produkt, this);
         addPris(prisListeProdukt);
         return prisListeProdukt;
     }

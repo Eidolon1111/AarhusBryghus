@@ -67,10 +67,6 @@ public class AfregnUdlejningPane extends GridPane {
 
         this.add(lbSalgslinjeriUdlejning, 1, 0);
         this.add(lWSalgslinjeriUdlejning, 1, 1, 1, 12);
-
-        //TODO
-        //lWSalgslinjeriUdlejning.setOnMouseClicked(event -> salgslinjeClicked());
-
         ChangeListener<Salgslinje> listenerSalgslinjer =
                 (ov, oldSalgslinje, newSalgslinje) -> this.selectedSalgslinjeChanged();
         lWSalgslinjeriUdlejning.getSelectionModel().selectedItemProperty().addListener(listenerSalgslinjer);
@@ -132,7 +128,7 @@ public class AfregnUdlejningPane extends GridPane {
                 if(salgslinje != null){
                     if (antal > salgslinje.getAntal() || antal < 0){
                         lbSucces.setText("");
-                        lbError.setText("Antal må max være antallet i salgslinjen minimum 0");
+                        lbError.setText("Antal må max være antallet i salgslinjen og minimum 0");
                     } else if (antal == salgslinje.getAntal()){
                         controller.createModregning(udlejning, salgslinje, antal);
                         tempSalgslinjer.remove(salgslinje);
