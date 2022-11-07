@@ -161,6 +161,7 @@ public class OpretPrisPane extends GridPane {
     }
 
     public void updateControls(){
+        lwProdukter.getItems().setAll(controller.getProdukter());
         Prisliste pl = lwPrislister.getSelectionModel().getSelectedItem();
         if (pl != null) {
             lwValgtPrisliste.getItems().setAll(pl.getPrislisten());

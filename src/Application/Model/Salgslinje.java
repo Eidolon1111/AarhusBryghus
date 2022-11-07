@@ -1,9 +1,12 @@
 package Application.Model;
 
+import java.util.ArrayList;
+
 public class Salgslinje {
     private int antal;
     private Pris pris;
     private double rabat;
+    private ArrayList<Observer> observers = new ArrayList<>();
 
     public Salgslinje(int antal, Pris pris) {
         this.antal = antal;

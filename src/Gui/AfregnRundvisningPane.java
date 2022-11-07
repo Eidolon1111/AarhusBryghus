@@ -148,7 +148,7 @@ public class AfregnRundvisningPane extends GridPane {
                     if (antal > 0) {
                         controller.fjernSalgslinje(rundvisning, førsteSalgLinje);
                         lwRundvisninger.setDisable(true);
-                        controller.createSalgslinje(rundvisning, antal, førsteSalgLinje.getPris());
+                        controller.createSalgslinje(rundvisning, antal, controller.getPrisPaaSalgslinje(førsteSalgLinje));
                         lwSalgslinjer.getItems().setAll(controller.getSalgslinjerPaaSalg(rundvisning));
                         txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(rundvisning));
                         lbError.setText("");

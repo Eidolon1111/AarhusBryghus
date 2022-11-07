@@ -49,6 +49,10 @@ public class Storage implements StorageInterface {
         return new ArrayList<>(salg);
     }
 
+    public void sletSalg(Salg target) {
+        salg.remove(target);
+    }
+
     public void addSalg(Salg s) {
         if (!salg.contains(s)) {
             salg.add(s);

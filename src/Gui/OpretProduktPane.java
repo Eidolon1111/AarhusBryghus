@@ -3,10 +3,7 @@ package Gui;
 import Application.Model.ProduktGruppe;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -20,6 +17,7 @@ public class OpretProduktPane extends GridPane {
     private ListView lwProdukter = new ListView<>();
     private TextField txfNavn, txfAntalEnheder, txfEnhed, txfBeskrivelse, txfOpretProduktgruppe;
     private Label produktError, produktGruppeError1, produktGruppeError2;
+    private CheckBox checkBoxPantPligtig = new CheckBox("Pant pligtig");
 
 
     public OpretProduktPane(ControllerInterface controller){
@@ -70,13 +68,15 @@ public class OpretProduktPane extends GridPane {
         //Tilføjelse af elementer i række 2
         this.add(lblOpretNytProdukt, 2, 0);
         this.add(lblNavn, 2, 1);
-        this.add(txfNavn, 3, 1,3,1);
+        this.add(txfNavn, 3, 1,4,1);
         this.add(lblAntalEnheder, 2, 2);
         this.add(txfAntalEnheder, 3, 2);
+        txfAntalEnheder.setPrefWidth(50);
         this.add(lblEnhed, 4, 2);
         this.add(txfEnhed, 5, 2);
+        this.add(checkBoxPantPligtig, 6, 2);
         this.add(lblBeskrivelse, 2, 3);
-        this.add(txfBeskrivelse, 3, 3,3,1);
+        this.add(txfBeskrivelse, 3, 3,4,1);
         this.add(btnTilføj, 2, 4);
 
         this.add(lblProdukter, 2, 6);
@@ -136,14 +136,22 @@ public class OpretProduktPane extends GridPane {
         ProduktGruppe produktGruppe = (ProduktGruppe) lwProduktgrupper.getSelectionModel().getSelectedItem();
         if (!txfNavn.getText().equals("")){
             if (txfAntalEnheder.getText().isEmpty()) {
-                controller.createSimpelProdukt(produktGruppe, txfNavn.getText(), txfBeskrivelse.getText(), 0, "");
-
+                if(checkBoxPantPligtig.isSelected()){
+                    controller.createSimpelProdukt(produktGruppe, txfNavn.getText(), txfBeskrivelse.getText(), 0, "", true);
+                } else {
+                    controller.createSimpelProdukt(produktGruppe, txfNavn.getText(), txfBeskrivelse.getText(), 0, "", false);
+                }
             } else {
-                controller.createSimpelProdukt(produktGruppe, txfNavn.getText(), txfBeskrivelse.getText(), Integer.parseInt(txfAntalEnheder.getText()), txfBeskrivelse.getText());
-                txfEnhed.clear();
-                txfNavn.clear();
-                txfBeskrivelse.clear();
-                lwProdukter.getItems().setAll(controller.getProdukterFraProduktgruppe((ProduktGruppe) lwProduktgrupper.getSelectionModel().getSelectedItem()));
+                if(checkBoxPantPligtig.isSelected()){
+                    controller.createSimpelProdukt(produktGruppe, txfNavn.getText(), txfBeskrivelse.getText(),
+                            Integer.parseInt(txfAntalEnheder.getText()), txfBeskrivelse.getText(), true);
+                } else {
+                    controller.createSimpelProdukt(produktGruppe, txfNavn.getText(), txfBeskrivelse.getText(), Integer.parseInt(txfAntalEnheder.getText()), txfBeskrivelse.getText(), false);
+                    txfEnhed.clear();
+                    txfNavn.clear();
+                    txfBeskrivelse.clear();
+                    lwProdukter.getItems().setAll(controller.getProdukterFraProduktgruppe((ProduktGruppe) lwProduktgrupper.getSelectionModel().getSelectedItem()));
+                }
                 if (produktError != null) {
                     produktError.setVisible(false);
                 }

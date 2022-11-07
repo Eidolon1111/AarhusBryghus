@@ -4,6 +4,14 @@ public class Pris {
     private double pris;
     private int klip;
     private Produkt produkt;
+    private Prisliste prisliste;
+
+    Pris(double pris, int klip, Produkt produkt, Prisliste prisliste) {
+        this.pris = pris;
+        this.klip = klip;
+        this.produkt = produkt;
+        this.prisliste = prisliste;
+    }
 
     Pris(double pris, int klip, Produkt produkt) {
         this.pris = pris;
@@ -29,6 +37,10 @@ public class Pris {
 
     public void setKlip(int klip) {
         this.klip = klip;
+    }
+
+    public Prisliste getPrisliste(){
+        return prisliste;
     }
 
     @Override

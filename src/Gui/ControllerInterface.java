@@ -22,7 +22,7 @@ public interface ControllerInterface {
         
     public ProduktGruppe createProduktGruppe(String navn);
 
-    public Produkt createSimpelProdukt(ProduktGruppe produktGruppe, String navn, String beskrivelse, int antalEnheder, String enhed);
+    public Produkt createSimpelProdukt(ProduktGruppe produktGruppe, String navn, String beskrivelse, int antalEnheder, String enhed, boolean pantPligtig);
 
     public Produkt createProduktSamling(ProduktGruppe produktGruppe, String navn, String beskrivelse);
 
@@ -84,7 +84,7 @@ public interface ControllerInterface {
 
     public int brugteKlipForPeriode(LocalDate fraDato, LocalDate tilDato);
 
-    public ArrayList<Udlejning> getUadsluttedeUdlejninger();
+    public ArrayList<Udlejning> getUafsluttedeUdlejninger();
 
     public Salgslinje createModregning(Udlejning udlejning, Salgslinje salgslinje, int antal);
 
@@ -94,8 +94,10 @@ public interface ControllerInterface {
 
     public void udbetalModregning(Udlejning udlejning);
 
-    public Salgslinje createTempSalgslinje(int antal, Pris pris);
+    public ArrayList<Salgslinje> createTempSalgslinjer(Udlejning udlejning);
 
     public Pris getPrisPaaSalgslinje(Salgslinje salgslinje);
+
+    public void sletSalg(Salg salg);
 
 }

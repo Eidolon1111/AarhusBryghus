@@ -3,9 +3,10 @@ package Application.Model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Salg {
+public class Salg implements Observerbar{
     private LocalDate registreringsDato;
     private ArrayList<Salgslinje> salgslinjer = new ArrayList<Salgslinje>();
+    private ArrayList<Observer> observers = new ArrayList<>();
     private Betalingsform betalingsform;
     private Status status;
     private double rabat;
@@ -18,6 +19,7 @@ public class Salg {
     public Salgslinje createSalgslinje(Pris Pris, int antal){
         Salgslinje salgslinje = new Salgslinje(antal, Pris);
         salgslinjer.add(salgslinje);
+        notifyObservers();
         return salgslinje;
     }
 
@@ -93,6 +95,25 @@ public class Salg {
 
     public Status getStatus(){
         return status;
+    }
+
+    @Override
+    public void addObserver(Observer observer) {
+        if(!observers.contains(observer)){
+            observers.add(observer);
+        }
+    }
+
+    @Override
+    public void removeObsercer(Observer observer) {
+        observers.remove(observer);
+
+    }
+
+    private void notifyObservers(){
+        for (Observer observer : observers) {
+            observer.update(this);
+        }
     }
 
     @Override
