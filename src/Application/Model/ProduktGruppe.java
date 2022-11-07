@@ -31,15 +31,15 @@ public class ProduktGruppe {
         return new ArrayList<>(produkts);
     }
 
-    public ArrayList<Produkt> getProduktsFraProduktGuppenIPrisliste(Prisliste prisliste){
-        ArrayList<Produkt> result = new ArrayList<>();
-        for (Pris p : prisliste.getPrislisten()){
-            if(this.getProdukts().contains(p.getProdukt())){
-                result.add(p.getProdukt());
-            }
-        }
-        return result;
-    }
+    //public ArrayList<Produkt> getProduktsFraProduktGuppenIPrisliste(Prisliste prisliste){
+    //    ArrayList<Produkt> result = new ArrayList<>();
+    //    for (Pris p : prisliste.getPrislisten()){
+    //        if(this.getProdukts().contains(p.getProdukt())){
+    //            result.add(p.getProdukt());
+    //        }
+    //    }
+    //    return result;
+    //}
 
     @Override
     public String toString() {
