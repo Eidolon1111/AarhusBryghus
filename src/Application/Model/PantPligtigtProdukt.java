@@ -18,9 +18,7 @@ public class PantPligtigtProdukt implements Observer{
                     Pris pantpris = prisliste.findPris(produktgruppeNavn + " " + "Pant");
                     udlejning.createSalgslinje(pantpris, salgslinje.getAntal());
                 }
-
             }
         }
     }
-
 }

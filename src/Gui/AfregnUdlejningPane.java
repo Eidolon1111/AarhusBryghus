@@ -113,8 +113,7 @@ public class AfregnUdlejningPane extends GridPane {
     }
 
     public void selectedSalgslinjeChanged(){
-        Salgslinje salgslinje = lWSalgslinjeriUdlejning.getSelectionModel().getSelectedItem();
-
+        lWSalgslinjeriUdlejning.getSelectionModel().getSelectedItem();
     }
 
     public void btnModregnAction(){
