@@ -104,7 +104,7 @@ public class AarhusBryghusTabWindow extends Application {
         tabOpretPris.setOnSelectionChanged(event -> opretPrisPane.updateControls());
 
         //Dagsrapport
-        Tab tabDagsrapporter = new Tab("Dagsrapporter");
+        Tab tabDagsrapporter = new Tab("Dagsrapporter og klippestatistik");
         tabPane.getTabs().add(tabDagsrapporter);
 
         DagsrapporterPane dagsrapporterPane = new DagsrapporterPane(controller);
