@@ -221,8 +221,10 @@ public class Controller implements ControllerInterface {
     public ArrayList<Salg> dagsRapport(LocalDate dato) {
         ArrayList<Salg> result = new ArrayList<>();
         for (Salg salg : storage.getSalg()) {
-            if (salg.getRegistreringsDato().equals(dato)) {
-                result.add(salg);
+            if (salg.getStatus().equals(Salg.Status.AFREGNET) || salg.getStatus().equals(Salg.Status.PANTBETALT)) {
+                if (salg.getRegistreringsDato().equals(dato)) {
+                    result.add(salg);
+                }
             }
         }
         return result;
@@ -231,8 +233,10 @@ public class Controller implements ControllerInterface {
     public double beregnDagsomsætning(LocalDate dato) {
         double result = 0.0;
         for (Salg salg : storage.getSalg()) {
-            if (salg.getRegistreringsDato().equals(dato)) {
-                result += salg.beregnSamletPrisDKK();
+            if (salg.getStatus().equals(Salg.Status.AFREGNET) || salg.getStatus().equals(Salg.Status.PANTBETALT)) {
+                if (salg.getRegistreringsDato().equals(dato)) {
+                    result += salg.beregnSamletPrisDKK();
+                }
             }
         }
         return result;
@@ -503,6 +507,6 @@ public class Controller implements ControllerInterface {
         Salg salgKlippekort = this.createSimpelSalg();
         salgKlippekort.createSalgslinje(this.createPris(fredagsbar, klippekort4Klip, 130,0),1);
         salgKlippekort.createSalgslinje(this.createPris(fredagsbar, klippekort4Klip, 130,0),1);
-        salgKlippekort.setBetalingsform(Salg.Betalingsform.DANKORT);
+        this.betalSalg(salgKlippekort, Salg.Betalingsform.DANKORT);
     }
 }
