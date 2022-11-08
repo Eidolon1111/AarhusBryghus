@@ -11,7 +11,6 @@ public class Salg implements Observerbar{
     private Status status;
     private double rabat;
 
-
     public Salg() {
         this.registreringsDato = LocalDate.now();
     }
@@ -42,12 +41,14 @@ public class Salg implements Observerbar{
         for (Salgslinje s : salgslinjer){
             result += s.beregnPrisDKK();
         }
-        if (rabat != 0){
-            if(rabat < 1){
+        if (rabat >= 0) {
+            if (rabat < 1) {
                 result = (result) - ((result) * rabat);
             } else {
                 result = (result) - rabat;
             }
+        } else {
+            throw new IllegalArgumentException("Rabat skal være over eller lig 0");
         }
         return result;
     }
