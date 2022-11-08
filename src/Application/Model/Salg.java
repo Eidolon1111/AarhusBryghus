@@ -16,10 +16,19 @@ public class Salg implements Observerbar{
         this.registreringsDato = LocalDate.now();
     }
 
-    public Salgslinje createSalgslinje(Pris Pris, int antal){
-        Salgslinje salgslinje = new Salgslinje(antal, Pris);
-        salgslinjer.add(salgslinje);
-        notifyObservers();
+    public Salgslinje createSalgslinje(Pris pris, int antal){
+        Salgslinje salgslinje;
+        if(pris != null) {
+            if(antal > 0){
+                salgslinje = new Salgslinje(antal, pris);
+                salgslinjer.add(salgslinje);
+                notifyObservers();
+            } else {
+                throw new IllegalArgumentException("antal skal være over 0");
+            }
+        } else {
+            throw new IllegalArgumentException("Prisen må ikke være null");
+        }
         return salgslinje;
     }
 
@@ -56,7 +65,11 @@ public class Salg implements Observerbar{
     }
 
     public void setBetalingsform(Betalingsform betalingsform){
-        this.betalingsform = betalingsform;
+        if(betalingsform != null){
+            this.betalingsform = betalingsform;
+        } else {
+            throw new IllegalArgumentException("betalingsform må ikke være null");
+        }
     }
 
     public boolean klippeKortBetalingMuligt() {

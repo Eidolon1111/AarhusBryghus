@@ -65,7 +65,6 @@ public class Controller implements ControllerInterface {
         return p;
     }
 
-    //TODO
     public Salg createSimpelSalg() {
         Salg salg = new Salg();
         storage.addSalg(salg);
@@ -111,22 +110,6 @@ public class Controller implements ControllerInterface {
         return sl;
     }
 
-    //TODO
-//    public Salgslinje findSalgslinjeFraKurv(Prisliste prisliste, Salg salg, String target){
-//        int index = 0;
-//        Salgslinje kandidat;
-//        Salgslinje result = null;
-//        while (result == null && index <= salg.getSalgslinjer().size()) {
-//            kandidat = salg.getSalgslinjer().get(index);
-//            if (kandidat.printMellemRegning().equals(target)) {
-//                result = kandidat;
-//            } else {
-//                index++;
-//            }
-//        }
-//        return result;
-//    }
-
     public void fjernSalgslinje(Salg salg, Salgslinje salgslinje) {
         salg.fjernSalgsLinje(salgslinje);
     }
@@ -159,7 +142,6 @@ public class Controller implements ControllerInterface {
         return result;
     }
 
-    //TODO tjek om denne bliver brugt
     public boolean klippeKortBetalingMuligt(Salg salg) {
         return salg.klippeKortBetalingMuligt();
     }
@@ -384,13 +366,13 @@ public class Controller implements ControllerInterface {
         Produkt fustageIndiaPaleAle = this.createSimpelProdukt(pg4, "India Pale Ale", "", 20, "liter", true);
         Produkt fustageJuleBryg = this.createSimpelProdukt(pg4, "Julebryg", "", 20, "liter", true);
         Produkt fustageImperialStout = this.createSimpelProdukt(pg4, "Imperial Stout", "", 20, "liter", true);
-        Produkt fustagePant = this.createSimpelProdukt(pg4, "Fustage Pant", "", 0,"", false);
+        Produkt fustagePant = this.createSimpelProdukt(pg4, "Pant", "", 0,"", false);
 
         //Kulsyre
         Produkt kulsyre10kg = this.createSimpelProdukt(pg5, "Kulsyre Stor", "", 10,"kg", true);
         Produkt kulsyre6kg = this.createSimpelProdukt(pg5, "Kulsyre Mellem", "", 6, "kg", true);
         Produkt kulsyre4kg = this.createSimpelProdukt(pg5, "Kulsyre Lille", "", 4,"kg", true);
-        Produkt kulsyrePant = this.createSimpelProdukt(pg5, "Kulsyre Pant", "", 0,"", false);
+        Produkt kulsyrePant = this.createSimpelProdukt(pg5, "Pant", "", 0,"", false);
 
 
         //Malt
@@ -490,17 +472,13 @@ public class Controller implements ControllerInterface {
         Udlejning testUdlejning = this.createUdlejning(k1);
         this.createSalgslinje(testUdlejning, 1, pris1Hane);
         this.createSalgslinje(testUdlejning, 3, prisFustageKlosterbryg);
-        this.createSalgslinje(testUdlejning, 3, prisFustagePant);
         this.createSalgslinje(testUdlejning, 1, prisKulsyre4kg);
-        this.createSalgslinje(testUdlejning, 1, prisKulsyrePant);
         this.betalSalg(testUdlejning, Salg.Betalingsform.DANKORT);
 
         Udlejning testUdlejning1 = this.createUdlejning(k1);
         this.createSalgslinje(testUdlejning1, 2, pris1Hane);
         this.createSalgslinje(testUdlejning1, 4, prisFustageKlosterbryg);
-        this.createSalgslinje(testUdlejning1, 4, prisFustagePant);
         this.createSalgslinje(testUdlejning1, 2, prisKulsyre4kg);
-        this.createSalgslinje(testUdlejning1, 2, prisKulsyrePant);
         this.betalSalg(testUdlejning1, Salg.Betalingsform.KONTANT);
 
         //Salg af klippekort
