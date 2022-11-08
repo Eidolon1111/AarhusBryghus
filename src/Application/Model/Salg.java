@@ -41,14 +41,12 @@ public class Salg implements Observerbar{
         for (Salgslinje s : salgslinjer){
             result += s.beregnPrisDKK();
         }
-        if (rabat >= 0) {
+        if (rabat != 0) {
             if (rabat < 1) {
                 result = (result) - ((result) * rabat);
             } else {
                 result = (result) - rabat;
             }
-        } else {
-            throw new IllegalArgumentException("Rabat skal være over eller lig 0");
         }
         return result;
     }
@@ -92,7 +90,9 @@ public class Salg implements Observerbar{
    }
 
     public void setRabatSalg(double rabat){
-        this.rabat = rabat;
+        if(rabat >= 0){
+            this.rabat = rabat;
+        } else throw new IllegalArgumentException("Rabat skal være over eller lig 0");
     }
 
     public double getRabat(){
