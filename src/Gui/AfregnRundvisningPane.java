@@ -208,10 +208,12 @@ public class AfregnRundvisningPane extends GridPane {
     public void btnSalgslinjeRabat(){
         Rundvisning rundvisning = lwRundvisninger.getSelectionModel().getSelectedItem();
         Salgslinje salgslinje = lwSalgslinjer.getSelectionModel().getSelectedItem();
-        RabatWindowSalgslinje dia = new RabatWindowSalgslinje(controller, "Rabat Salgslinje", salgslinje);
-        dia.showAndWait();
-        lwSalgslinjer.getItems().setAll(controller.getSalgslinjerPaaSalg(rundvisning));
-        txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(rundvisning));
+        if(salgslinje != null) {
+            RabatWindowSalgslinje dia = new RabatWindowSalgslinje(controller, "Rabat Salgslinje", salgslinje);
+            dia.showAndWait();
+            lwSalgslinjer.getItems().setAll(controller.getSalgslinjerPaaSalg(rundvisning));
+            txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(rundvisning));
+        }
     }
 
     public void btnSalgRabat(){
