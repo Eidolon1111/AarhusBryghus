@@ -104,7 +104,9 @@ public class Salg implements Observerbar{
     }
 
     public void setStatus(Status status) {
-        this.status = status;
+        if(status != null){
+            this.status = status;
+        }
     }
 
     public Status getStatus(){
@@ -115,13 +117,12 @@ public class Salg implements Observerbar{
     public void addObserver(Observer observer) {
         if(!observers.contains(observer)){
             observers.add(observer);
-        }
+        } else throw new IllegalArgumentException("Observeren er allerede tilknyttet");
     }
 
     @Override
     public void removeObsercer(Observer observer) {
         observers.remove(observer);
-
     }
 
     private void notifyObservers(){
