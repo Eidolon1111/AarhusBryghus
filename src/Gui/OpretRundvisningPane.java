@@ -87,7 +87,7 @@ public class OpretRundvisningPane extends GridPane {
         ChangeListener<Kunde> listener = (ov, o, v) -> this.selectedKundeChanged();
         lwKunder.getSelectionModel().selectedItemProperty().addListener(listener);
 
-        //Setter muligheder på combobox prislister og tilføjer listener
+        //Setter muligheder på combobox priser og tilføjer listener
         cbPrislister.getItems().setAll(controller.getPrisliste("Rundvisning").getPrislisten());
         ChangeListener<Pris> listenerCBPrislister = (ov, oldPrisliste, newPrisliste) -> this.selectedPrisChanged();
         cbPrislister.getSelectionModel().selectedItemProperty().addListener(listenerCBPrislister);
@@ -97,6 +97,7 @@ public class OpretRundvisningPane extends GridPane {
         lwKunder.getItems().setAll(controller.getKunder());
         txfTlfNr.clear(); txfNavn.clear(); txfEmail.clear(); txfAntalPers.clear(); txfTime.clear(); txfMinut.clear();
         datePicker.getEditor().clear();
+        cbPrislister.getItems().setAll(controller.getPrisliste("Rundvisning").getPrislisten());
     }
 
     public void selectedKundeChanged() {
