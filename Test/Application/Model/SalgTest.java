@@ -2,9 +2,22 @@ package Application.Model;
 
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class SalgTest {
+
+    @Test
+    void salgConstructorTest(){
+        //Arrange:
+
+        //Act:
+        Salg salg = new Salg();
+
+        //Assert:
+        assertEquals(LocalDate.now(), salg.getRegistreringsDato());
+    }
 
     @Test
     void createSalgslinje() {

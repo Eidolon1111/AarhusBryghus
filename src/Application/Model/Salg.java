@@ -106,7 +106,7 @@ public class Salg implements Observerbar{
     public void setStatus(Status status) {
         if(status != null){
             this.status = status;
-        }
+        } else throw new IllegalArgumentException("Status må ikke være null");
     }
 
     public Status getStatus(){
@@ -121,11 +121,11 @@ public class Salg implements Observerbar{
     }
 
     @Override
-    public void removeObsercer(Observer observer) {
+    public void removeObserver(Observer observer) {
         observers.remove(observer);
     }
 
-    private void notifyObservers(){
+    void notifyObservers(){
         for (Observer observer : observers) {
             observer.update(this);
         }
