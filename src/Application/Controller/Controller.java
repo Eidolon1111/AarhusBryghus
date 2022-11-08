@@ -35,9 +35,23 @@ public class Controller implements ControllerInterface {
     public ArrayList<Salg> getSalg() {return storage.getSalg(); }
 
     public Prisliste createPrisliste(String navn) {
-        Prisliste pl = new Prisliste(navn);
-        storage.addPrisliste(pl);
-        return pl;
+        boolean dublet = false;
+       if (!navn.equals("")){
+           for (Prisliste pl : storage.getPrislister()) {
+               if (pl.getNavn().equals(navn)){
+                   dublet = true;
+               }
+           }
+           if(!dublet) {
+               Prisliste pl = new Prisliste(navn);
+               storage.addPrisliste(pl);
+               return pl;
+           } else {
+               throw new IllegalArgumentException("Prisliste med samme navn eksisterer!");
+           }
+       } else {
+            throw new IllegalArgumentException("Navn kan ikke være tom!");
+       }
     }
 
     public Pris createPris(Prisliste prisliste, Produkt produkt, double pris, int klip) {
@@ -50,14 +64,45 @@ public class Controller implements ControllerInterface {
     }
 
     public ProduktGruppe createProduktGruppe(String navn) {
-        ProduktGruppe pg = new ProduktGruppe(navn);
-        storage.addProduktGruppe(pg);
-        return pg;
+        boolean dublet = false;
+        if(!navn.equals("")) {
+            for (ProduktGruppe pg : storage.getProduktGrupper()) {
+                if (pg.getNavn().equals(navn)) {
+                    dublet = true;
+                }
+            }
+            if (!dublet) {
+                ProduktGruppe pg = new ProduktGruppe(navn);
+                storage.addProduktGruppe(pg);
+                return pg;
+            } else {
+                throw new IllegalArgumentException("ProduktGruppe med samme navn eksisterer!");
+            }
+        }
+        else {
+            throw new IllegalArgumentException("Navn kan ikke være tom!");
+        }
     }
 
     public Produkt createSimpelProdukt(ProduktGruppe produktGruppe, String navn, String beskrivelse, int antalEnheder, String enhed, boolean pantPligtig) {
-        Produkt p = produktGruppe.createSimpelProdukt(navn, antalEnheder, enhed, beskrivelse, pantPligtig);
-        return p;
+        boolean dublet = false;
+        if(!navn.equals("")) {
+            if (produktGruppe != null) {
+                for (Produkt p : produktGruppe.getProdukts()) {
+                    if (p.getNavn().equals(navn)) {
+                        dublet = true;
+                    }
+                }
+                if (!dublet) {
+                    Produkt p = produktGruppe.createSimpelProdukt(navn, antalEnheder, enhed, beskrivelse, pantPligtig);
+                    return p;
+                } else {
+                    throw new IllegalArgumentException("Produkt med samme navn eksisterer allerede i Produktgruppen!");
+                }
+            } else {
+                throw new IllegalArgumentException("ProduktGruppe må ikke være null!");
+            }
+        } else throw new IllegalArgumentException("Navn kan ikke være tom!");
     }
 
     public ProduktSamling createProduktSamling(ProduktGruppe produktGruppe, String navn, String beskrivelse) {
@@ -177,10 +222,12 @@ public class Controller implements ControllerInterface {
     }
 
     public Udlejning createUdlejning(Kunde kunde) {
-        Udlejning udlejning = new Udlejning(kunde);
-        udlejning.addObserver(new PantPligtigtProdukt());
-        storage.addSalg(udlejning);
-        return udlejning;
+        if (kunde != null) {
+            Udlejning udlejning = new Udlejning(kunde);
+            udlejning.addObserver(new PantPligtigtProdukt());
+            storage.addSalg(udlejning);
+            return udlejning;
+        } else { throw new IllegalArgumentException("Kunde må ikke være null!"); }
     }
 
 
@@ -268,7 +315,15 @@ public class Controller implements ControllerInterface {
     }
 
     public Salgslinje createModregning(Udlejning udlejning, Salgslinje salgslinje, int antal) {
-        return udlejning.createModregning(salgslinje, antal);
+        if (udlejning != null){
+            if(udlejning.getSalgslinjer().contains(salgslinje)){
+                if (antal > 0){
+                    if (antal <= salgslinje.getAntal()) {
+                        return udlejning.createModregning(salgslinje, antal);
+                    } else { throw new IllegalArgumentException("Antal må ikke overstige det originale antal på salgslinjen!"); }
+                } else throw new IllegalArgumentException("Antal skal være størrere end 0!");
+            } else throw new IllegalArgumentException("Salgslinje findes ikke på udlejningen!");
+        } else throw new IllegalArgumentException("Udlejning må ikke være null!");
     }
 
     public void setAntalPåSalgslinje(Salgslinje salgslinje, int antal) {
