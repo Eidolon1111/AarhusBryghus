@@ -12,8 +12,8 @@ public abstract class Produkt implements Comparable<Produkt> {
     }
 
     public String getNavn() {
-        return navn;
-    }
+       return navn;
+   }
 
     public String getBeskrivelse(){
         return beskrivelse;
@@ -21,10 +21,6 @@ public abstract class Produkt implements Comparable<Produkt> {
 
     public ProduktGruppe getProduktGruppe(){
         return produktGruppe;
-    }
-
-    public String printNavn(){
-        return navn;
     }
 
     @Override

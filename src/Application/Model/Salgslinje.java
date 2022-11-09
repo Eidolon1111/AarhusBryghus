@@ -68,24 +68,24 @@ public class Salgslinje {
         String result;
         if (klippeKortBetalingMuligt()) {
             if (rabat != 0 && rabat < 1) {
-                result = pris.getProdukt().printNavn() + ", " + "antal: " + antal + " " + "DKK: " +
+                result = pris.getProdukt().getNavn() + ", " + "antal: " + antal + " " + "DKK: " +
                         beregnPrisDKK() + " / Klip: " + beregnPrisKlip() + " -" + (rabat * 100) + "%";
             } else if (rabat != 0 && rabat > 1) {
-                result = pris.getProdukt().printNavn() + ", " + "antal: " + antal + " " + "DKK: " +
+                result = pris.getProdukt().getNavn() + ", " + "antal: " + antal + " " + "DKK: " +
                         beregnPrisDKK() + " / Klip: " + beregnPrisKlip() + " -" + rabat + " DKK";
             } else {
-                result = pris.getProdukt().printNavn() + ", " + "antal: " + antal + " " + "DKK: " +
+                result = pris.getProdukt().getNavn() + ", " + "antal: " + antal + " " + "DKK: " +
                         beregnPrisDKK() + " / Klip: " + beregnPrisKlip();
             }
         } else {
             if (rabat != 0 && rabat < 1) {
-                result = pris.getProdukt().printNavn() + ", " + "antal: " + antal + " " + "DKK: " +
+                result = pris.getProdukt().getNavn() + ", " + "antal: " + antal + " " + "DKK: " +
                         beregnPrisDKK() + " -" + (rabat * 100) + "%";
             } else if (rabat != 0 && rabat > 1) {
-                result = pris.getProdukt().printNavn() + ", " + "antal: " + antal + " " + "DKK: " +
+                result = pris.getProdukt().getNavn() + ", " + "antal: " + antal + " " + "DKK: " +
                         beregnPrisDKK() + " -" + rabat + " DKK";
             } else {
-                result = pris.getProdukt().printNavn() + ", " + "antal: " + antal + " " + "DKK: " +
+                result = pris.getProdukt().getNavn() + ", " + "antal: " + antal + " " + "DKK: " +
                         beregnPrisDKK();
             }
         }

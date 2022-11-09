@@ -56,16 +56,6 @@ public class Prisliste {
         return result;
     }
 
-   public Pris findPris(String Produktnavn) {
-       Pris res = null;
-       for (Pris p : prislisten) {
-           if (p.getProdukt().getNavn().equals(Produktnavn)) {
-               res = p;
-           }
-       }
-       return res;
-   }
-
     public String getNavn() {
         return navn;
     }
