@@ -35,7 +35,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="JavaFX" level="application" />
-    <orderEntry type="library" name="Mockito" level="application" />
+    <orderEntry type="library" name="lib" level="application" />
+    <orderEntry type="library" name="mockito" level="application" />
   </component>
 </module>

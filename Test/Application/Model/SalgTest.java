@@ -348,9 +348,9 @@ class SalgTest {
     void klippeKortBetalingMuligt_TC1() {
         //Arrange:
         Salg salg = new Salg();
-        Pris prisMock1 = mock(Pris.class);
-        salg.createSalgslinje(prisMock1, 1);
-        when(prisMock1.getKlip()).thenReturn(1);
+        Salgslinje salgslinjeMock = mock(Salgslinje.class);
+        salg.addSalgslinje(salgslinjeMock);
+        when(salgslinjeMock.klippeKortBetalingMuligt()).thenReturn(true);
 
         //Act:
         boolean expected = true;
@@ -364,9 +364,9 @@ class SalgTest {
     void klippeKortBetalingMuligt_TC2() {
         //Arrange:
         Salg salg = new Salg();
-        Pris prisMock2 = mock(Pris.class);
-        salg.createSalgslinje(prisMock2, 1);
-        when(prisMock2.getKlip()).thenReturn(0);
+        Salgslinje salgslinjeMock = mock(Salgslinje.class);
+        salg.addSalgslinje(salgslinjeMock);
+        when(salgslinjeMock.klippeKortBetalingMuligt()).thenReturn(false);
 
         //Act:
         boolean expected = false;
@@ -380,12 +380,13 @@ class SalgTest {
     void klippeKortBetalingMuligt_TC3() {
         //Arrange:
         Salg salg = new Salg();
-        Pris prisMock1 = mock(Pris.class);
-        Pris prisMock2 = mock(Pris.class);
-        salg.createSalgslinje(prisMock1, 1);
-        salg.createSalgslinje(prisMock2, 1);
-        when(prisMock1.getKlip()).thenReturn(1);
-        when(prisMock2.getKlip()).thenReturn(0);
+        Salgslinje salgslinjeMock1 = mock(Salgslinje.class);
+        Salgslinje salgslinjeMock2 = mock(Salgslinje.class);
+        salg.addSalgslinje(salgslinjeMock1);
+        salg.addSalgslinje(salgslinjeMock2);
+
+        when(salgslinjeMock1.klippeKortBetalingMuligt()).thenReturn(true);
+        when(salgslinjeMock2.klippeKortBetalingMuligt()).thenReturn(false);
 
         //Act:
         boolean expected = false;
