@@ -380,71 +380,109 @@ public class Controller implements ControllerInterface {
     public void init(){
         Prisliste fredagsbar = this.createPrisliste("Fredagsbar");
         Prisliste butik = this.createPrisliste("Butik");
+        Prisliste rundvisning = this.createPrisliste("Rundvisning");
+        Prisliste udlejning = this.createPrisliste("Udlejning");
 
-        ProduktGruppe pg1 = this.createProduktGruppe("Flaske");
-        ProduktGruppe pg2 = this.createProduktGruppe("Fadøl");
-        ProduktGruppe pg3 = this.createProduktGruppe("Spiritus");
-        ProduktGruppe pg4 = this.createProduktGruppe("Fustage");
-        ProduktGruppe pg5 = this.createProduktGruppe("Kulsyre");
-        ProduktGruppe pg6 = this.createProduktGruppe("Malt");
-        ProduktGruppe pg7 = this.createProduktGruppe("Beklædning");
-        ProduktGruppe pg8 = this.createProduktGruppe("Anlæg");
-        ProduktGruppe pg9 = this.createProduktGruppe("Glas");
-        ProduktGruppe pg10 = this.createProduktGruppe("Sampakninger");
-        ProduktGruppe pg11 = this.createProduktGruppe("Rundvisning");
+        ProduktGruppe flasker = this.createProduktGruppe("Flasker");
+        ProduktGruppe fadøl = this.createProduktGruppe("Fadøl");
+        ProduktGruppe spritus = this.createProduktGruppe("Spiritus");
+        ProduktGruppe fustager = this.createProduktGruppe("Fustage");
+        ProduktGruppe kulsyre = this.createProduktGruppe("Kulsyre");
+        ProduktGruppe malt = this.createProduktGruppe("Malt");
+        ProduktGruppe beklædning = this.createProduktGruppe("Beklædning");
+        ProduktGruppe anlæg = this.createProduktGruppe("Anlæg");
+        ProduktGruppe glasPG = this.createProduktGruppe("Glas");
+        ProduktGruppe sampakninger = this.createProduktGruppe("Sampakninger");
+        ProduktGruppe rundvisningPG = this.createProduktGruppe("Rundvisning");
         ProduktGruppe klippekort = this.createProduktGruppe("Klippekort");
+        ProduktGruppe snacksOgSodavand = this.createProduktGruppe("Snacks og Sodavand");
 
         //Flaske produkter
-        Produkt p1 = this.createSimpelProdukt(pg1,"Klosterbryg","",0,"", false);
-        Produkt p2 = this.createSimpelProdukt(pg1,"Sweet Georgia Brown","",0,"", false);
-        Produkt p3 = this.createSimpelProdukt(pg1,"Extra Pilsner","",0,"", false);
-        Produkt p4 = this.createSimpelProdukt(pg1,"Celebration","",0,"", false);
-        Produkt p5 = this.createSimpelProdukt(pg1,"Blondie","",0,"", false);
+        Produkt flaskeKlosterbryg = this.createSimpelProdukt(flasker,"Klosterbryg","",0,"", false);
+        Produkt flaskeSweetGeorgiaBrown = this.createSimpelProdukt(flasker,"Sweet Georgia Brown","",0,"", false);
+        Produkt flaskeExtraPilsner = this.createSimpelProdukt(flasker,"Extra Pilsner","",0,"", false);
+        Produkt flaskeCelebration = this.createSimpelProdukt(flasker,"Celebration","",0,"", false);
+        Produkt flaskeBlondie = this.createSimpelProdukt(flasker,"Blondie","",0,"", false);
+        Produkt flaskeForårsbryg = this.createSimpelProdukt(flasker,"Forårsbryg","",0,"", false);
+        Produkt flaskeIndiaPaleAle = this.createSimpelProdukt(flasker,"India Pale Ale","",0,"", false);
+        Produkt flaskeJulebryg = this.createSimpelProdukt(flasker,"Julebryg","",0,"", false);
+        Produkt flaskeJuletønden = this.createSimpelProdukt(flasker,"Juletønden","",0,"", false);
+        Produkt flaskeOldStrongAle = this.createSimpelProdukt(flasker,"Old Strong Ale","",0,"", false);
+        Produkt flaskeFregattenJylland = this.createSimpelProdukt(flasker,"Fregatten Jylland","",0,"", false);
+        Produkt flaskeImperialStout = this.createSimpelProdukt(flasker,"Imperial Stout","",0,"", false);
+        Produkt flaskeTribute = this.createSimpelProdukt(flasker,"Tribute","",0,"", false);
+        Produkt flaskeBlackMonster = this.createSimpelProdukt(flasker,"Black Monster","",0,"", false);
 
         //Fadøl produkter
-        this.createSimpelProdukt(pg2, "Klosterbryg", "", 40,"cl", false);
-        this.createSimpelProdukt(pg2, "Jazz Classic", "", 40, "cl", false);
-        this.createSimpelProdukt(pg2, "Extra Pilsner", "", 40, "cl", false);
-        this.createSimpelProdukt(pg2, "Celebration", "", 40, "cl", false);
-        this.createSimpelProdukt(pg2, "Blondie", "", 40, "cl", false);
+        Produkt fadølKlosterbryg = this.createSimpelProdukt(fadøl, "Klosterbryg", "", 40,"cl", false);
+        Produkt fadølJazzClassic = this.createSimpelProdukt(fadøl, "Jazz Classic", "", 40, "cl", false);
+        Produkt fadølExtraPilsner = this.createSimpelProdukt(fadøl, "Extra Pilsner", "", 40, "cl", false);
+        Produkt fadølCelebration = this.createSimpelProdukt(fadøl, "Celebration", "", 40, "cl", false);
+        Produkt fadølBlondie = this.createSimpelProdukt(fadøl, "Blondie", "", 40, "cl", false);
+        Produkt fadølForårsbryg = this.createSimpelProdukt(fadøl, "Forårsbryg", "", 40, "cl", false);
+        Produkt fadølIndiaPaleAle = this.createSimpelProdukt(fadøl, "India Pale Ale", "", 40, "cl", false);
+        Produkt fadølJulebryg = this.createSimpelProdukt(fadøl, "Julebryg", "", 40, "cl", false);
+        Produkt fadølImperialStout = this.createSimpelProdukt(fadøl, "Imperial Stout", "", 40, "cl", false);
+        Produkt fadølSpecial = this.createSimpelProdukt(fadøl, "Special", "", 40, "cl", false);
+
+
+        //Snacks og sodavand produkter
+        Produkt æblebrus = this.createSimpelProdukt(snacksOgSodavand, "Æblebrus", "", 0, "", false);
+        Produkt chips = this.createSimpelProdukt(snacksOgSodavand, "Chips", "", 0, "", false);
+        Produkt peanuts = this.createSimpelProdukt(snacksOgSodavand, "Peanuts", "", 0, "", false);
+        Produkt cola = this.createSimpelProdukt(snacksOgSodavand, "Cola", "", 0, "", false);
+        Produkt nikoline = this.createSimpelProdukt(snacksOgSodavand, "Nikoline", "", 0, "", false);
+        Produkt sevenUp = this.createSimpelProdukt(snacksOgSodavand, "7-Up", "", 0, "", false);
+        Produkt vand = this.createSimpelProdukt(snacksOgSodavand, "Vand", "", 0, "", false);
+        Produkt ølpølser = this.createSimpelProdukt(snacksOgSodavand, "Ølpølser", "", 0, "", false);
 
         //Spritus produkter
-        this.createSimpelProdukt(pg3, "Whisky", "45%", 50 ,"cl rør", false);
+        Produkt whisky45 = this.createSimpelProdukt(spritus, "Whisky 45%", "", 50 ,"cl rør", false);
+        Produkt whisky4cl = this.createSimpelProdukt(spritus, "Whisky", "45%", 4 ,"cl", false);
+        Produkt whisky43 = this.createSimpelProdukt(spritus, "Whisky 43%", "", 50 ,"cl rør", false);
+        Produkt uEgesplint = this.createSimpelProdukt(spritus, "u/ egesplit", "", 0, "", false);
+        Produkt mEgesplint = this.createSimpelProdukt(spritus, "m/ egesplit", "", 0, "", false);
+        Produkt whiskGlasPlusBrikker = this.createSimpelProdukt(spritus, "2*whisky glas + brikker", "", 0, "", false);
+        Produkt liquorOfAarhus = this.createSimpelProdukt(spritus, "Liquour of Aarhus", "", 0, "", false);
+        Produkt lyngGin50 = this.createSimpelProdukt(spritus, "Lyng gin 50 cl", "", 50, "cl", false);
+        Produkt lyngGin4 = this.createSimpelProdukt(spritus, "Lyng gin 4 cl", "", 4, "cl", false);
 
         //Fustage produkter
-        Produkt fustageKlosterbryg = this.createSimpelProdukt(pg4, "Klosterbryg", "",20, "liter", true);
-        Produkt fustageJazzClassic = this.createSimpelProdukt(pg4, "Jazz Classic", "", 25, "liter", true);
-        Produkt fustageEkstraPilsner = this.createSimpelProdukt(pg4, "Ekstra Pilsner", "", 25, "liter", true);
-        Produkt fustageCelebration = this.createSimpelProdukt(pg4, "Celebration", "", 20, "liter", true);
-        Produkt fustageBlondie = this.createSimpelProdukt(pg4, "Blondie", "", 25, "liter", true);
-        Produkt fustageFårsbryg = this.createSimpelProdukt(pg4, "Forårsbryg", "", 20, "liter", true);
-        Produkt fustageIndiaPaleAle = this.createSimpelProdukt(pg4, "India Pale Ale", "", 20, "liter", true);
-        Produkt fustageJuleBryg = this.createSimpelProdukt(pg4, "Julebryg", "", 20, "liter", true);
-        Produkt fustageImperialStout = this.createSimpelProdukt(pg4, "Imperial Stout", "", 20, "liter", true);
-        Produkt fustagePant = this.createSimpelProdukt(pg4, "Pant", "", 0,"", false);
+        Produkt fustageKlosterbryg = this.createSimpelProdukt(fustager, "Klosterbryg", "",20, "liter", true);
+        Produkt fustageJazzClassic = this.createSimpelProdukt(fustager, "Jazz Classic", "", 25, "liter", true);
+        Produkt fustageEkstraPilsner = this.createSimpelProdukt(fustager, "Ekstra Pilsner", "", 25, "liter", true);
+        Produkt fustageCelebration = this.createSimpelProdukt(fustager, "Celebration", "", 20, "liter", true);
+        Produkt fustageBlondie = this.createSimpelProdukt(fustager, "Blondie", "", 25, "liter", true);
+        Produkt fustageFårsbryg = this.createSimpelProdukt(fustager, "Forårsbryg", "", 20, "liter", true);
+        Produkt fustageIndiaPaleAle = this.createSimpelProdukt(fustager, "India Pale Ale", "", 20, "liter", true);
+        Produkt fustageJuleBryg = this.createSimpelProdukt(fustager, "Julebryg", "", 20, "liter", true);
+        Produkt fustageImperialStout = this.createSimpelProdukt(fustager, "Imperial Stout", "", 20, "liter", true);
+        Produkt fustagePant = this.createSimpelProdukt(fustager, "Pant", "", 0,"", false);
 
         //Kulsyre
-        Produkt kulsyre10kg = this.createSimpelProdukt(pg5, "Kulsyre Stor", "", 10,"kg", true);
-        Produkt kulsyre6kg = this.createSimpelProdukt(pg5, "Kulsyre Mellem", "", 6, "kg", true);
-        Produkt kulsyre4kg = this.createSimpelProdukt(pg5, "Kulsyre Lille", "", 4,"kg", true);
-        Produkt kulsyrePant = this.createSimpelProdukt(pg5, "Pant", "", 0,"", false);
+        Produkt kulsyre10kg = this.createSimpelProdukt(kulsyre, "Kulsyre Stor", "", 10,"kg", true);
+        Produkt kulsyre6kg = this.createSimpelProdukt(kulsyre, "Kulsyre Mellem", "", 6, "kg", true);
+        Produkt kulsyre4kg = this.createSimpelProdukt(kulsyre, "Kulsyre Lille", "", 4,"kg", true);
+        Produkt kulsyrePant = this.createSimpelProdukt(kulsyre, "Pant", "", 0,"", false);
 
 
         //Malt
-        this.createSimpelProdukt(pg6, "Maltsæk", "", 25, "kg", false);
+        Produkt maltsæk = this.createSimpelProdukt(malt, "Maltsæk", "", 25, "kg", false);
 
         //Beklædning
-        this.createSimpelProdukt(pg7, "t-shirt", "", 0,"", false);
+        Produkt tshirt = this.createSimpelProdukt(beklædning, "t-shirt", "", 0,"", false);
+        Produkt polo = this.createSimpelProdukt(beklædning, "polo", "", 0,"", false);
+        Produkt cap = this.createSimpelProdukt(beklædning, "cap", "", 0,"", false);
 
         //Anlæg
-        Produkt anlæg1hane = this.createSimpelProdukt(pg8, "1-hane", "", 0,"", false);
-        Produkt anlæg2hane = this.createSimpelProdukt(pg8, "2-haner", "", 0,"", false);
-        Produkt anlægBarflerehaner = this.createSimpelProdukt(pg8, "Bar med flere haner", "", 0,"", false);
-        Produkt anlægLevering = this.createSimpelProdukt(pg8, "Levering", "", 0,"", false);
-        Produkt anlægKrus = this.createSimpelProdukt(pg8, "Krus", "", 0,"", false);
+        Produkt anlæg1hane = this.createSimpelProdukt(anlæg, "1-hane", "", 0,"", false);
+        Produkt anlæg2hane = this.createSimpelProdukt(anlæg, "2-haner", "", 0,"", false);
+        Produkt anlægBarflerehaner = this.createSimpelProdukt(anlæg, "Bar med flere haner", "", 0,"", false);
+        Produkt anlægLevering = this.createSimpelProdukt(anlæg, "Levering", "", 0,"", false);
+        Produkt anlægKrus = this.createSimpelProdukt(anlæg, "Krus", "", 0,"", false);
 
         //Glas
-        this.createSimpelProdukt(pg9, "Glas", "uanset størrelse", 0,"", false);
+        Produkt glas = this.createSimpelProdukt(glasPG, "Glas", "uanset størrelse", 0,"", false);
 
         //Sampakninger
         //this.createSimpelProdukt(pg10, "Gaveæske", "2 øl, 2 glas", "");
@@ -453,19 +491,96 @@ public class Controller implements ControllerInterface {
         Produkt klippekort4Klip = this.createSimpelProdukt(klippekort, "Klippekort, 4 klip", "",4, "klip", false);
 
         //Priser for fredagsbar for flasker + klippekort
-        this.createPris(fredagsbar,p1, 70,2);
-        this.createPris(fredagsbar,p2, 70,2);
-        this.createPris(fredagsbar,p3, 70,2);
-        this.createPris(fredagsbar,p4, 70,2);
-        this.createPris(fredagsbar,p5, 70,2);
+        this.createPris(fredagsbar,flaskeKlosterbryg, 70,2);
+        this.createPris(fredagsbar,flaskeSweetGeorgiaBrown, 70,2);
+        this.createPris(fredagsbar,flaskeExtraPilsner, 70,2);
+        this.createPris(fredagsbar,flaskeCelebration, 70,2);
+        this.createPris(fredagsbar,flaskeBlondie, 70,2);
+        this.createPris(fredagsbar,flaskeForårsbryg, 70,2);
+        this.createPris(fredagsbar,flaskeIndiaPaleAle, 70,2);
+        this.createPris(fredagsbar,flaskeJulebryg, 70,2);
+        this.createPris(fredagsbar,flaskeJuletønden, 70,2);
+        this.createPris(fredagsbar,flaskeOldStrongAle, 70,2);
+        this.createPris(fredagsbar,flaskeFregattenJylland, 70,2);
+        this.createPris(fredagsbar,flaskeImperialStout, 70,2);
+        this.createPris(fredagsbar,flaskeTribute, 70,2);
+        this.createPris(fredagsbar,flaskeBlackMonster, 100,3);
         this.createPris(fredagsbar, klippekort4Klip, 130, 0);
 
+        //Priser for fredagsbar for fadøl
+        this.createPris(fredagsbar, fadølKlosterbryg, 38, 1);
+        this.createPris(fredagsbar,fadølJazzClassic,38 ,1);
+        this.createPris(fredagsbar,fadølExtraPilsner ,38 ,1 );
+        this.createPris(fredagsbar,fadølCelebration ,38 ,1 );
+        this.createPris(fredagsbar,fadølBlondie ,38 ,1 );
+        this.createPris(fredagsbar,fadølForårsbryg,38 ,1 );
+        this.createPris(fredagsbar,fadølIndiaPaleAle ,38 ,1 );
+        this.createPris(fredagsbar,fadølJulebryg ,38 ,1 );
+        this.createPris(fredagsbar,fadølImperialStout ,38 ,1 );
+        this.createPris(fredagsbar,fadølSpecial ,38 ,1 );
+
+        //Priser for fredagsbar for snack og sodavand
+        this.createPris(fredagsbar,æblebrus ,15 ,0 );
+        this.createPris(fredagsbar,chips ,10 ,0 );
+        this.createPris(fredagsbar,peanuts ,15 ,0 );
+        this.createPris(fredagsbar,cola ,15 ,0 );
+        this.createPris(fredagsbar,nikoline ,15 ,0 );
+        this.createPris(fredagsbar,sevenUp ,15 ,0 );
+        this.createPris(fredagsbar,vand ,15 ,0 );
+        this.createPris(fredagsbar,ølpølser ,30 ,1 );
+
+        //Priser for fredagsbar for spiritus
+        this.createPris(fredagsbar,whisky45 ,599 ,0 );
+        this.createPris(fredagsbar,whisky4cl ,50 ,0 );
+        this.createPris(fredagsbar,whisky43 ,499 ,0 );
+        this.createPris(fredagsbar,uEgesplint ,300 ,0 );
+        this.createPris(fredagsbar,mEgesplint ,300 ,0 );
+        this.createPris(fredagsbar,whiskGlasPlusBrikker ,80 ,0 );
+        this.createPris(fredagsbar,liquorOfAarhus ,175 ,0 );
+        this.createPris(fredagsbar,lyngGin50 ,350 ,0 );
+        this.createPris(fredagsbar,lyngGin4 ,40 ,0 );
+
+        //Priser for fredagsbar for beklædning
+        this.createPris(fredagsbar,tshirt ,70 ,0 );
+        this.createPris(fredagsbar,polo ,100 ,0 );
+        this.createPris(fredagsbar,cap ,30 ,0 );
+
         //Priser for butik for flasker
-        this.createPris(butik,p1, 36,0);
-        this.createPris(butik,p2, 36,0);
-        this.createPris(butik,p3, 36,0);
-        this.createPris(butik,p4, 36,0);
-        this.createPris(butik,p5, 36,0);
+        this.createPris(butik,flaskeKlosterbryg, 36,0);
+        this.createPris(butik,flaskeSweetGeorgiaBrown, 36,0);
+        this.createPris(butik,flaskeExtraPilsner, 36,0);
+        this.createPris(butik,flaskeCelebration, 36,0);
+        this.createPris(butik,flaskeBlondie, 36,0);
+        this.createPris(butik,flaskeForårsbryg, 36,0);
+        this.createPris(butik,flaskeIndiaPaleAle, 36,0);
+        this.createPris(butik,flaskeJulebryg, 36,0);
+        this.createPris(butik,flaskeJuletønden, 36,0);
+        this.createPris(butik,flaskeOldStrongAle, 36,0);
+        this.createPris(butik,flaskeFregattenJylland, 36,0);
+        this.createPris(butik,flaskeImperialStout, 36,0);
+        this.createPris(butik,flaskeTribute, 36,0);
+        this.createPris(butik,flaskeBlackMonster, 60,0);
+
+        //Priser for butik for spiritus
+        this.createPris(butik,whisky45, 599,0);
+        this.createPris(butik,whisky43, 499,0);
+        this.createPris(butik,uEgesplint, 300,0);
+        this.createPris(butik,mEgesplint, 350,0);
+        this.createPris(butik,whiskGlasPlusBrikker, 80,0);
+        this.createPris(butik,liquorOfAarhus, 175,0);
+        this.createPris(butik,lyngGin50, 350,0);
+
+        //Pris for butik for malt
+        this.createPris(butik,maltsæk, 300,0);
+
+        //Priser for butik for beklædning
+        this.createPris(butik,tshirt ,70 ,0 );
+        this.createPris(butik,polo ,100 ,0 );
+        this.createPris(butik,cap ,30 ,0 );
+
+        //Pris for butik for glas
+        this.createPris(butik,glas ,15 ,0 );
+
 
 
         //Initialisering af objekter anvendt i rundvisning
@@ -475,18 +590,14 @@ public class Controller implements ControllerInterface {
         Kunde k2 = this.createKunde("Jens", "61235789", "Jens@gmail.com");
         Kunde k3 = this.createKunde("Poul", "23466892", "Poul@gmail.com");
 
-        //Prislister
-        Prisliste rundvisning = this.createPrisliste("Rundvisning");
-        Prisliste udlejning = this.createPrisliste("Udlejning");
-
         //Rundvisnings produkter
-        Produkt rundvisningDag = this.createSimpelProdukt(pg11,
+        Produkt rundvisningDag = this.createSimpelProdukt(rundvisningPG,
                 "Rundvisning dag", "",0, "Pris pr person", false);
-        Produkt rundvisningAften = this.createSimpelProdukt(pg11,
+        Produkt rundvisningAften = this.createSimpelProdukt(rundvisningPG,
                 "Rundvisning aften", "",0, "Pris pr person", false);
-        Produkt rundvisningDagMedSmagning = this.createSimpelProdukt(pg11,
+        Produkt rundvisningDagMedSmagning = this.createSimpelProdukt(rundvisningPG,
                 "Rundvisning dag med smagning", "",0, "Pris pr person", false);
-        Produkt rundvisningAftenMedSmagning = this.createSimpelProdukt(pg11,
+        Produkt rundvisningAftenMedSmagning = this.createSimpelProdukt(rundvisningPG,
                 "Rundvisning aften med smagning", "",0, "Pris pr person", false);
 
         //Priser til rundvisningsprodukter
