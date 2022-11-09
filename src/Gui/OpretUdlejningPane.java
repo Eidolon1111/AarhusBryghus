@@ -222,10 +222,14 @@ public class OpretUdlejningPane extends GridPane {
 
     public void btnSalgslinjeRabat(){
         Salgslinje salgslinje = lwSalgslinjer.getSelectionModel().getSelectedItem();
-        RabatWindowSalgslinje dia = new RabatWindowSalgslinje(controller, "Rabat Salgslinje", salgslinje);
-        dia.showAndWait();
-        lwSalgslinjer.getItems().setAll(controller.getSalgslinjerPaaSalg(currentSalg));
-        txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(currentSalg));
+        if(salgslinje != null){
+            RabatWindowSalgslinje dia = new RabatWindowSalgslinje(controller, "Rabat Salgslinje", salgslinje);
+            dia.showAndWait();
+            lwSalgslinjer.getItems().setAll(controller.getSalgslinjerPaaSalg(currentSalg));
+            txfTotal.setText("" + controller.printSamletPrisDKKOgKlip(currentSalg));
+        } else {
+            lbError.setText("Vælg salgslinje først");
+        }
     }
 
     public void btnSalgRabat(){
