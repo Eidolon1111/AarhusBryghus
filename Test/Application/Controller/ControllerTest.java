@@ -258,32 +258,7 @@ class ControllerTest {
 
     @Test
     @Order(15)
-    void createModregning_TC3_salgslinjeNotFound_exception() {
-        //Arrange
-        Storage storage = mock(Storage.class);
-        Controller controller = new Controller(storage);
-        Kunde kunde = mock(Kunde.class);
-        Produkt klosterbryg = controller.createSimpelProdukt(mock(ProduktGruppe.class), "Klosterbryg 20 liter", "", 0, "", false);
-        Produkt jazz = controller.createSimpelProdukt(mock(ProduktGruppe.class), "Jazz Classic 20 liter", "", 0, "", false);
-
-        Prisliste temp = new Prisliste("temp");
-        Prisliste temp2 = new Prisliste("temp2");
-        Pris klosterbrygPris = temp.createPrisTilPrisliste(klosterbryg,775, 0);
-        Pris jazzPris = temp2.createPrisTilPrisliste(jazz,625, 0);
-
-        Udlejning udlejning = controller.createUdlejning(kunde);
-        Salgslinje salgslinje = controller.createSalgslinje(udlejning, 4, klosterbrygPris);
-
-        //Act & Assert
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            Salgslinje modregning = controller.createModregning(udlejning, new Salgslinje(2,jazzPris), 1);
-        });
-        assertEquals("Salgslinje findes ikke på udlejningen!", exception.getMessage());
-    }
-
-    @Test
-    @Order(16)
-    void createModregning_TC4_antalUnder0_exception() {
+    void createModregning_TC3_antalUnder0_exception() {
         //Arrange
         Storage storage = mock(Storage.class);
         Controller controller = new Controller(storage);
@@ -304,8 +279,8 @@ class ControllerTest {
     }
 
     @Test
-    @Order(17)
-    void createModregning_TC5_antalOverOriginal_exception() {
+    @Order(16)
+    void createModregning_TC4_antalOverOriginal_exception() {
         //Arrange
         Storage storage = mock(Storage.class);
         Controller controller = new Controller(storage);

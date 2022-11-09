@@ -8,96 +8,86 @@ import java.util.ArrayList;
 
 public interface ControllerInterface {
 
-    public ArrayList<Prisliste> getPrislister();
+    ArrayList<Prisliste> getPrislister();
 
-    public ArrayList<ProduktGruppe> getProduktGrupper();
+    ArrayList<ProduktGruppe> getProduktGrupper();
     
-    public ArrayList<Produkt> getProdukter();
+    ArrayList<Produkt> getProdukter();
 
-    public Prisliste createPrisliste(String navn);
+    Prisliste createPrisliste(String navn);
 
-    public Pris createPris(Prisliste prisliste, Produkt produkt, double pris, int klip);
+    Pris createPris(Prisliste prisliste, Produkt produkt, double pris, int klip);
 
-    public void fjernPris(Prisliste prisliste, Pris pris);
+    void fjernPris(Prisliste prisliste, Pris pris);
         
-    public ProduktGruppe createProduktGruppe(String navn);
+    ProduktGruppe createProduktGruppe(String navn);
 
-    public Produkt createSimpelProdukt(ProduktGruppe produktGruppe, String navn, String beskrivelse, int antalEnheder, String enhed, boolean pantPligtig);
+    Produkt createSimpelProdukt(ProduktGruppe produktGruppe, String navn, String beskrivelse, int antalEnheder, String enhed, boolean pantPligtig);
 
-    public Produkt createProduktSamling(ProduktGruppe produktGruppe, String navn, String beskrivelse);
+    Produkt createProduktSamling(ProduktGruppe produktGruppe, String navn, String beskrivelse);
 
-    public Salg createSimpelSalg();
+    Salg createSimpelSalg();
 
-    public ArrayList<Salgslinje> getSalgslinjerPaaSalg(Salg salg);
+    ArrayList<Salgslinje> getSalgslinjerPaaSalg(Salg salg);
 
-    public ArrayList<Salgslinje> getModregningerPaaUdlejning(Udlejning udlejning);
+    ArrayList<Salgslinje> getModregningerPaaUdlejning(Udlejning udlejning);
 
-    public String printSamletPrisDKKOgKlip(Salg salg);
+    String printSamletPrisDKKOgKlip(Salg salg);
 
-    public Salgslinje createSalgslinje(Salg salg, int antal, Pris pris);
+    Salgslinje createSalgslinje(Salg salg, int antal, Pris pris);
 
-    public ArrayList<Salg> getSalg();
+    ArrayList<Salg> getSalg();
 
-    public void fjernSalgslinje(Salg salg, Salgslinje salgslinje);
+    void fjernSalgslinje(Salg salg, Salgslinje salgslinje);
 
-    public ArrayList<ProduktGruppe> getProduktGrupperIPrisliste(Prisliste prisliste);
+    ArrayList<ProduktGruppe> getProduktGrupperIPrisliste(Prisliste prisliste);
 
-    public ArrayList<Produkt> getProdukterFraProduktgruppe(ProduktGruppe pg);
+    ArrayList<Produkt> getProdukterFraProduktgruppe(ProduktGruppe pg);
 
-    public String getProduktGruppeNavn(ProduktGruppe pg);
+    void betalSalg(Salg salg, Salg.Betalingsform betalingsform);
 
-    public void betalSalg(Salg salg, Salg.Betalingsform betalingsform);
+    ArrayList<Salg.Betalingsform> getMuligeBetalingsformer(Salg salg);
 
-    public ArrayList<Salg.Betalingsform> getMuligeBetalingsformer(Salg salg);
+    Pris findPrisPaaProdukt(Prisliste prisliste, Produkt produkt);
 
-    public Pris findPrisPaaProdukt(Prisliste prisliste, Produkt produkt);
+    Rundvisning createRundvisning(Kunde kunde, LocalDateTime afholdesesDato,Pris pris, int antal);
 
-    public boolean klippeKortBetalingMuligt(Salg salg);
+    Udlejning createUdlejning(Kunde kunde);
 
-    public Rundvisning createRundvisning(Kunde kunde, LocalDateTime afholdesesDato,Pris pris, int antal);
+    void setRabatSalg(Salg salg, double rabat);
 
-    public Udlejning createUdlejning(Kunde kunde);
+    void setRabatSalgslinje(Salgslinje salgslinje, double rabat);
 
-    public void setRabatSalg(Salg salg, double rabat);
+    void init();
 
-    public void setRabatSalgslinje(Salgslinje salgslinje, double rabat);
+    Kunde createKunde(String navn, String tlfNr, String email);
 
-    public void init();
+    ArrayList<Kunde> getKunder();
 
-    public Kunde createKunde(String navn, String tlfNr, String email);
+    Prisliste getPrisliste (String navn);
 
-    public ArrayList<Kunde> getKunder();
+    ArrayList<Salg> dagsRapport(LocalDate dato);
 
-    public void setAfholdelsesDag(Rundvisning rundvisning, LocalDateTime afholdelsesDag);
+    double beregnDagsomsætning(LocalDate dato);
 
-    public void setAfregningsDato(Udlejning udlejning, LocalDate afregningsDato);
+    int solgteKlipForPeriode(LocalDate fraDato, LocalDate tilDato);
 
-    public Prisliste getPrisliste (String navn);
+    ArrayList<Rundvisning> getRegistreredeRundvisninger();
 
-    public ArrayList<Salg> dagsRapport(LocalDate dato);
+    int brugteKlipForPeriode(LocalDate fraDato, LocalDate tilDato);
 
-    public double beregnDagsomsætning(LocalDate dato);
+    ArrayList<Udlejning> getUafsluttedeUdlejninger();
 
-    public int solgteKlipForPeriode(LocalDate fraDato, LocalDate tilDato);
+    Salgslinje createModregning(Udlejning udlejning, Salgslinje salgslinje, int antal);
 
-    public ArrayList<Rundvisning> getRegistreredeRundvisninger();
+    double beregnReturBeløbUdlejning(Udlejning udlejning);
 
-    public int brugteKlipForPeriode(LocalDate fraDato, LocalDate tilDato);
+    void udbetalModregning(Udlejning udlejning);
 
-    public ArrayList<Udlejning> getUafsluttedeUdlejninger();
+    ArrayList<Salgslinje> createTempSalgslinjer(Udlejning udlejning);
 
-    public Salgslinje createModregning(Udlejning udlejning, Salgslinje salgslinje, int antal);
+    Pris getPrisPaaSalgslinje(Salgslinje salgslinje);
 
-    public void setAntalPåSalgslinje(Salgslinje salgslinje, int antal);
-
-    public double beregnReturBeløbUdlejning(Udlejning udlejning);
-
-    public void udbetalModregning(Udlejning udlejning);
-
-    public ArrayList<Salgslinje> createTempSalgslinjer(Udlejning udlejning);
-
-    public Pris getPrisPaaSalgslinje(Salgslinje salgslinje);
-
-    public void sletSalg(Salg salg);
+    void sletSalg(Salg salg);
 
 }

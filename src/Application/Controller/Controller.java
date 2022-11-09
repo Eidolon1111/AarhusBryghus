@@ -163,10 +163,6 @@ public class Controller implements ControllerInterface {
         return pg.getProdukts();
     }
 
-    public String getProduktGruppeNavn(ProduktGruppe pg) {
-        return pg.getNavn();
-    }
-
     public void betalSalg(Salg salg, Salg.Betalingsform betalingsform) {
         salg.setBetalingsform(betalingsform);
         if(salg instanceof Udlejning){
@@ -185,10 +181,6 @@ public class Controller implements ControllerInterface {
             }
         }
         return result;
-    }
-
-    public boolean klippeKortBetalingMuligt(Salg salg) {
-        return salg.klippeKortBetalingMuligt();
     }
 
     public ArrayList<Salg.Betalingsform> getMuligeBetalingsformer(Salg salg){
@@ -237,14 +229,6 @@ public class Controller implements ControllerInterface {
 
     public void setRabatSalgslinje(Salgslinje salgslinje, double rabat) {
         salgslinje.setRabat(rabat);
-    }
-
-    public void setAfholdelsesDag(Rundvisning rundvisning, LocalDateTime afholdelsesDag){
-        rundvisning.setAfholdelsesDag(afholdelsesDag);
-    }
-
-    public void setAfregningsDato(Udlejning udlejning, LocalDate afregningdato){
-        udlejning.setAfregningsDato(afregningdato);
     }
 
     public ArrayList<Salg> dagsRapport(LocalDate dato) {
@@ -316,18 +300,12 @@ public class Controller implements ControllerInterface {
 
     public Salgslinje createModregning(Udlejning udlejning, Salgslinje salgslinje, int antal) {
         if (udlejning != null){
-            if(udlejning.getSalgslinjer().contains(salgslinje)){
-                if (antal > 0){
-                    if (antal <= salgslinje.getAntal()) {
-                        return udlejning.createModregning(salgslinje, antal);
-                    } else { throw new IllegalArgumentException("Antal må ikke overstige det originale antal på salgslinjen!"); }
-                } else throw new IllegalArgumentException("Antal skal være størrere end 0!");
-            } else throw new IllegalArgumentException("Salgslinje findes ikke på udlejningen!");
+            if (antal > 0){
+                if (antal <= salgslinje.getAntal()) {
+                    return udlejning.createModregning(salgslinje, antal);
+                } else { throw new IllegalArgumentException("Antal må ikke overstige det originale antal på salgslinjen!"); }
+            } else throw new IllegalArgumentException("Antal skal være størrere end 0!");
         } else throw new IllegalArgumentException("Udlejning må ikke være null!");
-    }
-
-    public void setAntalPåSalgslinje(Salgslinje salgslinje, int antal) {
-        salgslinje.setAntal(antal);
     }
 
     public double beregnReturBeløbUdlejning(Udlejning udlejning) {
