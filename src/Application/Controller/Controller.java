@@ -485,7 +485,60 @@ public class Controller implements ControllerInterface {
         Produkt glas = this.createSimpelProdukt(glasPG, "Glas", "uanset størrelse", 0,"", false);
 
         //Sampakninger
-        //this.createSimpelProdukt(pg10, "Gaveæske", "2 øl, 2 glas", "");
+        ProduktSamling gaveæske2øl2glas = this.createProduktSamling(sampakninger, "Gaveæske 2 øl, 2 glas", "");
+        gaveæske2øl2glas.addProdukt(flaskeBlondie);
+        gaveæske2øl2glas.addProdukt(flaskeCelebration);
+        gaveæske2øl2glas.addProdukt(glas); gaveæske2øl2glas.addProdukt(glas);
+
+        ProduktSamling gaveæske4øl = this.createProduktSamling(sampakninger, "Gaveæske 4 øl", "");
+        gaveæske4øl.addProdukt(flaskeBlondie);
+        gaveæske4øl.addProdukt(flaskeCelebration);
+        gaveæske4øl.addProdukt(flaskeExtraPilsner);
+        gaveæske4øl.addProdukt(flaskeJulebryg);
+
+        ProduktSamling trækasse6øl = this.createProduktSamling(sampakninger, "Trækasse 6 øl", "");
+        trækasse6øl.addProdukt(flaskeBlondie);
+        trækasse6øl.addProdukt(flaskeCelebration);
+        trækasse6øl.addProdukt(flaskeExtraPilsner);
+        trækasse6øl.addProdukt(flaskeIndiaPaleAle);
+        trækasse6øl.addProdukt(flaskeJulebryg);
+        trækasse6øl.addProdukt(flaskeKlosterbryg);
+
+        ProduktSamling gavekurv6øl2glas = this.createProduktSamling(sampakninger, "Gavekurv 6 øl, 2 glas", "");
+        gavekurv6øl2glas.addProdukt(glas); gavekurv6øl2glas.addProdukt(glas);
+        gavekurv6øl2glas.addProdukt(flaskeBlondie);
+        gavekurv6øl2glas.addProdukt(flaskeCelebration);
+        gavekurv6øl2glas.addProdukt(flaskeExtraPilsner);
+        gavekurv6øl2glas.addProdukt(flaskeIndiaPaleAle);
+        gavekurv6øl2glas.addProdukt(flaskeJulebryg);
+        gavekurv6øl2glas.addProdukt(flaskeKlosterbryg);
+
+        ProduktSamling trækasse6øl6glas = this.createProduktSamling(sampakninger, "Trækasse 6 øl, 6 glas", "");
+        trækasse6øl6glas.addProdukt(glas); trækasse6øl6glas.addProdukt(glas);trækasse6øl6glas.addProdukt(glas);
+        trækasse6øl6glas.addProdukt(glas);trækasse6øl6glas.addProdukt(glas); trækasse6øl6glas.addProdukt(glas);
+        trækasse6øl6glas.addProdukt(glas); trækasse6øl6glas.addProdukt(glas);
+        trækasse6øl6glas.addProdukt(flaskeBlondie);
+        trækasse6øl6glas.addProdukt(flaskeCelebration);
+        trækasse6øl6glas.addProdukt(flaskeExtraPilsner);
+        trækasse6øl6glas.addProdukt(flaskeIndiaPaleAle);
+        trækasse6øl6glas.addProdukt(flaskeJulebryg);
+        trækasse6øl6glas.addProdukt(flaskeKlosterbryg);
+
+        ProduktSamling trækasse12øl = this.createProduktSamling(sampakninger, "Trækasse 12 øl", "");
+        trækasse12øl.addProdukt(flaskeBlondie); trækasse12øl.addProdukt(flaskeCelebration);
+        trækasse12øl.addProdukt(flaskeExtraPilsner); trækasse12øl.addProdukt(flaskeIndiaPaleAle);
+        trækasse12øl.addProdukt(flaskeJulebryg); trækasse12øl.addProdukt(flaskeKlosterbryg);
+        trækasse12øl.addProdukt(flaskeBlondie); trækasse12øl.addProdukt(flaskeCelebration);
+        trækasse12øl.addProdukt(flaskeExtraPilsner); trækasse12øl.addProdukt(flaskeIndiaPaleAle);
+        trækasse12øl.addProdukt(flaskeJulebryg); trækasse12øl.addProdukt(flaskeKlosterbryg);
+
+        ProduktSamling papkasse12øl = this.createProduktSamling(sampakninger, "Trækasse 12 øl", "");
+        papkasse12øl.addProdukt(flaskeBlondie); papkasse12øl.addProdukt(flaskeCelebration);
+        papkasse12øl.addProdukt(flaskeExtraPilsner); papkasse12øl.addProdukt(flaskeIndiaPaleAle);
+        papkasse12øl.addProdukt(flaskeJulebryg); papkasse12øl.addProdukt(flaskeKlosterbryg);
+        papkasse12øl.addProdukt(flaskeBlondie); papkasse12øl.addProdukt(flaskeCelebration);
+        papkasse12øl.addProdukt(flaskeExtraPilsner); papkasse12øl.addProdukt(flaskeIndiaPaleAle);
+        papkasse12øl.addProdukt(flaskeJulebryg); papkasse12øl.addProdukt(flaskeKlosterbryg);
 
         //Klippekort
         Produkt klippekort4Klip = this.createSimpelProdukt(klippekort, "Klippekort, 4 klip", "",4, "klip", false);
@@ -545,6 +598,15 @@ public class Controller implements ControllerInterface {
         this.createPris(fredagsbar,polo ,100 ,0 );
         this.createPris(fredagsbar,cap ,30 ,0 );
 
+        //Priser for fredagsbar for sampakninger
+        this.createPris(fredagsbar, gaveæske2øl2glas, 110, 0);
+        this.createPris(fredagsbar, gaveæske4øl, 140, 0);
+        this.createPris(fredagsbar, trækasse6øl, 260, 0);
+        this.createPris(fredagsbar, gavekurv6øl2glas, 260, 0);
+        this.createPris(fredagsbar, trækasse6øl6glas, 350, 0);
+        this.createPris(fredagsbar, trækasse12øl, 410, 0);
+        this.createPris(fredagsbar, papkasse12øl, 370, 0);
+
         //Priser for butik for flasker
         this.createPris(butik,flaskeKlosterbryg, 36,0);
         this.createPris(butik,flaskeSweetGeorgiaBrown, 36,0);
@@ -581,7 +643,14 @@ public class Controller implements ControllerInterface {
         //Pris for butik for glas
         this.createPris(butik,glas ,15 ,0 );
 
-
+        //Priser for butik for sampakninger
+        this.createPris(butik, gaveæske2øl2glas, 110, 0);
+        this.createPris(butik, gaveæske4øl, 140, 0);
+        this.createPris(butik, trækasse6øl, 260, 0);
+        this.createPris(butik, gavekurv6øl2glas, 260, 0);
+        this.createPris(butik, trækasse6øl6glas, 350, 0);
+        this.createPris(butik, trækasse12øl, 410, 0);
+        this.createPris(butik, papkasse12øl, 370, 0);
 
         //Initialisering af objekter anvendt i rundvisning
 
