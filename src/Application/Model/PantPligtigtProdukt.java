@@ -1,7 +1,5 @@
 package Application.Model;
 
-import java.util.Locale;
-
 public class PantPligtigtProdukt implements Observer{
 
     @Override
