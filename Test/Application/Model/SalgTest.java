@@ -23,7 +23,7 @@ class SalgTest {
     }
 
     @Test
-    void createSalgslinjeTC1() {
+    void createSalgslinjeAntal1() {
         //Arrange:
         Salg salg = new Salg();
         Pris mockedPris = mock(Pris.class);
@@ -58,7 +58,7 @@ class SalgTest {
 
 
     @Test
-    void createSalgslinjeTC2() {
+    void createSalgslinjeAntal0() {
         //Arrange:
         Salg salg = new Salg();
         Pris mockedPris = mock(Pris.class);
@@ -71,7 +71,7 @@ class SalgTest {
     }
 
     @Test
-    void createSalgslinjeTC3() {
+    void createSalgslinjeAntalMindreEnd0() {
         //Arrange:
         Salg salg = new Salg();
         Pris mockedPris = mock(Pris.class);
@@ -84,17 +84,17 @@ class SalgTest {
     }
 
     @Test
-    void createSalgslinjeTC4() {
+    void createSalgslinjePrisenErNull() {
         //Arrange:
         Salg salg = new Salg();
 
         //Act & Assert:
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> salg.createSalgslinje(null, -1));
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> salg.createSalgslinje(null, 1));
         assertEquals("Prisen må ikke være null", exception.getMessage());
     }
 
     @Test
-    void fjernSalgsLinjeTC1() {
+    void fjernSalgsLinjeSalgslinje1Bliverfjernet() {
         //Arrange:
         Salg salg = new Salg();
         Pris mockedPris1 = mock(Pris.class);
@@ -118,7 +118,7 @@ class SalgTest {
     }
 
     @Test
-    void fjernSalgsLinjeTC2() {
+    void fjernSalgsLinjeIngenSalgslinjerFjernet() {
         //Arrange:
         Salg salg = new Salg();
         Pris mockedPris1 = mock(Pris.class);
@@ -144,7 +144,7 @@ class SalgTest {
     }
 
     @Test
-    void beregnSamletPrisDKKTC1() {
+    void beregnSamletPrisDKKUdenSalgslinjerRabat0() {
         //Arrange:
         Salg salg = new Salg();
         Salgslinje mockedSalgslinje1 = mock(Salgslinje.class);
@@ -166,7 +166,7 @@ class SalgTest {
     }
 
     @Test
-    void beregnSamletPrisDKKTC2() {
+    void beregnSamletPrisDKKMedSalgslinjerRabat0() {
         //Arrange:
         Salg salg = new Salg();
         Salgslinje mockedSalgslinje1 = mock(Salgslinje.class);
@@ -192,7 +192,7 @@ class SalgTest {
     }
 
     @Test
-    void beregnSamletPrisDKKTC3() {
+    void beregnSamletPrisDKKMedSalgslinjerRabat20Procent() {
         //Arrange:
         Salg salg = new Salg();
         Salgslinje mockedSalgslinje1 = mock(Salgslinje.class);
@@ -218,7 +218,7 @@ class SalgTest {
     }
 
     @Test
-    void beregnSamletPrisDKKTC4() {
+    void beregnSamletPrisDKKMedSalgslinjerRabat40DKK() {
         //Arrange:
         Salg salg = new Salg();
         Salgslinje mockedSalgslinje1 = mock(Salgslinje.class);
@@ -244,65 +244,37 @@ class SalgTest {
     }
 
     @Test
-    void beregnSamletPrisKlipTC1() {
+    void beregnSamletPrisKlipUdenSalgslinjer() {
         //Arrange:
-        Salg salg1 = new Salg();
-        Salg salg2 = new Salg();
-        Salg salg3 = new Salg();
-
-        Salgslinje mockedSalgslinje1 = mock(Salgslinje.class);
-        when(mockedSalgslinje1.beregnPrisKlip()).thenReturn(1);
-        Salgslinje mockedSalgslinje2 = mock(Salgslinje.class);
-        when(mockedSalgslinje2.beregnPrisKlip()).thenReturn(1);
-        Salgslinje mockedSalgslinje3 = mock(Salgslinje.class);
-        when(mockedSalgslinje3.beregnPrisKlip()).thenReturn(2);
-        Salgslinje mockedSalgslinje4 = mock(Salgslinje.class);
-        when(mockedSalgslinje4.beregnPrisKlip()).thenReturn(0);
-        salg2.addSalgslinje(mockedSalgslinje1);
-        salg2.addSalgslinje(mockedSalgslinje2);
-        salg2.addSalgslinje(mockedSalgslinje3);
-        salg3.addSalgslinje(mockedSalgslinje4);
+        Salg salg = new Salg();
 
         //Act:
-        double result = salg1.beregnSamletPrisKlip();
+        double result = salg.beregnSamletPrisKlip();
 
         //Assert:
         assertEquals(0, result);
     }
 
     @Test
-    void beregnSamletPrisKlipTC2() {
+    void beregnSamletPrisKlipMedSalgslinjeMedKlippris0() {
         //Arrange:
-        Salg salg1 = new Salg();
-        Salg salg2 = new Salg();
-        Salg salg3 = new Salg();
+        Salg salg = new Salg();
 
-        Salgslinje mockedSalgslinje1 = mock(Salgslinje.class);
-        when(mockedSalgslinje1.beregnPrisKlip()).thenReturn(1);
-        Salgslinje mockedSalgslinje2 = mock(Salgslinje.class);
-        when(mockedSalgslinje2.beregnPrisKlip()).thenReturn(1);
-        Salgslinje mockedSalgslinje3 = mock(Salgslinje.class);
-        when(mockedSalgslinje3.beregnPrisKlip()).thenReturn(2);
         Salgslinje mockedSalgslinje4 = mock(Salgslinje.class);
         when(mockedSalgslinje4.beregnPrisKlip()).thenReturn(0);
-        salg3.addSalgslinje(mockedSalgslinje1);
-        salg3.addSalgslinje(mockedSalgslinje2);
-        salg3.addSalgslinje(mockedSalgslinje3);
-        salg2.addSalgslinje(mockedSalgslinje4);
+        salg.addSalgslinje(mockedSalgslinje4);
 
         //Act:
-        double result = salg2.beregnSamletPrisKlip();
+        double result = salg.beregnSamletPrisKlip();
 
         //Assert:
         assertEquals(0, result);
     }
 
     @Test
-    void beregnSamletPrisKlipTC3() {
+    void beregnSamletPrisKlipMedSalgslinjerMedKlipprisOverNul() {
         //Arrange:
-        Salg salg1 = new Salg();
-        Salg salg2 = new Salg();
-        Salg salg3 = new Salg();
+        Salg salg = new Salg();
 
         Salgslinje mockedSalgslinje1 = mock(Salgslinje.class);
         when(mockedSalgslinje1.beregnPrisKlip()).thenReturn(1);
@@ -310,26 +282,22 @@ class SalgTest {
         when(mockedSalgslinje2.beregnPrisKlip()).thenReturn(1);
         Salgslinje mockedSalgslinje3 = mock(Salgslinje.class);
         when(mockedSalgslinje3.beregnPrisKlip()).thenReturn(2);
-        Salgslinje mockedSalgslinje4 = mock(Salgslinje.class);
-        when(mockedSalgslinje4.beregnPrisKlip()).thenReturn(0);
-        salg3.addSalgslinje(mockedSalgslinje1);
-        salg3.addSalgslinje(mockedSalgslinje2);
-        salg3.addSalgslinje(mockedSalgslinje3);
-        salg2.addSalgslinje(mockedSalgslinje4);
+        salg.addSalgslinje(mockedSalgslinje1);
+        salg.addSalgslinje(mockedSalgslinje2);
+        salg.addSalgslinje(mockedSalgslinje3);
+
 
         //Act:
-        double result = salg3.beregnSamletPrisKlip();
+        double result = salg.beregnSamletPrisKlip();
 
         //Assert:
         assertEquals(4, result);
     }
 
     @Test
-    void beregnSamletPrisKlipTC4() {
+    void beregnSamletPrisKlipMedSalgslinjerMedKlipprisOver0OgKlipprisUnder0() {
         //Arrange:
-        Salg salg1 = new Salg();
-        Salg salg2 = new Salg();
-        Salg salg3 = new Salg();
+        Salg salg = new Salg();
 
         Salgslinje mockedSalgslinje1 = mock(Salgslinje.class);
         when(mockedSalgslinje1.beregnPrisKlip()).thenReturn(1);
@@ -339,13 +307,13 @@ class SalgTest {
         when(mockedSalgslinje3.beregnPrisKlip()).thenReturn(2);
         Salgslinje mockedSalgslinje4 = mock(Salgslinje.class);
         when(mockedSalgslinje4.beregnPrisKlip()).thenReturn(0);
-        salg3.addSalgslinje(mockedSalgslinje1);
-        salg3.addSalgslinje(mockedSalgslinje2);
-        salg3.addSalgslinje(mockedSalgslinje3);
-        salg3.addSalgslinje(mockedSalgslinje4);
+        salg.addSalgslinje(mockedSalgslinje1);
+        salg.addSalgslinje(mockedSalgslinje2);
+        salg.addSalgslinje(mockedSalgslinje3);
+        salg.addSalgslinje(mockedSalgslinje4);
 
         //Act:
-        double result = salg3.beregnSamletPrisKlip();
+        double result = salg.beregnSamletPrisKlip();
 
         //Assert:
         assertEquals(4, result);
