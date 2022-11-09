@@ -97,6 +97,31 @@ class SalgTest {
     }
 
     @Test
+    void addSalgslinje_TC1_addTilListeUdenSalgslinjeMock() {
+        //Arrange
+        Salg salg = new Salg();
+        Salgslinje salgslinjeMock = mock(Salgslinje.class);
+
+        //Act
+        salg.addSalgslinje(salgslinjeMock);
+
+        //Assert
+        assertTrue(salg.getSalgslinjer().contains(salgslinjeMock));
+    }
+
+    @Test
+    void addSalgslinje_TC2_addTilListeMedSalgslinjeMock_ThrowsException() {
+        //Arrange
+        Salg salg = new Salg();
+        Salgslinje salgslinjeMock = mock(Salgslinje.class);
+        salg.addSalgslinje(salgslinjeMock);
+
+        //Act and assert
+        Exception exception = assertThrows(RuntimeException.class, () -> salg.addSalgslinje(salgslinjeMock));
+        assertEquals("Salgslinjer er allerede registreret på salget!", exception.getMessage());
+    }
+
+    @Test
     void fjernSalgsLinjeSalgslinje1Bliverfjernet_TC1() {
         //Arrange:
         Salg salg = new Salg();
