@@ -131,6 +131,10 @@ public class Salg implements Observerbar{
         }
     }
 
+    public ArrayList<Observer> getObservers() {
+        return new ArrayList<>(observers);
+    }
+
     @Override
     public String toString() {
         return beregnSamletPrisDKK() + " DKK, " + betalingsform;
