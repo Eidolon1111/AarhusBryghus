@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Salg implements Observerbar{
     private LocalDate registreringsDato;
-    private ArrayList<Salgslinje> salgslinjer = new ArrayList<Salgslinje>();
+    private ArrayList<Salgslinje> salgslinjer = new ArrayList<>();
     private ArrayList<Observer> observers = new ArrayList<>();
     private Betalingsform betalingsform;
     private Status status;
@@ -133,7 +133,8 @@ public class Salg implements Observerbar{
         observers.remove(observer);
     }
 
-    void notifyObservers(){
+
+    private void notifyObservers(){
         for (Observer observer : observers) {
             observer.update(this);
         }

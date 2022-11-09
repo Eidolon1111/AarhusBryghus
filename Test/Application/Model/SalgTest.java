@@ -41,23 +41,22 @@ class SalgTest {
 
     }
 
-    //TODO
-//    @Test
-//    void createSalgslinjeNotifyObsevers() {
-//        //Arrange:
-//        Salg mockedSalg = mock(Salg.class);
-//        Pris mockedPris = mock(Pris.class);
-//        when(mockedPris.getPrisDKK()).thenReturn(10.00);
-//        when(mockedPris.getKlip()).thenReturn(2);
-//        PantPligtigtProdukt mockpantPligtigtProdukt = mock(PantPligtigtProdukt.class);
-//        mockedSalg.addObserver(mockpantPligtigtProdukt);
-//
-//        //Act:
-//        mockedSalg.createSalgslinje(mockedPris, 1);
-//
-//        //Assert:
-//        verify(mockedSalg).notifyObservers();
-//    }
+    @Test
+    void createSalgslinjeNotifyObsevers() {
+        //Arrange:
+        Salg salg = new Salg();
+        Pris mockedPris = mock(Pris.class);
+        when(mockedPris.getPrisDKK()).thenReturn(10.00);
+        when(mockedPris.getKlip()).thenReturn(2);
+        PantPligtigtProdukt mockpantPligtigtProdukt = mock(PantPligtigtProdukt.class);
+        salg.addObserver(mockpantPligtigtProdukt);
+
+        //Act:
+        salg.createSalgslinje(mockedPris, 1);
+
+        //Assert:
+        verify(mockpantPligtigtProdukt).update(salg);
+    }
 
 
     @Test
@@ -552,8 +551,4 @@ class SalgTest {
         assertEquals(listSize, salg.getObservers().size());
     }
 
-    @Test
-    void notifyObservers(){
-
-    }
 }

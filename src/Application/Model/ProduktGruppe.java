@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class ProduktGruppe {
     private String navn;
     private ArrayList<Produkt> produkts;
+    private Produkt pantProdukt;
 
     public ProduktGruppe(String navn){
         this.navn = navn;
@@ -29,6 +30,14 @@ public class ProduktGruppe {
     
     public ArrayList<Produkt> getProdukts() {
         return new ArrayList<>(produkts);
+    }
+
+    public void setPantProdukt(Produkt pantProdukt){
+        this.pantProdukt = pantProdukt;
+    }
+
+    public Produkt getPantProdukt(){
+        return pantProdukt;
     }
 
     @Override
