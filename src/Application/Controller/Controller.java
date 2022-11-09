@@ -458,13 +458,14 @@ public class Controller implements ControllerInterface {
         Produkt fustageJuleBryg = this.createSimpelProdukt(fustager, "Julebryg", "", 20, "liter", true);
         Produkt fustageImperialStout = this.createSimpelProdukt(fustager, "Imperial Stout", "", 20, "liter", true);
         Produkt fustagePant = this.createSimpelProdukt(fustager, "Pant", "", 0,"", false);
+        fustager.setPantProdukt(fustagePant);
 
         //Kulsyre
         Produkt kulsyre10kg = this.createSimpelProdukt(kulsyre, "Kulsyre Stor", "", 10,"kg", true);
         Produkt kulsyre6kg = this.createSimpelProdukt(kulsyre, "Kulsyre Mellem", "", 6, "kg", true);
         Produkt kulsyre4kg = this.createSimpelProdukt(kulsyre, "Kulsyre Lille", "", 4,"kg", true);
         Produkt kulsyrePant = this.createSimpelProdukt(kulsyre, "Pant", "", 0,"", false);
-
+        kulsyre.setPantProdukt(kulsyrePant);
 
         //Malt
         Produkt maltsæk = this.createSimpelProdukt(malt, "Maltsæk", "", 25, "kg", false);
