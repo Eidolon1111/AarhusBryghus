@@ -1,5 +1,6 @@
 package Gui;
 
+import Application.Model.Produkt;
 import Application.Model.ProduktGruppe;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
@@ -107,6 +108,7 @@ public class OpretProduktPane extends GridPane {
     public void createProduktgruppeAction() {
         if (!txfOpretProduktgruppe.getText().equals("") && !dublet()){
             controller.createProduktGruppe(txfOpretProduktgruppe.getText());
+            lwProduktgrupper.getItems().setAll(controller.getProduktGrupper());
             txfOpretProduktgruppe.clear();
             this.updateControls();
             if(produktGruppeError1 != null) {
@@ -137,12 +139,20 @@ public class OpretProduktPane extends GridPane {
         if (!txfNavn.getText().equals("")){
             if (txfAntalEnheder.getText().isEmpty()) {
                 if(checkBoxPantPligtig.isSelected()){
+                    if(controller.getPantIProduktgruppe(produktGruppe) == null){
+                        Produkt pant = controller.createSimpelProdukt(produktGruppe, "Pant", "", 1, "", false);
+                        controller.setPantProduktPaaProduktGruppe(produktGruppe, pant);
+                    }
                     controller.createSimpelProdukt(produktGruppe, txfNavn.getText(), txfBeskrivelse.getText(), 0, "", true);
                 } else {
                     controller.createSimpelProdukt(produktGruppe, txfNavn.getText(), txfBeskrivelse.getText(), 0, "", false);
                 }
             } else {
                 if(checkBoxPantPligtig.isSelected()){
+                    if(controller.getPantIProduktgruppe(produktGruppe) == null){
+                        Produkt pant = controller.createSimpelProdukt(produktGruppe, "Pant", "", 1, "", false);
+                        controller.setPantProduktPaaProduktGruppe(produktGruppe, pant);
+                    }
                     controller.createSimpelProdukt(produktGruppe, txfNavn.getText(), txfBeskrivelse.getText(),
                             Integer.parseInt(txfAntalEnheder.getText()), txfBeskrivelse.getText(), true);
                 } else {

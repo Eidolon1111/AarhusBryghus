@@ -331,6 +331,14 @@ public class Controller implements ControllerInterface {
         }
     }
 
+    public Produkt getPantIProduktgruppe(ProduktGruppe produktGruppe) {
+        return produktGruppe.getPantProdukt();
+    }
+
+    public void setPantProduktPaaProduktGruppe(ProduktGruppe produktGruppe, Produkt produkt) {
+        produktGruppe.setPantProdukt(produkt);
+    }
+
     public Prisliste getPrisliste(String navn) {
         Prisliste res = null;
         for (Prisliste pl : getPrislister()) {
@@ -354,6 +362,8 @@ public class Controller implements ControllerInterface {
     public Pris getPrisPaaSalgslinje(Salgslinje salgslinje) {
         return salgslinje.getPris();
     }
+
+
 
     public void init(){
         Prisliste fredagsbar = this.createPrisliste("Fredagsbar");

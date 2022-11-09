@@ -90,4 +90,8 @@ public interface ControllerInterface {
 
     void sletSalg(Salg salg);
 
+    Produkt getPantIProduktgruppe(ProduktGruppe produktGruppe);
+
+    void setPantProduktPaaProduktGruppe(ProduktGruppe produktGruppe, Produkt produkt);
+
 }
