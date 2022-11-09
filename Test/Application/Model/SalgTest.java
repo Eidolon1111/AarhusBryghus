@@ -15,7 +15,7 @@ import static org.mockito.Mockito.*;
 class SalgTest {
 
     @Test
-    void salgConstructorTest(){
+    void salgConstructorTest_TC1(){
         //Arrange:
 
         //Act:
@@ -26,7 +26,7 @@ class SalgTest {
     }
 
     @Test
-    void createSalgslinjeAntal1() {
+    void createSalgslinjeAntal1_TC1() {
         //Arrange:
         Salg salg = new Salg();
         Pris mockedPris = mock(Pris.class);
@@ -61,7 +61,7 @@ class SalgTest {
 
 
     @Test
-    void createSalgslinjeAntal0() {
+    void createSalgslinjeAntal0_TC2() {
         //Arrange:
         Salg salg = new Salg();
         Pris mockedPris = mock(Pris.class);
@@ -74,7 +74,7 @@ class SalgTest {
     }
 
     @Test
-    void createSalgslinjeAntalMindreEnd0() {
+    void createSalgslinjeAntalMindreEnd0_TC3() {
         //Arrange:
         Salg salg = new Salg();
         Pris mockedPris = mock(Pris.class);
@@ -87,7 +87,7 @@ class SalgTest {
     }
 
     @Test
-    void createSalgslinjePrisenErNull() {
+    void createSalgslinjePrisenErNull_TC4() {
         //Arrange:
         Salg salg = new Salg();
 
@@ -97,7 +97,7 @@ class SalgTest {
     }
 
     @Test
-    void fjernSalgsLinjeSalgslinje1Bliverfjernet() {
+    void fjernSalgsLinjeSalgslinje1Bliverfjernet_TC1() {
         //Arrange:
         Salg salg = new Salg();
         Pris mockedPris1 = mock(Pris.class);
@@ -121,7 +121,7 @@ class SalgTest {
     }
 
     @Test
-    void fjernSalgsLinjeIngenSalgslinjerFjernet() {
+    void fjernSalgsLinjeIngenSalgslinjerFjernet_TC2() {
         //Arrange:
         Salg salg = new Salg();
         Pris mockedPris1 = mock(Pris.class);
@@ -147,7 +147,7 @@ class SalgTest {
     }
 
     @Test
-    void beregnSamletPrisDKKUdenSalgslinjerRabat0() {
+    void beregnSamletPrisDKKUdenSalgslinjerRabat0_TC1() {
         //Arrange:
         Salg salg = new Salg();
         Salgslinje mockedSalgslinje1 = mock(Salgslinje.class);
@@ -169,7 +169,7 @@ class SalgTest {
     }
 
     @Test
-    void beregnSamletPrisDKKMedSalgslinjerRabat0() {
+    void beregnSamletPrisDKKMedSalgslinjerRabat0_TC2() {
         //Arrange:
         Salg salg = new Salg();
         Salgslinje mockedSalgslinje1 = mock(Salgslinje.class);
@@ -195,7 +195,7 @@ class SalgTest {
     }
 
     @Test
-    void beregnSamletPrisDKKMedSalgslinjerRabat20Procent() {
+    void beregnSamletPrisDKKMedSalgslinjerRabat20Procent_TC3() {
         //Arrange:
         Salg salg = new Salg();
         Salgslinje mockedSalgslinje1 = mock(Salgslinje.class);
@@ -221,7 +221,7 @@ class SalgTest {
     }
 
     @Test
-    void beregnSamletPrisDKKMedSalgslinjerRabat40DKK() {
+    void beregnSamletPrisDKKMedSalgslinjerRabat40DKK_TC4() {
         //Arrange:
         Salg salg = new Salg();
         Salgslinje mockedSalgslinje1 = mock(Salgslinje.class);
@@ -247,7 +247,7 @@ class SalgTest {
     }
 
     @Test
-    void beregnSamletPrisKlipUdenSalgslinjer() {
+    void beregnSamletPrisKlipUdenSalgslinjer_TC1() {
         //Arrange:
         Salg salg = new Salg();
 
@@ -259,7 +259,7 @@ class SalgTest {
     }
 
     @Test
-    void beregnSamletPrisKlipMedSalgslinjeMedKlippris0() {
+    void beregnSamletPrisKlipMedSalgslinjeMedKlippris0_TC2() {
         //Arrange:
         Salg salg = new Salg();
 
@@ -275,7 +275,7 @@ class SalgTest {
     }
 
     @Test
-    void beregnSamletPrisKlipMedSalgslinjerMedKlipprisOverNul() {
+    void beregnSamletPrisKlipMedSalgslinjerMedKlipprisOverNul_TC3() {
         //Arrange:
         Salg salg = new Salg();
 
@@ -298,7 +298,7 @@ class SalgTest {
     }
 
     @Test
-    void beregnSamletPrisKlipMedSalgslinjerMedKlipprisOver0OgKlipprisUnder0() {
+    void beregnSamletPrisKlipMedSalgslinjerMedKlipprisOver0OgKlipprisUnder0_TC4() {
         //Arrange:
         Salg salg = new Salg();
 
@@ -320,13 +320,6 @@ class SalgTest {
 
         //Assert:
         assertEquals(4, result);
-    }
-
-    @Test
-    void getSalgslinjer() {
-        //Arrange:
-        //Act:
-        //Assert:
     }
 
     @Test
@@ -403,13 +396,6 @@ class SalgTest {
     }
 
     @Test
-    void getBetalingsform() {
-        //Arrange:
-        //Act:
-        //Assert:
-    }
-
-    @Test
     void setRabatSalg_TC1_rabatOver0() {
         //Arrange:
         Salg salg = new Salg();
@@ -447,20 +433,6 @@ class SalgTest {
     }
 
     @Test
-    void getRabat() {
-        //Arrange:
-        //Act:
-        //Assert:
-    }
-
-    @Test
-    void getRegistreringsDato() {
-        //Arrange:
-        //Act:
-        //Assert:
-    }
-
-    @Test
     void setStatus_TC1_StatusNotNull() {
         //Arrange:
         Salg salg = new Salg();
@@ -480,13 +452,6 @@ class SalgTest {
         //Act and assert:
         Exception exception = assertThrows(IllegalArgumentException.class, () -> salg.setStatus(null));
         assertEquals("Status må ikke være null", exception.getMessage());
-    }
-
-    @Test
-    void getStatus() {
-        //Arrange:
-        //Act:
-        //Assert:
     }
 
     @Test
@@ -562,9 +527,7 @@ class SalgTest {
     }
 
     @Test
-    void testToString() {
-        //Arrange:
-        //Act:
-        //Assert:
+    void notifyObservers(){
+
     }
 }
