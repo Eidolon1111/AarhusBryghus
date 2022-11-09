@@ -20,9 +20,11 @@ import static org.mockito.Mockito.*;
 
 class ControllerTest {
 
+//    void setBetalingsform_TC1_betalingsformNotNull
+
     @Test
     @Order(1)
-    void createPrislisteTC1() {
+    void createPrisliste_TC1_good() {
         //Arrange
         String testString = "Test af opretPrisliste";
         Storage storage = mock(Storage.class);
@@ -37,7 +39,7 @@ class ControllerTest {
 
     @Test
     @Order(2)
-    void createPrislisteTC2() {
+    void createPrisliste_TC2_emptyNavn_exception() {
         //Arrange
         String testString = "";
         Storage storage = mock(Storage.class);
@@ -52,7 +54,7 @@ class ControllerTest {
 
     @Test
     @Order(3)
-    void createPrislisteTC3() {
+    void createPrisliste_TC3_prislisteDublet_exception() {
         //Arrange
         String testString = "test af opretPrisliste";
         Storage storage = mock(Storage.class);
@@ -70,7 +72,7 @@ class ControllerTest {
 
     @Test
     @Order(4)
-    void createProduktGruppeTC1() {
+    void createProduktGruppe_TC1_good() {
         //Arrange
         String testString = "Test af opretProduktGruppe";
         Storage storage = mock(Storage.class);
@@ -85,7 +87,7 @@ class ControllerTest {
 
     @Test
     @Order(5)
-    void createProduktGruppeTC2() {
+    void createProduktGruppe_TC2_emptyNavn_exception() {
         //Arrange
         String testString = "";
         Storage storage = mock(Storage.class);
@@ -100,7 +102,7 @@ class ControllerTest {
 
     @Test
     @Order(6)
-    void createProduktGruppeTC3() {
+    void createProduktGruppe_TC3_produktgruppeDublet_exception() {
         //Arrange
         String testString = "test af opretProduktGruppe";
         Storage storage = mock(Storage.class);
@@ -118,7 +120,7 @@ class ControllerTest {
 
     @Test
     @Order(7)
-    void createSimpelProduktTC1() {
+    void createSimpelProdukt_TC1_good() {
         //Arrange
         String testString = "Sommer Pilsner";
         Storage storage = mock(Storage.class);
@@ -134,7 +136,7 @@ class ControllerTest {
 
     @Test
     @Order(8)
-    void createSimpelProduktTC2() {
+    void createSimpelProdukt_TC2_emptyNavn_exception() {
         //Arrange
         String testString = "";
         Storage storage = mock(Storage.class);
@@ -150,7 +152,7 @@ class ControllerTest {
 
     @Test
     @Order(9)
-    void createSimpelProduktTC3() {
+    void createSimpelProdukt_TC3_produktgruppeNull_exception() {
         //Arrange
         String testString = "Sommer Pilsner";
         Storage storage = mock(Storage.class);
@@ -166,7 +168,7 @@ class ControllerTest {
     //Find ud af hvorfor nullpointer (p == null), Spørg Esben
     @Test
     @Order(10)
-    void createSimpelProduktTC4() {
+    void createSimpelProdukt_TC4_produktDublet_exception() {
         //Arrange
         String testString = "Sommer Pilsner";
         Storage storage = mock(Storage.class);
@@ -183,7 +185,7 @@ class ControllerTest {
 
     @Test
     @Order(11)
-    void createUdlejningTC1() {
+    void createUdlejning_TC1_good() {
         //Arrange
         Storage storage = mock(Storage.class);
         Controller controller = new Controller(storage);
@@ -198,7 +200,7 @@ class ControllerTest {
 
     @Test
     @Order(12)
-    void createUdlejningTC2() {
+    void createUdlejning_TC2_kundeNull_exception() {
         //Arrange
         Storage storage = mock(Storage.class);
         Controller controller = new Controller(storage);
@@ -212,7 +214,7 @@ class ControllerTest {
 
     @Test
     @Order(13)
-    void createModregningTC1() {
+    void createModregning_TC1_good() {
         //Arrange
         Storage storage = mock(Storage.class);
         Controller controller = new Controller(storage);
@@ -234,7 +236,7 @@ class ControllerTest {
 
     @Test
     @Order(14)
-    void createModregningTC2() {
+    void createModregning_TC2_udlejningNull_exception() {
         //Arrange
         Storage storage = mock(Storage.class);
         Controller controller = new Controller(storage);
@@ -256,7 +258,7 @@ class ControllerTest {
 
     @Test
     @Order(15)
-    void createModregningTC3() {
+    void createModregning_TC3_salgslinjeNotFound_exception() {
         //Arrange
         Storage storage = mock(Storage.class);
         Controller controller = new Controller(storage);
@@ -281,7 +283,7 @@ class ControllerTest {
 
     @Test
     @Order(16)
-    void createModregningTC4() {
+    void createModregning_TC4_antalUnder0_exception() {
         //Arrange
         Storage storage = mock(Storage.class);
         Controller controller = new Controller(storage);
@@ -303,7 +305,7 @@ class ControllerTest {
 
     @Test
     @Order(17)
-    void createModregningTC5() {
+    void createModregning_TC5_antalOverOriginal_exception() {
         //Arrange
         Storage storage = mock(Storage.class);
         Controller controller = new Controller(storage);
