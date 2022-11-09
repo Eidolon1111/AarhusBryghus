@@ -35,6 +35,14 @@ public class Salg implements Observerbar{
         salgslinjer.remove(salgslinje);
     }
 
+    public void addSalgslinje(Salgslinje salgslinje){
+        if(!salgslinjer.contains(salgslinje)){
+            salgslinjer.add(salgslinje);
+        } else {
+            throw new RuntimeException("Salgslinjer er allerede registreret på salget!");
+        }
+    }
+
 
     public double beregnSamletPrisDKK() {
         double result = 0;
@@ -53,7 +61,7 @@ public class Salg implements Observerbar{
 
     public int beregnSamletPrisKlip() {
         int result = 0;
-        for (Salgslinje s : salgslinjer){
+        for (Salgslinje s : this.getSalgslinjer()){
             result += s.beregnPrisKlip();
         }
         return result;

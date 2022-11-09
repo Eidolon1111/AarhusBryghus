@@ -163,25 +163,23 @@ class ControllerTest {
         assertEquals("ProduktGruppe må ikke være null!", exception.getMessage());
     }
 
-//    Find ud af hvorfor nullpointer (p == null), Spørg Esben
-//    @Test
-//    @Order(10)
-//    void createSimpelProduktTC4() {
-//        //Arrange
-//        String testString = "Sommer Pilsner";
-//        Storage storage = mock(Storage.class);
-//        Controller controller = new Controller(storage);
-//        ProduktGruppe produktGruppe = controller.createProduktGruppe("Flaske");
-//        ArrayList<Produkt> temp = new ArrayList<>();
-//        Produkt tempProdukt = controller.createSimpelProdukt(produktGruppe,testString,"",0,"", false);
-//        temp.add(tempProdukt);
-//        when(produktGruppe.getProdukts()).thenReturn(temp);
-//
-//        //Act & Assert
-//        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-//            Produkt p = controller.createSimpelProdukt(produktGruppe,testString,"", 2, "", false);
-//        });
-//    }
+    //Find ud af hvorfor nullpointer (p == null), Spørg Esben
+    @Test
+    @Order(10)
+    void createSimpelProduktTC4() {
+        //Arrange
+        String testString = "Sommer Pilsner";
+        Storage storage = mock(Storage.class);
+        Controller controller = new Controller(storage);
+        ProduktGruppe produktGruppe = controller.createProduktGruppe("Flaske");
+        controller.createSimpelProdukt(produktGruppe,testString,"",0,"", false);
+
+        //Act & Assert
+        Exception exception = assertThrows(IllegalArgumentException.class, () ->
+        {controller.createSimpelProdukt(produktGruppe,testString,"", 2, "", false);
+        });
+        assertEquals("Produkt med samme navn eksisterer allerede i Produktgruppen!",  exception.getMessage());
+    }
 
     @Test
     @Order(11)
