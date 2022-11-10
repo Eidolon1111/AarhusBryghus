@@ -23,14 +23,6 @@ public class Controller implements ControllerInterface {
     public ArrayList<ProduktGruppe> getProduktGrupper() {
         return storage.getProduktGrupper();
     }
-    
-    public ArrayList<Produkt> getProdukter() {
-        ArrayList<Produkt> result = new ArrayList<>();
-        for (ProduktGruppe pg : getProduktGrupper()) {
-            result.addAll(pg.getProdukts());
-        }
-        return result;
-    }
 
     public ArrayList<Salg> getSalg() {return storage.getSalg(); }
 

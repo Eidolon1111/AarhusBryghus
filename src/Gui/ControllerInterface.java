@@ -11,8 +11,6 @@ public interface ControllerInterface {
     ArrayList<Prisliste> getPrislister();
 
     ArrayList<ProduktGruppe> getProduktGrupper();
-    
-    ArrayList<Produkt> getProdukter();
 
     Prisliste createPrisliste(String navn, boolean tilBrugIDagligtSalg);
 
