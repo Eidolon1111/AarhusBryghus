@@ -31,7 +31,7 @@ class ControllerTest {
         Controller controller = new Controller(storage);
 
         //Act
-        Prisliste pl = controller.createPrisliste(testString);
+        Prisliste pl = controller.createPrisliste(testString, false);
 
         //Assert
         assertEquals(testString,pl.getNavn());
@@ -47,7 +47,7 @@ class ControllerTest {
 
         //Act & Assert
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            Prisliste pl = controller.createPrisliste(testString);
+            Prisliste pl = controller.createPrisliste(testString, false);
         });
         assertEquals("Navn kan ikke være tom!", exception.getMessage());
     }
@@ -60,12 +60,12 @@ class ControllerTest {
         Storage storage = mock(Storage.class);
         Controller controller = new Controller(storage);
         ArrayList<Prisliste> temp = new ArrayList<>();
-        temp.add(controller.createPrisliste("test af opretPrisliste"));
+        temp.add(controller.createPrisliste("test af opretPrisliste",false));
         when(storage.getPrislister()).thenReturn(temp);
 
         //Act & Assert
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            Prisliste pl = controller.createPrisliste(testString);
+            Prisliste pl = controller.createPrisliste(testString, false);
         });
         assertEquals("Prisliste med samme navn eksisterer!", exception.getMessage());
     }
@@ -221,7 +221,7 @@ class ControllerTest {
         Kunde kunde = mock(Kunde.class);
         Produkt klosterbryg = controller.createSimpelProdukt(mock(ProduktGruppe.class), "Klosterbryg 20 liter", "", 0, "", false);
 
-        Prisliste temp = new Prisliste("temp");
+        Prisliste temp = new Prisliste("temp",false);
         Pris klosterbrygPris = temp.createPrisTilPrisliste(klosterbryg,775, 0);
 
         Udlejning udlejning = controller.createUdlejning(kunde);
@@ -243,7 +243,7 @@ class ControllerTest {
         Kunde kunde = mock(Kunde.class);
         Produkt klosterbryg = controller.createSimpelProdukt(mock(ProduktGruppe.class), "Klosterbryg 20 liter", "", 0, "", false);
 
-        Prisliste temp = new Prisliste("temp");
+        Prisliste temp = new Prisliste("temp", false);
         Pris klosterbrygPris = temp.createPrisTilPrisliste(klosterbryg,775, 0);
 
         Udlejning udlejning = controller.createUdlejning(kunde);
@@ -265,7 +265,7 @@ class ControllerTest {
         Kunde kunde = mock(Kunde.class);
         Produkt klosterbryg = controller.createSimpelProdukt(mock(ProduktGruppe.class), "Klosterbryg 20 liter", "", 0, "", false);
 
-        Prisliste temp = new Prisliste("temp");
+        Prisliste temp = new Prisliste("temp",false);
         Pris klosterbrygPris = temp.createPrisTilPrisliste(klosterbryg, 775, 0);
 
         Udlejning udlejning = controller.createUdlejning(kunde);
@@ -287,7 +287,7 @@ class ControllerTest {
         Kunde kunde = mock(Kunde.class);
         Produkt klosterbryg = controller.createSimpelProdukt(mock(ProduktGruppe.class), "Klosterbryg 20 liter", "", 0, "", false);
 
-        Prisliste temp = new Prisliste("temp");
+        Prisliste temp = new Prisliste("temp",false);
         Pris klosterbrygPris = temp.createPrisTilPrisliste(klosterbryg, 775, 0);
 
         Udlejning udlejning = controller.createUdlejning(kunde);

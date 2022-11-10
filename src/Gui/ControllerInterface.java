@@ -14,7 +14,7 @@ public interface ControllerInterface {
     
     ArrayList<Produkt> getProdukter();
 
-    Prisliste createPrisliste(String navn);
+    Prisliste createPrisliste(String navn, boolean tilBrugIDagligtSalg);
 
     Pris createPris(Prisliste prisliste, Produkt produkt, double pris, int klip);
 
@@ -93,5 +93,7 @@ public interface ControllerInterface {
     Produkt getPantIProduktgruppe(ProduktGruppe produktGruppe);
 
     void setPantProduktPaaProduktGruppe(ProduktGruppe produktGruppe, Produkt produkt);
+
+    ArrayList<Prisliste> getPrislisterTilBrugIDagligt();
 
 }

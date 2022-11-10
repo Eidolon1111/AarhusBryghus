@@ -110,5 +110,13 @@ public class AarhusBryghusTabWindow extends Application {
         DagsrapporterPane dagsrapporterPane = new DagsrapporterPane(controller);
         tabDagsrapporter.setContent(dagsrapporterPane);
         tabDagsrapporter.setOnSelectionChanged(event -> dagsrapporterPane.updateControls());
+
+        //TreeviewTest
+        Tab tabTreeview = new Tab("Treeview");
+        tabPane.getTabs().add(tabTreeview);
+
+        TreeviewTestPane treeviewTestPane = new TreeviewTestPane(controller);
+        tabTreeview.setContent(treeviewTestPane);
+        tabTreeview.setOnSelectionChanged(event -> treeviewTestPane.updateControls());
     }
 }

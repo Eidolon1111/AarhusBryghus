@@ -34,7 +34,7 @@ public class Controller implements ControllerInterface {
 
     public ArrayList<Salg> getSalg() {return storage.getSalg(); }
 
-    public Prisliste createPrisliste(String navn) {
+    public Prisliste createPrisliste(String navn, boolean tilBrugIDagligtSalg) {
         boolean dublet = false;
        if (!navn.equals("")){
            for (Prisliste pl : storage.getPrislister()) {
@@ -43,7 +43,7 @@ public class Controller implements ControllerInterface {
                }
            }
            if(!dublet) {
-               Prisliste pl = new Prisliste(navn);
+               Prisliste pl = new Prisliste(navn, tilBrugIDagligtSalg);
                storage.addPrisliste(pl);
                return pl;
            } else {
@@ -339,6 +339,16 @@ public class Controller implements ControllerInterface {
         produktGruppe.setPantProdukt(produkt);
     }
 
+    public ArrayList<Prisliste> getPrislisterTilBrugIDagligt() {
+        ArrayList<Prisliste> result = new ArrayList<>();
+        for (Prisliste prisliste : storage.getPrislister()){
+            if(prisliste.isTilBrugIDagligtSalg()){
+                result.add(prisliste);
+            }
+        }
+        return result;
+    }
+
     public Prisliste getPrisliste(String navn) {
         Prisliste res = null;
         for (Prisliste pl : getPrislister()) {
@@ -366,10 +376,10 @@ public class Controller implements ControllerInterface {
 
 
     public void init(){
-        Prisliste fredagsbar = this.createPrisliste("Fredagsbar");
-        Prisliste butik = this.createPrisliste("Butik");
-        Prisliste rundvisning = this.createPrisliste("Rundvisning");
-        Prisliste udlejning = this.createPrisliste("Udlejning");
+        Prisliste fredagsbar = this.createPrisliste("Fredagsbar", true);
+        Prisliste butik = this.createPrisliste("Butik", true);
+        Prisliste rundvisning = this.createPrisliste("Rundvisning", false);
+        Prisliste udlejning = this.createPrisliste("Udlejning", false);
 
         ProduktGruppe flasker = this.createProduktGruppe("Flasker");
         ProduktGruppe fadøl = this.createProduktGruppe("Fadøl");

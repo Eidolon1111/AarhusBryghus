@@ -5,9 +5,11 @@ import java.util.ArrayList;
 public class Prisliste {
     private ArrayList<Pris> prislisten = new ArrayList<>();
     private String navn;
+    private boolean tilBrugIDagligtSalg;
 
-    public Prisliste(String navn) {
+    public Prisliste(String navn, boolean tilBrugIDagligtSalg) {
         this.navn = navn;
+        this.tilBrugIDagligtSalg = tilBrugIDagligtSalg;
     }
 
     public Pris createPrisTilPrisliste(Produkt produkt, double pris, int klip) {
@@ -60,6 +62,9 @@ public class Prisliste {
         return navn;
     }
 
+    public boolean isTilBrugIDagligtSalg(){
+        return tilBrugIDagligtSalg;
+    }
     
     @Override
     public String toString() {

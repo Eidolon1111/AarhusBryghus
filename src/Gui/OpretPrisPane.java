@@ -5,10 +5,7 @@ import Application.Model.Prisliste;
 import Application.Model.Produkt;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
 
@@ -22,6 +19,7 @@ public class OpretPrisPane extends GridPane {
     private TextField txfDkkPris, txfKlipPris;
     private Label lblErrorPrisliste = new Label();
     private Label lblErrorPris = new Label();
+    private CheckBox checkBoxTilBrugIDagligtSalg = new CheckBox("må bruges i dagligt salg");
 
 
     public OpretPrisPane(ControllerInterface controller){
@@ -44,8 +42,9 @@ public class OpretPrisPane extends GridPane {
         this.add(lblEllerOpretNy, 0, 18);
         this.add(lblOpretPrisListe, 0, 19);
         this.add(txfOpretPrisliste,1,19);
-        this.add(btnOpret, 0, 20);
-        this.add(lblErrorPrisliste, 1, 20);
+        this.add(checkBoxTilBrugIDagligtSalg, 0, 20,2,1);
+        this.add(btnOpret, 0, 21);
+        this.add(lblErrorPrisliste, 1, 21);
         lblErrorPrisliste.setStyle("-fx-text-fill: red");
 
 
@@ -59,29 +58,17 @@ public class OpretPrisPane extends GridPane {
         //Oprettelse af elementer i række 3
         Button btnTilføj = new Button("Tilføj/Gem");
 
-//
-//        Label lblNuDkk = new Label("Nuværende DKK: ");
-//        TextField txfNuDkk = new TextField();
-//        txfNuDkk.setEditable(false);
-
         Label lblDkkPris = new Label("DKK pris: ");
         txfDkkPris = new TextField();
-
-//        Label lblNuKlip = new Label("Nuværende klip: ");
-//        TextField txfNuKlip = new TextField();
-//        txfNuKlip.setEditable(false);
 
         Label lblKlipPris = new Label("Klip pris: ");
         txfKlipPris = new TextField();
 
 
         //Tilføjelse af elementer i række 3
-//        this.add(lblNuDkk, 4, 4);
-//        this.add(txfNuDkk, 5, 4);
+
         this.add(lblDkkPris, 4, 5);
         this.add(txfDkkPris, 5, 5);
-//        this.add(lblNuKlip, 4, 6);
-//        this.add(txfNuKlip, 5, 6);
         this.add(lblKlipPris, 4, 6);
         this.add(txfKlipPris, 5, 6);
 
@@ -108,8 +95,6 @@ public class OpretPrisPane extends GridPane {
         lwPrislister.getSelectionModel().selectedItemProperty().addListener(prislisteListener);
 
         lwProdukter.getItems().setAll(controller.getProdukter());
-        //ChangeListener<Produkt> produktListener = (ov, o, n) -> ProduktItemSelected();
-        //lwPrislister.getSelectionModel().selectedItemProperty().addListener(produktListener);
 
         //Buttons funktionalitet
         btnOpret.setOnAction(event -> this.opretAction());
@@ -122,9 +107,15 @@ public class OpretPrisPane extends GridPane {
         if (navn.length() == 0) {
             lblErrorPrisliste.setText("Navn er tom");
         } else {
-            controller.createPrisliste(navn);
-            lwPrislister.getItems().setAll(controller.getPrislister());
-            updateControls();
+            if(checkBoxTilBrugIDagligtSalg.isSelected()){
+                controller.createPrisliste(navn, true);
+                lwPrislister.getItems().setAll(controller.getPrislister());
+                updateControls();
+            } else {
+                controller.createPrisliste(navn, false);
+                lwPrislister.getItems().setAll(controller.getPrislister());
+                updateControls();
+            }
         }
     }
 

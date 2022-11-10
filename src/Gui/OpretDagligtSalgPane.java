@@ -62,7 +62,7 @@ public class OpretDagligtSalgPane extends GridPane {
 
         this.add(lbPrisliser, 0, 0);
         this.add(cBPrislister, 0, 1);
-        cBPrislister.getItems().setAll(controller.getPrislister());
+        cBPrislister.getItems().setAll(controller.getPrislisterTilBrugIDagligt());
         ChangeListener<Prisliste> listenerCBPrislister = (ov, oldPrisliste, newPrisliste) -> this.selectedPrislisteChanged();
         cBPrislister.getSelectionModel().selectedItemProperty().addListener(listenerCBPrislister);
 
@@ -111,7 +111,10 @@ public class OpretDagligtSalgPane extends GridPane {
     }
 
     public void selectedPrislisteChanged(){
-        updateControls();
+        Prisliste prisliste = cBPrislister.getSelectionModel().getSelectedItem();
+        if(prisliste != null){
+            lwProduktgrupper.getItems().setAll(controller.getProduktGrupperIPrisliste(prisliste));
+        }
     }
 
     public void selectedProduktGruppeChanged(){
@@ -122,10 +125,7 @@ public class OpretDagligtSalgPane extends GridPane {
     }
 
     public void updateControls(){
-        Prisliste prisliste = cBPrislister.getSelectionModel().getSelectedItem();
-        if(prisliste != null){
-            lwProduktgrupper.getItems().setAll(controller.getProduktGrupperIPrisliste(prisliste));
-        }
+        cBPrislister.getItems().setAll(controller.getPrislisterTilBrugIDagligt());
     }
 
     public void btnTilføjAction() {
