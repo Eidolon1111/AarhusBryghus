@@ -51,7 +51,6 @@ public class Udlejning extends Salg{
         return result;
     }
 
-    //TODO
     @Override
     public String toString() {
         return kunde.getNavn() + ", " + super.getRegistreringsDato();
