@@ -88,7 +88,6 @@ public class OpretUdlejningPane extends GridPane {
 
         this.add(lbProduktgrupper, 3, 0);
         this.add(lwProduktgrupper, 3, 1,1,8);
-        lwProduktgrupper.getItems().setAll(controller.getProduktGrupperIPrisliste(prisliste));
         ChangeListener<ProduktGruppe> listenerProduktGruppe = (ov, oldProduktGruppe, newProduktGruppe) -> this.selectedProduktGruppeChanged();
         lwProduktgrupper.getSelectionModel().selectedItemProperty().addListener(listenerProduktGruppe);
 
@@ -128,7 +127,10 @@ public class OpretUdlejningPane extends GridPane {
     }
 
     public void selectedProduktGruppeChanged(){
-        updateControls();
+        ProduktGruppe produktGruppe = lwProduktgrupper.getSelectionModel().getSelectedItem();
+        if(produktGruppe != null){
+            lwProdukter.getItems().setAll(controller.getProdukterFraProduktgruppe(produktGruppe));
+        }
     }
 
     public void selectedProdukt(){
@@ -136,10 +138,8 @@ public class OpretUdlejningPane extends GridPane {
     }
 
     public void updateControls(){
-        ProduktGruppe produktGruppe = lwProduktgrupper.getSelectionModel().getSelectedItem();
-        if(produktGruppe != null){
-            lwProdukter.getItems().setAll(controller.getProdukterFraProduktgruppe(produktGruppe));
-        }
+        lwProduktgrupper.getItems().setAll(controller.getProduktGrupperIPrisliste(prisliste));
+        lwKunder.getItems().setAll(controller.getKunder());
     }
 
     public void btnOpretKundeAction() {
