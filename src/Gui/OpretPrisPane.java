@@ -16,7 +16,6 @@ public class OpretPrisPane extends GridPane {
     
     private ControllerInterface controller;
     private ListView<Prisliste> lwPrislister = new ListView<>();
-    //private ListView<Produkt> lwProdukter = new ListView<>();
     private TreeView<Object> treeViewProdukterIproduktgrupper = new TreeView<>();
     private TreeItem<Object> root = new TreeItem<>("ProduktGrupper");
     private ListView lwValgtPrisliste = new ListView<>();
@@ -52,7 +51,6 @@ public class OpretPrisPane extends GridPane {
         Label lblProdukter = new Label("Produkter:");
 
         this.add(lblProdukter, 2, 0);
-        //this.add(lwProdukter, 2, 1,2,16);
         this.add(treeViewProdukterIproduktgrupper, 2, 1,2,16);
 
         Button btnTilføj = new Button("Tilføj/Gem");
@@ -87,7 +85,6 @@ public class OpretPrisPane extends GridPane {
         ChangeListener<Prisliste> prislisteListener = (ov, o, n) -> PrislisteItemSelected();
         lwPrislister.getSelectionModel().selectedItemProperty().addListener(prislisteListener);
 
-        //lwProdukter.getItems().setAll(controller.getProdukter());
         treeViewProdukterIproduktgrupper.setRoot(root);
         treeViewProdukterIproduktgrupper.setShowRoot(false);
         ChangeListener<TreeItem<Object>> objectChangeListener = (ov, o, n) -> treeviewItemSelectedChanged();
@@ -156,7 +153,6 @@ public class OpretPrisPane extends GridPane {
     public void updateControls(){
         root.getChildren().clear();
         createProduktGruppeBranches(controller.getProduktGrupper(), root);
-        //lwProdukter.getItems().setAll(controller.getProdukter());
         Prisliste pl = lwPrislister.getSelectionModel().getSelectedItem();
         if (pl != null) {
             lwValgtPrisliste.getItems().setAll(pl.getPrislisten());
@@ -173,7 +169,7 @@ public class OpretPrisPane extends GridPane {
     }
 
     public void treeviewItemSelectedChanged(){
-        TreeItem<Object> treeItem = treeViewProdukterIproduktgrupper.getSelectionModel().getSelectedItem();
+        treeViewProdukterIproduktgrupper.getSelectionModel().getSelectedItem();
     }
 
     public void createProduktGruppeBranches(ArrayList<ProduktGruppe> list, TreeItem<Object> parent){
