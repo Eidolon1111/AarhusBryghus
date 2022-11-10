@@ -7,8 +7,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
-import java.util.ArrayList;
-
 public class AfregnRundvisningPane extends GridPane {
 
     private Salgslinje førsteSalgLinje;

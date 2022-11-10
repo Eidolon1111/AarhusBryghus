@@ -211,10 +211,4 @@ public class AfregnUdlejningPane extends GridPane {
         lWUafsluttedeUdlejninger.setDisable(false);
         updateControls();
     }
-
-    //TODO
-    public void salgslinjeClicked(){
-        Salgslinje salgslinje = lWSalgslinjeriUdlejning.getSelectionModel().getSelectedItem();
-        System.out.println(salgslinje);
-    }
 }

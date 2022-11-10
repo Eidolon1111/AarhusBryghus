@@ -314,6 +314,7 @@ public class Controller implements ControllerInterface {
 
     public void udbetalModregning(Udlejning udlejning) {
         udlejning.setStatus(Salg.Status.AFREGNET);
+        udlejning.setAfregningsDato(LocalDate.now());
     }
 
     public ArrayList<Salgslinje> createTempSalgslinjer(Udlejning udlejning) {

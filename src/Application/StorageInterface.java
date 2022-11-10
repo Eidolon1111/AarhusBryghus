@@ -8,22 +8,22 @@ import Application.Model.Salg;
 import java.util.ArrayList;
 
 public interface StorageInterface {
-    public ArrayList<Prisliste> getPrislister();
+    ArrayList<Prisliste> getPrislister();
 
-    public void addPrisliste(Prisliste prisliste);
+    void addPrisliste(Prisliste prisliste);
     
-    public ArrayList<ProduktGruppe> getProduktGrupper();
+    ArrayList<ProduktGruppe> getProduktGrupper();
 
-    public void addProduktGruppe(ProduktGruppe produktGruppe);
+    void addProduktGruppe(ProduktGruppe produktGruppe);
 
-    public ArrayList<Salg> getSalg();
+    ArrayList<Salg> getSalg();
 
-    public void sletSalg(Salg salg);
+    void sletSalg(Salg salg);
 
-    public void addSalg(Salg salg);
+    void addSalg(Salg salg);
 
-    public void addKunde(Kunde kunde);
+    void addKunde(Kunde kunde);
 
-    public ArrayList<Kunde> getKunder();
+    ArrayList<Kunde> getKunder();
 
 }
